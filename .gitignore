@@ -1,0 +1,10 @@
+data/
+out/
+logs/
+hf_cache/
+*.log
+*.err
+__pycache__/
+*.pyc
+.DS_Store
+.idea/
