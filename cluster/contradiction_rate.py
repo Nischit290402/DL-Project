@@ -51,7 +51,7 @@ def get_segments(item):
 def load_nli(model_name, device):
     import torch
     from transformers import AutoModelForSequenceClassification, AutoTokenizer
-    tok = AutoTokenizer.from_pretrained(model_name)
+    tok = AutoTokenizer.from_pretrained(model_name, use_fast=False)  # tokenizer.json needs tokenizers>=0.19; env pins 0.15
     model = AutoModelForSequenceClassification.from_pretrained(model_name).to(device).eval()
     labels = {v.lower(): k for k, v in model.config.id2label.items()}
     c_idx = labels["contradiction"]
