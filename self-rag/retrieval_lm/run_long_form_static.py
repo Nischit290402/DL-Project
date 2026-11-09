@@ -8,6 +8,12 @@ import argparse
 from vllm import LLM, SamplingParams
 from utils import TASK_INST, PROMPT_DICT, load_special_tokens, load_jsonlines, postprocess, fix_spacing
 
+# DL-Project: vLLM's SamplingParams strips special tokens from the decoded text by default
+# (skip_special_tokens=True). Self-RAG's reflection tokens ([Retrieval], [No Retrieval], ...) are special
+# tokens, so the text checks below ("[Retrieval]" in pred, "[No Retrieval]" in pred_text) never fire and the
+# segment-level beam search never goes past depth 1. --keep_special_tokens sets this to True.
+KEEP_SPECIAL_TOKENS = False
+
 
 def run_step_generation_batch(model, prompt, paragraphs,  max_new_tokens,
                               rel_tokens=None, grd_tokens=None, ret_tokens=None, ut_tokens=None,
@@ -19,7 +25,7 @@ def run_step_generation_batch(model, prompt, paragraphs,  max_new_tokens,
         aug_prompts = [prompt]
 
     sampling_params = SamplingParams(
-        temperature=0.0, top_p=1.0, max_tokens=max_new_tokens, logprobs=32000, )
+        temperature=0.0, top_p=1.0, max_tokens=max_new_tokens, logprobs=32000, skip_special_tokens=not KEEP_SPECIAL_TOKENS)
     preds = model.generate(aug_prompts, sampling_params)
 
     # compute the scores for each generation
@@ -159,7 +165,7 @@ def call_model_beam_batch(prompt, model, max_new_tokens=15, ctxs=None, query=Non
 
     if mode == "no_retrieval":
         sampling_params = SamplingParams(
-            temperature=0.0, top_p=1, max_tokens=max_new_tokens)
+            temperature=0.0, top_p=1, max_tokens=max_new_tokens, skip_special_tokens=not KEEP_SPECIAL_TOKENS)
         prompt += "[No Retrieval]"
         preds = model.generate([prompt], sampling_params)
         preds = [pred.outputs[0].text.split("\n\n")[0] for pred in preds]
@@ -171,7 +177,7 @@ def call_model_beam_batch(prompt, model, max_new_tokens=15, ctxs=None, query=Non
 
     else:
         sampling_params = SamplingParams(
-            temperature=0.0, top_p=1, max_tokens=25, logprobs=32000)
+            temperature=0.0, top_p=1, max_tokens=25, logprobs=32000, skip_special_tokens=not KEEP_SPECIAL_TOKENS)
         preds = model.generate([prompt], sampling_params)
         pred_log_probs = preds[0].outputs[0].logprobs
         preds = [pred.outputs[0].text.split("\n\n")[0] for pred in preds]
@@ -191,7 +197,7 @@ def call_model_beam_batch(prompt, model, max_new_tokens=15, ctxs=None, query=Non
 
     if do_retrieve is False:
         sampling_params = SamplingParams(
-            temperature=0.0, top_p=1, max_tokens=max_new_tokens)
+            temperature=0.0, top_p=1, max_tokens=max_new_tokens, skip_special_tokens=not KEEP_SPECIAL_TOKENS)
         prompt += "[No Retrieval]"
         preds = model.generate([prompt], sampling_params)
         preds = [pred.outputs[0].text.split("\n\n")[0] for pred in preds]
@@ -344,7 +350,13 @@ def main():
     parser.add_argument("--gpu_memory_utilization", type=float, default=0.9,
                         help="fraction of GPU memory vLLM may reserve; lower it to fit an extra model (e.g. NLI)")
 
+    parser.add_argument("--keep_special_tokens", action="store_true",
+                        help="keep reflection tokens in decoded text so multi-segment beam search can trigger")
+
     args = parser.parse_args()
+    global KEEP_SPECIAL_TOKENS
+    KEEP_SPECIAL_TOKENS = args.keep_special_tokens
+    print("keep_special_tokens =", KEEP_SPECIAL_TOKENS, flush=True)
 
     tokenizer = AutoTokenizer.from_pretrained(
         args.model_name, padding_side="left")
