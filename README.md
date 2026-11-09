@@ -67,22 +67,27 @@ Changes to `run_long_form_static.py` (outputs identical to upstream at default s
   `--w_use` default is changed to 0.5 to keep the baseline unchanged.
 - `--gpu_memory_utilization` (default 0.9, the vLLM default) to leave room for an extra NLI model later.
 
+Cluster limits that shape the plan (TC2 user guide, QoS `normal`): the limits are per user and summed over all
+your jobs: 1 GPU, 10 CPU, 30 GB RAM, 2 jobs, 6 h each. Two GPU jobs from one account therefore cannot run at the
+same time; chain them with `--dependency`, or run the shards from two different members' accounts. Home quota is
+100 GB and things break above 98%; check with `du -sh ~/*` or `ncdu`. Do not run Python on the login node except
+installs and downloads; everything else goes through `sbatch`.
+
 Steps:
 ```bash
 ls data/eval_data | grep asqa                       # need asqa_eval_gtr_top100.json from get_data.sh
 # 1. pilot (30 questions): read the s/question lines in the log to size the shards
 sbatch --export=ALL,START=0,END=30,TAG=pilot --time=01:00:00 cluster/run_asqa.sbatch
-# 2. full baseline in two shards (both run at once: 2-job limit)
-sbatch --export=ALL,START=0,END=474,TAG=baseline cluster/run_asqa.sbatch
-sbatch --export=ALL,START=474,TAG=baseline cluster/run_asqa.sbatch
+# 2. full baseline in two shards, the second starts when the first ends (one GPU per user)
+JOB_A=$(sbatch --parsable --export=ALL,START=0,END=474,TAG=baseline cluster/run_asqa.sbatch)
+sbatch --dependency=afterany:$JOB_A --export=ALL,START=474,TAG=baseline cluster/run_asqa.sbatch
 python cluster/merge_shards.py out/asqa_baseline_0_474.json out/asqa_baseline_474_end.json -o out/asqa_baseline.json
-# 3. scoring env (login node, one time; the T5-11B citation model is ~45 GB, check quota first)
+# 3. scoring setup (login node, one time, after setup_env.sh). Adds scoring packages to the selfrag env and
+#    downloads scorer models; the T5-11B citation model is ~45 GB (SKIP_T5=1 to leave it out)
 bash cluster/setup_alce.sh
 sbatch --export=ALL,F=out/asqa_baseline.json cluster/run_alce_eval.sbatch     # writes out/asqa_baseline.json.score
 # 4. go/no-go: how often do baseline answers contradict themselves across segments?
-source cluster/env_alce.sh
-python cluster/contradiction_rate.py out/asqa_baseline.json --out_prefix out/contra_baseline
-python cluster/contradiction_rate.py out/asqa_baseline.json --out_prefix out/contra_baseline_q --with_question
+sbatch --export=ALL,F=out/asqa_baseline.json,TAG=baseline cluster/run_contra.sbatch
 ```
 If the pilot shows more than about 40 s/question, 474 questions will not fit in 6 h: use more, smaller shards.
 Expected numbers: the paper (Table 2, 7B) reports str-em 30.0, rouge 35.7, MAUVE 74.3, citation 66.9/67.8.

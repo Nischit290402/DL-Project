@@ -12,8 +12,9 @@
 # ASQA long-form, settings from the upstream README (paper Table 2, Self-RAG 7B).
 # Shard with START/END (example indices, END exclusive). TAG names the run.
 #   Pilot:   sbatch --export=ALL,START=0,END=30,TAG=pilot --time=01:00:00 cluster/run_asqa.sbatch
-#   Shard A: sbatch --export=ALL,START=0,END=474,TAG=baseline cluster/run_asqa.sbatch
-#   Shard B: sbatch --export=ALL,START=474,END=948,TAG=baseline cluster/run_asqa.sbatch
+#   Shard A: JOB_A=$(sbatch --parsable --export=ALL,START=0,END=474,TAG=baseline cluster/run_asqa.sbatch)
+#   Shard B: sbatch --dependency=afterany:$JOB_A --export=ALL,START=474,TAG=baseline cluster/run_asqa.sbatch
+# (QoS limits are per user: one GPU at a time, so shard B waits for shard A.)
 # Extra flags for experiments go in EXTRA, e.g. EXTRA="--beam_width 4".
 cd "$SLURM_SUBMIT_DIR"
 source cluster/env.sh

@@ -4,8 +4,7 @@ How often do Self-RAG's long-form answers contradict themselves *across segments
 Runs an off-the-shelf NLI model over every pair of segments in each answer (both directions,
 p_contra = max of the two) on an existing ASQA output file. No generation, so it is cheap.
 
-Usage (GPU job or interactive; CPU works but is slower):
-  source cluster/env_alce.sh
+Usage on the cluster (never on the login node): submit cluster/run_contra.sbatch, which runs
   python cluster/contradiction_rate.py out/asqa_baseline.json --out_prefix out/contra_baseline
   python cluster/contradiction_rate.py out/asqa_baseline.json --out_prefix out/contra_baseline_q --with_question
 
