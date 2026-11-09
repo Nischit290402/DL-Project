@@ -1,4 +1,5 @@
 import argparse
+import time
 import jsonlines
 from transformers import AutoTokenizer
 import numpy as np
@@ -330,12 +331,18 @@ def main():
                         help="reward weight for document relevance")
     parser.add_argument("--w_sup",  type=float, default=1.0,
                         help="reward weight for generation support (attribution)")
-    parser.add_argument("--w_use",  type=float, default=1.0,
+    parser.add_argument("--w_use",  type=float, default=0.5,
                         help="reward weight for overall completeness / utility.")
     parser.add_argument("--ignore_cont", action="store_true",
                         help="filter out sentences that include [No support / Contradictory] ")
     parser.add_argument('--mode', type=str, help="mode to control retrieval.",
                         default="default", choices=['adaptive_retrieval', 'no_retrieval', 'always_retrieve'],)
+
+    # DL-Project additions (no effect on outputs)
+    parser.add_argument("--start", type=int, default=0, help="first example index (for sharding)")
+    parser.add_argument("--end", type=int, default=None, help="end example index, exclusive (for sharding)")
+    parser.add_argument("--gpu_memory_utilization", type=float, default=0.9,
+                        help="fraction of GPU memory vLLM may reserve; lower it to fit an extra model (e.g. NLI)")
 
     args = parser.parse_args()
 
@@ -348,7 +355,8 @@ def main():
 
     if args.world_size is not None:
         model = LLM(model=args.model_name, download_dir=args.download_dir,
-                    dtype=args.dtype, tensor_parallel_size=args.world_size,)
+                    dtype=args.dtype, tensor_parallel_size=args.world_size,
+                    gpu_memory_utilization=args.gpu_memory_utilization)
 
     else:
         model = LLM(model=args.model_name,
@@ -361,13 +369,16 @@ def main():
                                      rel_tokens=rel_tokens, ret_tokens=ret_tokens, grd_tokens=grd_tokens, ut_tokens=ut_tokens,
                                      use_seqscore=args.use_seqscore, threshold=args.threshold, 
                                      beam_width=args.beam_width, max_depth=args.max_depth,
-                                     w_rel=1.0, w_sup=1.0, w_use=0.5, mode=args.mode, ignore_cont=args.ignore_cont, )
+                                     w_rel=args.w_rel, w_sup=args.w_sup, w_use=args.w_use, mode=args.mode, ignore_cont=args.ignore_cont, )
 
     input_path = args.input_file
     if input_path.endswith(".json"):
         input_data = json.load(open(input_path))
     else:
         input_data = load_jsonlines(input_path)
+    input_data = input_data[args.start:args.end]
+    print("Running examples [{}:{}] -> {} items".format(args.start, args.end, len(input_data)), flush=True)
+    t0 = time.time()
 
     if args.task is not None and args.task == "factscore":
         new_results = []
@@ -429,10 +440,15 @@ def main():
             new_results["data"].append(item)
 
             if instance_idx % 10 == 0:
+                elapsed = time.time() - t0
+                print("[{}/{}] {:.1f} min elapsed, {:.1f} s/question".format(
+                    instance_idx + 1, len(input_data), elapsed / 60, elapsed / (instance_idx + 1)), flush=True)
                 with open(args.output_file + "_tmp", 'w') as writer:
                     json.dump(new_results, writer)
+        new_results["args"] = vars(args)
         with open(args.output_file, 'w') as writer:
             json.dump(new_results, writer)
+        print("Done: {} items in {:.1f} min".format(len(new_results["data"]), (time.time() - t0) / 60), flush=True)
     else:
         raise NotImplementedError
 

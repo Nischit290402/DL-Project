@@ -56,7 +56,44 @@ Compare `Final result` against `results/popqa_baseline.md` (0.5497 at this commi
 does not touch inference should reproduce that number exactly (greedy decoding, temperature 0). Log every
 experiment as an ablation: idea, hypothesis, setup, result, decision.
 
-## Known upstream bug (fix before running PopQA)
+## ASQA long-form baseline (branch `asqa-baseline`)
+
+Needed for the self-contradiction experiment: short-form PopQA produces one segment per answer, so cross-segment
+contradiction only exists in long-form beam search (`call_model_beam_batch` in `run_long_form_static.py`).
+
+Changes to `run_long_form_static.py` (outputs identical to upstream at default settings):
+- `--start/--end` to shard the 948 questions across jobs (6 h wall limit), plus a s/question progress line.
+- `--w_rel/--w_sup/--w_use` are now actually used. Upstream ignored them and hardcoded 1.0/1.0/0.5, so the
+  `--w_use` default is changed to 0.5 to keep the baseline unchanged.
+- `--gpu_memory_utilization` (default 0.9, the vLLM default) to leave room for an extra NLI model later.
+
+Steps:
+```bash
+ls data/eval_data | grep asqa                       # need asqa_eval_gtr_top100.json from get_data.sh
+# 1. pilot (30 questions): read the s/question lines in the log to size the shards
+sbatch --export=ALL,START=0,END=30,TAG=pilot --time=01:00:00 cluster/run_asqa.sbatch
+# 2. full baseline in two shards (both run at once: 2-job limit)
+sbatch --export=ALL,START=0,END=474,TAG=baseline cluster/run_asqa.sbatch
+sbatch --export=ALL,START=474,TAG=baseline cluster/run_asqa.sbatch
+python cluster/merge_shards.py out/asqa_baseline_0_474.json out/asqa_baseline_474_end.json -o out/asqa_baseline.json
+# 3. scoring env (login node, one time; the T5-11B citation model is ~45 GB, check quota first)
+bash cluster/setup_alce.sh
+sbatch --export=ALL,F=out/asqa_baseline.json cluster/run_alce_eval.sbatch     # writes out/asqa_baseline.json.score
+# 4. go/no-go: how often do baseline answers contradict themselves across segments?
+source cluster/env_alce.sh
+python cluster/contradiction_rate.py out/asqa_baseline.json --out_prefix out/contra_baseline
+python cluster/contradiction_rate.py out/asqa_baseline.json --out_prefix out/contra_baseline_q --with_question
+```
+If the pilot shows more than about 40 s/question, 474 questions will not fit in 6 h: use more, smaller shards.
+Expected numbers: the paper (Table 2, 7B) reports str-em 30.0, rouge 35.7, MAUVE 74.3, citation 66.9/67.8.
+Upstream issue #4 (still open) shows the released code does not reproduce the citation metrics: independent
+7B reruns get about str-em 30.2, rouge 35.8, MAUVE 68-76, citation recall ~50, precision ~64. So compare every
+experiment against OUR reproduced baseline, not the paper, and say so in the report.
+The author's own 7B ASQA predictions are linked in that issue
+(https://drive.google.com/file/d/190YHd-7fCzZ7ml31WuCKwaFpHqBl6UC0/view); `contradiction_rate.py` can run on
+them before our baseline finishes (it falls back to splitting the cited output when `intermediate` is missing).
+
+## Known upstream bug (already fixed on this branch, commit 90616df)
 `self-rag/retrieval_lm/run_short_form.py`, in `main()`, passes `max_depth=args.max_depth` to
 `call_model_rerank_w_scores_batch(...)`, which has no such parameter. Every run fails with
 `TypeError: ... unexpected keyword argument 'max_depth'`. The argument is unused in short-form inference, so
