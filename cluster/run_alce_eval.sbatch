@@ -6,6 +6,7 @@
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=28G
 #SBATCH --time=06:00:00
+#SBATCH --exclude=TC2N01,TC2N02
 #SBATCH --job-name=alce_eval
 #SBATCH --output=logs/alce_%j.log
 #SBATCH --error=logs/alce_%j.err
@@ -18,7 +19,15 @@ source cluster/env_alce.sh
 : "${F:?set F=path/to/asqa_output.json}"
 FLAGS=${FLAGS:---citations --qa --mauve}
 F_ABS=$(readlink -f "$F")
-nvidia-smi --query-gpu=name,memory.total --format=csv
+# GPU pin: TC2N01/N02 are A40 (8 each), TC2N03-N08 are L40S (4 each; probed 2026-11-11). A40 vs L40S changes ~3% of answers,
+# so experiments run on L40S to match the reference run. REQUIRE_GPU="" disables the check.
+GPU_NAME=$(nvidia-smi --query-gpu=name --format=csv,noheader | head -1)
+REQUIRE_GPU=${REQUIRE_GPU-L40S}
+echo "GPU: $GPU_NAME on $(hostname)"
+if [ -n "$REQUIRE_GPU" ] && [[ "$GPU_NAME" != *"$REQUIRE_GPU"* ]]; then
+  echo "WRONG_GPU: got $GPU_NAME on $(hostname), need $REQUIRE_GPU. Add that node to --exclude and resubmit."
+  exit 3
+fi
 cd "$ALCE_DIR"
 python eval.py --f "$F_ABS" $FLAGS
 echo "SCORE_FILE ${F_ABS}.score"

@@ -8,11 +8,12 @@ the decoded text, and the script's post-processing needs those tokens to attach 
 Keeping them (`--keep_special_tokens`) gives citation recall 66.6 and precision 67.6, within 0.4 of the author's own
 scores, with str-em, ROUGE-L and MAUVE unchanged. The same bug also disables every text-based decision in the
 script (segment expansion, the adaptive-retrieval threshold and `--ignore_cont`). Even with the fix, Self-RAG
-7B never asks for a second retrieval on ASQA, so segment-level beam search stays at depth 1.
+7B asks for a second retrieval in only 1 of 948 ASQA answers, so segment-level beam search almost never goes
+past depth 1.
 
 ## Setup
 
-- Cluster: NTU CCDS TC2, one NVIDIA L40S 46 GB per job. Env: `cluster/requirements-lock.txt` (vllm 0.2.6,
+- Cluster: NTU CCDS TC2, one 46 GB GPU per job (A40 or L40S, whichever node the scheduler picks; see below). Env: `cluster/requirements-lock.txt` (vllm 0.2.6,
   torch 2.1.2+cu121, transformers 4.36.2). Model: `selfrag/selfrag_llama2_7b`.
 - Data: `data/eval_data/asqa_eval_gtr_top100.json` (ALCE ASQA dev, 948 questions, GTR top-100 passages).
 - Inference: `cluster/run_asqa.sbatch` with the upstream README settings: `--mode always_retrieve --ndocs 5
@@ -23,8 +24,8 @@ script (segment expansion, the adaptive-retrieval threshold and `--ignore_cont`)
 
 | Run | Job | Flag | Wall time |
 | --- | --- | --- | --- |
-| Baseline, released code | 52720 (scored by 52771) | none | 53.3 min |
-| Fixed | 52783 (scored by 52809) | `--keep_special_tokens` | 40.2 min |
+| Baseline, released code | 52720 (scored by 52771), A40 | none | 53.3 min |
+| Fixed | 52783 (scored by 52809), L40S | `--keep_special_tokens` | 40.2 min |
 | Pilots, first 30 questions | 52656, 52774 | none / `--keep_special_tokens` | 1.8 / 1.3 min |
 
 Raw predictions: `out/asqa_baseline_0_end.json`, `out/asqa_keeptok_0_end.json` (+ `.score`) on the cluster,
@@ -43,6 +44,8 @@ not committed.
 - Our released-code run matches the independent rerun in issue #4 to within 0.1 on every metric.
 - With the fix, citation recall rises by 16.4 points and precision by 3.7 points; correctness and fluency move by
   0.5 or less. The fixed run lands within 0.4 of the author's own scores.
+- Citation markers per answer: 1.00 in the released-code run (every answer has exactly one, on its last
+  sentence) and 1.52 with the fix (`cluster/compare_outputs.py`).
 - The paper lists precision 66.9 / recall 67.8; the author's ALCE output has recall 66.97 / precision 67.82, so
   the two columns in Table 2 look swapped. Check against the PDF before quoting this.
 
@@ -75,9 +78,18 @@ With the tokens kept, the output is `S1 [1]. S2 [1].`; with them stripped it is 
 recall scores a sentence without a citation as unsupported, so every non-final sentence of a multi-sentence
 answer counts against the released code.
 
-Why the comparison is controlled: decoding is greedy, the prompts are the same, and candidate scores come from
-token ids, so both runs should generate the same tokens and pick the same candidates. Only the decoded text and
-the citation markers should differ. `cluster/compare_outputs.py` checks this (see Verification).
+How controlled the comparison is: the flag only changes how tokens are turned back into text, so in principle
+both runs generate the same answers. In practice 922 of 948 generations are identical after removing reflection
+tokens (`cluster/compare_outputs.py`). Of the 26 that differ, one is the answer that the fixed run expanded into
+two segments. The other 25 come from hardware: the released-code run landed on an NVIDIA A40 (Ampere) and the fixed
+run on an L40S (Ada), and fp16 kernels on different architectures give slightly different numbers. Near-tied
+candidates then swap rank and a different passage wins (e.g. Josef Bican vs Pelé for "highest goals in world
+football"). It does not threaten the result: ALCE citation recall is a mean of per-answer
+scores between 0 and 100, so 26 changed answers can move it by at most 26/948 x 100 = 2.7 points. At least 13.7 of
+the 16.4-point gain therefore comes from citation formatting on identical answers. The same noise also sets a
+floor for comparing experiments: differences below about 0.5 in str-em or ROUGE between two runs are not
+meaningful on their own, and runs being compared should use the same GPU model (the log's first lines record
+it). The fixed reference run is on an L40S.
 
 PopQA (`run_short_form.py`) is not affected in the same way: its retrieval decision and scores use log-probs and
 token ids, and the answer text is cleaned anyway. This fits the PopQA baseline matching the paper
@@ -88,10 +100,12 @@ token ids, and the answer text is cleaned anyway. This fits the PopQA baseline m
 Counts in the 948 baseline outputs: `[Retrieval]` 948 (only the root placeholder the code writes once per
 question), `[No Retrieval]` 0, `[Continue to Use Evidence]` 0, because the tokens are stripped. In the fixed
 30-question pilot the tokens are present (`[Relevant]` 30, `[Utility:` 30, `[Fully supported]` 27,
-`[Continue to Use Evidence]` 17), but `[Retrieval]` and `[No Retrieval]` are still never generated after the
-first segment. The model writes the whole answer in one segment, staying on the first passage with
-`[Continue to Use Evidence]`. So with or without the fix, every answer is one segment from one passage. The only
-ranking that matters is the first step: 5 candidates (one per passage), keep 2, output the best.
+`[Continue to Use Evidence]` 17), but `[Retrieval]` and `[No Retrieval]` are never generated after the first
+segment. Over the full fixed run, `[Retrieval]` appears 949 times: the 948 placeholders plus one real
+re-retrieval, i.e. 1 of 948 answers has two segments. The model writes the whole answer in one segment, staying
+on the first passage with `[Continue to Use Evidence]`. So with or without the fix, almost every answer is one
+segment from one passage. The only ranking that matters is the first step: 5 candidates (one per passage),
+keep 2, output the best.
 
 Consequences for our experiments:
 - On ASQA, anything that acts on later beam steps or compares segments (self-contradiction across segments,
@@ -101,9 +115,14 @@ Consequences for our experiments:
 
 ## Verification
 
-- [ ] `grep -o "\[Retrieval\]" out/asqa_keeptok_0_end.json | wc -l` gives 948 (no segment expansion in the full fixed run).
-- [ ] `cluster/compare_outputs.py out/asqa_baseline_0_end.json out/asqa_keeptok_0_end.json` shows identical
-      generations for all 948 questions and more citation markers per answer in the fixed run.
+- [x] `grep -o "\[Retrieval\]" out/asqa_keeptok_0_end.json | wc -l` = 949: 948 placeholders plus one real
+      re-retrieval (1 answer with two segments).
+- [x] `cluster/compare_outputs.py out/asqa_baseline_0_end.json out/asqa_keeptok_0_end.json` (job 53170): 922/948
+      identical generations, 924/948 identical answer text, answers with >1 segment 0 vs 1, citation markers per
+      answer 1.00 vs 1.52.
+- [x] GPU models differ: job 52720 ran on an NVIDIA A40, job 52783 on an NVIDIA L40S, which accounts for the
+      other 25 differences. Optional stronger check: rerun the released-code setting on an L40S and expect
+      about 947/948 identical generations.
 - [ ] Table 2 column order checked against the paper PDF.
 
 ## Code changes (branch `asqa-baseline`)

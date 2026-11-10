@@ -92,6 +92,10 @@ sbatch --export=ALL,F=out/asqa_baseline.json,TAG=baseline cluster/run_contra.sba
 The full 948 questions take 40-55 min on one L40S, so one job is enough
 (`sbatch --export=ALL,START=0,TAG=baseline --time=03:00:00 cluster/run_asqa.sbatch`); sharding is only a fallback.
 
+**GPU model matters.** TC2N01/N02 have A40s (16 GPUs) and TC2N03-N08 have L40S (24 GPUs); running the same
+job on the two models changes about 3% of answers. `run_asqa.sbatch` and `run_alce_eval.sbatch` exclude N01/N02 and
+stop with `WRONG_GPU` if they still land on a non-L40S node (`REQUIRE_GPU=""` turns the check off).
+
 **Use `--keep_special_tokens` for every ASQA experiment** (`EXTRA=--keep_special_tokens`). Without it vLLM strips
 Self-RAG's reflection tokens, which disables segment expansion, the retrieval threshold and `--ignore_cont`, and
 lowers citation recall from 66.6 to 50.2. Details and numbers: `results/asqa_reproduction.md`.
