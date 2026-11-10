@@ -89,7 +89,12 @@ sbatch --export=ALL,F=out/asqa_baseline.json cluster/run_alce_eval.sbatch     # 
 # 4. go/no-go: how often do baseline answers contradict themselves across segments?
 sbatch --export=ALL,F=out/asqa_baseline.json,TAG=baseline cluster/run_contra.sbatch
 ```
-If the pilot shows more than about 40 s/question, 474 questions will not fit in 6 h: use more, smaller shards.
+The full 948 questions take 40-55 min on one L40S, so one job is enough
+(`sbatch --export=ALL,START=0,TAG=baseline --time=03:00:00 cluster/run_asqa.sbatch`); sharding is only a fallback.
+
+**Use `--keep_special_tokens` for every ASQA experiment** (`EXTRA=--keep_special_tokens`). Without it vLLM strips
+Self-RAG's reflection tokens, which disables segment expansion, the retrieval threshold and `--ignore_cont`, and
+lowers citation recall from 66.6 to 50.2. Details and numbers: `results/asqa_reproduction.md`.
 Expected numbers: the paper (Table 2, 7B) reports str-em 30.0, rouge 35.7, MAUVE 74.3, citation 66.9/67.8.
 Upstream issue #4 (still open) shows the released code does not reproduce the citation metrics: independent
 7B reruns get about str-em 30.2, rouge 35.8, MAUVE 68-76, citation recall ~50, precision ~64. So compare every
