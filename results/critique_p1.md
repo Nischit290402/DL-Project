@@ -45,7 +45,13 @@ while we average per question. MAUVE is a whole-set metric, so it has no per-que
 | Citation precision | 63.92 [60.86, 66.88] | 67.47 [64.55, 70.22] | **+3.54 [+2.34, +4.72]** * |
 | Length (words) | 29.99 [28.60, 31.32] | 29.96 [28.60, 31.29] | -0.03 [-0.17, +0.10] |
 | MAUVE | 76.09 | 75.57 | - |
+| Contradiction rate | 0.0 (0 pairs) | 0.0 (1 pair) | - |
 | Seconds / question | 3.37 (A40) | 2.54 (L40S) | - |
+
+Contradiction rate: `cluster/contradiction_rate.py` (`cross-encoder/nli-deberta-v3-large`, every pair of segments
+in an answer, thresholds 0.5 / 0.7 / 0.9). It is 0 at every threshold for both runs, but only because there is
+almost nothing to compare: C0 has no answer with two or more segments and C1 has one (1 pair in 948 answers).
+On ASQA with the released settings, cross-segment contradiction cannot be measured without more segments.
 
 C1 on the test sets, for reference (every comparison below is paired on the same questions):
 
