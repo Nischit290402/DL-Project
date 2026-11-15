@@ -14,6 +14,17 @@ from utils import TASK_INST, PROMPT_DICT, load_special_tokens, load_jsonlines, p
 # segment-level beam search never goes past depth 1. --keep_special_tokens sets this to True.
 KEEP_SPECIAL_TOKENS = False
 
+# DL-Project (critique division): --save_candidates also records, for every candidate at every beam step, the raw
+# reflection-token probabilities (all [IsSup] positions, utility read from the utility tokens, sequence score).
+# Recording only: the candidate scores and the chosen answer are computed exactly as before.
+SAVE_CANDIDATES = False
+
+
+def _token_probs(pred_log_probs, idx, token_dict):
+    """Probabilities of the tokens in token_dict at output position idx (0.0 when outside the returned logprobs)."""
+    return {tok: float(np.exp(pred_log_probs[idx][tok_id])) if tok_id in pred_log_probs[idx] else 0.0
+            for tok, tok_id in token_dict.items()}
+
 
 def run_step_generation_batch(model, prompt, paragraphs,  max_new_tokens,
                               rel_tokens=None, grd_tokens=None, ret_tokens=None, ut_tokens=None,
@@ -108,6 +119,25 @@ def run_step_generation_batch(model, prompt, paragraphs,  max_new_tokens,
                                  "relevance_score_dict": relevance_score_dict,
                                  "grd_score_dict": grd_score_dict,
                                  "ut_score_dict": utility_score}
+
+        if SAVE_CANDIDATES:
+            grd_ids = set(grd_tokens.values()) if grd_tokens is not None else set()
+            ut_ids = set(ut_tokens.values()) if ut_tokens is not None else set()
+            overall_scores[p_idx]["saved"] = {
+                "final_score": float(final_score),
+                "relevance_score": float(relevance_score),
+                "ground_score": float(ground_score),
+                "utility_score": float(utility_score),
+                "seq_score": float(seq_score),
+                "relevance_probs": {tok: float(p) for tok, p in relevance_score_dict[p_idx].items()},
+                # one entry per [IsSup] token in the output, in order (the score above uses only the first)
+                "support_probs": [_token_probs(pred_log_probs, i, grd_tokens)
+                                  for i, t in enumerate(pred_token_ids) if t in grd_ids],
+                # read from the utility tokens (the score above reads them through grd_tokens)
+                "utility_probs": [_token_probs(pred_log_probs, i, ut_tokens)
+                                  for i, t in enumerate(pred_token_ids) if t in ut_ids],
+                "n_tokens": len(pred_token_ids),
+            }
 
         # modify and add do retrieve tokens
         if "[No Retrieval]" in pred_text:
@@ -241,6 +271,10 @@ def call_model_beam_batch(prompt, model, max_new_tokens=15, ctxs=None, query=Non
                             prediction_tree[node_id] = {"prompt": prompt + prev_generation, "pred": pred,
                                                         "score": node_score, "ctx": ctxs[i], "parent": node,
                                                         "overall_score_dict": overall_score_dict}
+                            if SAVE_CANDIDATES:
+                                prediction_tree[node_id]["p_idx"] = i
+                                prediction_tree[node_id]["depth"] = curr_depth
+                                prediction_tree[node_id]["saved"] = overall_score_dict[i]["saved"]
 
                             if "[Retrieval]" in pred:
                                 gen_result_index = pred.index("[Retrieval]")
@@ -304,6 +338,21 @@ def call_model_beam_batch(prompt, model, max_new_tokens=15, ctxs=None, query=Non
     return final_prediction, result
 
 
+def _saved_candidates(prediction_tree):
+    """Every scored node of the beam tree, JSON-ready (only used with --save_candidates)."""
+    candidates = []
+    for node_id, node in prediction_tree.items():
+        if "saved" not in node:
+            continue
+        ctx = node["ctx"] or {}
+        candidates.append({"node_id": node_id, "parent": node["parent"], "depth": node["depth"],
+                           "p_idx": node["p_idx"], "pred": node["pred"], "processed_pred": node["processed_pred"],
+                           "beam_score": float(node["score"]),
+                           "ctx": {"title": ctx.get("title", ""), "text": ctx.get("text", "")},
+                           **node["saved"]})
+    return candidates
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--model_name', type=str)
@@ -353,10 +402,18 @@ def main():
     parser.add_argument("--keep_special_tokens", action="store_true",
                         help="keep reflection tokens in decoded text so multi-segment beam search can trigger")
 
+    # DL-Project critique division (recording / selection only, no effect on how answers are scored or chosen)
+    parser.add_argument("--save_candidates", action="store_true",
+                        help="add every beam candidate with its raw reflection-token probabilities to each output item")
+    parser.add_argument("--indices_file", type=str, default=None,
+                        help="comma-separated split files (critique/splits/asqa_A.json,...): run only those questions")
+
     args = parser.parse_args()
-    global KEEP_SPECIAL_TOKENS
+    global KEEP_SPECIAL_TOKENS, SAVE_CANDIDATES
     KEEP_SPECIAL_TOKENS = args.keep_special_tokens
+    SAVE_CANDIDATES = args.save_candidates
     print("keep_special_tokens =", KEEP_SPECIAL_TOKENS, flush=True)
+    print("save_candidates =", SAVE_CANDIDATES, flush=True)
 
     tokenizer = AutoTokenizer.from_pretrained(
         args.model_name, padding_side="left")
@@ -388,8 +445,18 @@ def main():
         input_data = json.load(open(input_path))
     else:
         input_data = load_jsonlines(input_path)
-    input_data = input_data[args.start:args.end]
-    print("Running examples [{}:{}] -> {} items".format(args.start, args.end, len(input_data)), flush=True)
+    if args.indices_file:
+        q_indices = []
+        for path in [p for p in args.indices_file.split(",") if p]:
+            q_indices += json.load(open(path))["indices"]
+        q_indices = sorted(set(q_indices))
+        input_data = [input_data[i] for i in q_indices]
+        print("Running {} examples from {}".format(len(input_data), args.indices_file), flush=True)
+    else:
+        q_indices = list(range(len(input_data)))[args.start:args.end]
+        input_data = input_data[args.start:args.end]
+        print("Running examples [{}:{}] -> {} items".format(args.start, args.end, len(input_data)), flush=True)
+    record_q_idx = args.save_candidates or args.indices_file is not None
     t0 = time.time()
 
     if args.task is not None and args.task == "factscore":
@@ -449,6 +516,13 @@ def main():
             item["docs"] = docs
             if "original_splitted_sentences" in intermediate:
                 item["intermediate"] = intermediate["original_splitted_sentences"][0]
+            if record_q_idx:
+                item["q_idx"] = q_indices[instance_idx]
+            if args.save_candidates and "prediction_tree" in intermediate:
+                item["candidates"] = _saved_candidates(intermediate["prediction_tree"])
+                item["best_paths"] = {str(k): v for k, v in intermediate["best_selections"].items()}
+                # main() falls back to the second-best path when the best one is empty after postprocessing
+                item["output_path"] = 1 if len(postprocess(final_pred[0])) == 0 else 0
             new_results["data"].append(item)
 
             if instance_idx % 10 == 0:
