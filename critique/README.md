@@ -43,7 +43,7 @@ Seconds per question (no logs committed): C1 40.2 min / 948 = 2.54 s on an L40S;
 an A40 (`results/asqa_reproduction.md`).
 
 What the files already show (counted on this branch): every C1 answer has exactly one support grade
-(891 Fully supported, 16 Partially, 42 No support; the one two-segment answer has two). In 336 of 948 answers
+(891 Fully supported, 16 Partially, 42 No support, counted in each answer's last segment; one answer has two). In 336 of 948 answers
 the model keeps writing after that grade (`[Continue to Use Evidence]`), so those later sentences are never graded.
 
 ## Step 3. Per-question scores for C0 and C1 (GPU, two jobs, run one after the other)
@@ -58,7 +58,7 @@ note at the top of `score_per_question.py`). If str-em or citations differ by mo
 
 Then on the laptop (copy the two small `.perq.jsonl` files back first):
 ```bash
-scp <you>@10.96.189.12:DL-Project/results/runs/*.perq.jsonl results/runs/
+scp '<you>@10.96.189.12:DL-Project/results/runs/*.perq.jsonl' results/runs/   # quotes: zsh would expand * locally
 python3 critique/bootstrap.py --base results/runs/asqa_keeptok_0_end.json.perq.jsonl
 python3 critique/bootstrap.py --base results/runs/asqa_keeptok_0_end.json.perq.jsonl --split critique/splits/asqa_A.json
 python3 critique/bootstrap.py --base results/runs/asqa_baseline_0_end.json.perq.jsonl --new results/runs/asqa_keeptok_0_end.json.perq.jsonl
@@ -95,7 +95,8 @@ Output: `out/asqa_cands_0_end.json`. Keep the log (`logs/asqa_<jobid>.log`) for 
 
 ```bash
 sbatch --export=ALL,F=out/asqa_cands_0_end.json cluster/run_critique_nli.sbatch
-# laptop, after copying out/asqa_cands_0_end.json and out/asqa_cands_0_end.json.verdicts.jsonl:
+# laptop (quotes keep zsh from expanding * on the laptop):
+mkdir -p out && scp '<you>@10.96.189.12:DL-Project/out/asqa_cands_0_end.json*' out/
 python3 critique/honesty_check.py --verdicts out/asqa_cands_0_end.json.verdicts.jsonl \
     --tune critique/splits/asqa_A.json --test critique/splits/asqa_B.json --out results/critique_honesty.json
 ```
@@ -122,7 +123,8 @@ scp out/rr_*.json <you>@10.96.189.12:DL-Project/out/
 prev=""; for f in rr_released rr_fix1 rr_fix2_mean rr_fix2_min; do
   prev=$(sbatch --parsable ${prev:+--dependency=afterany:$prev} --export=ALL,F=out/$f.json cluster/run_critique_score.sbatch)
 done
-# laptop, after copying the four .perq.jsonl files back:
+# laptop:
+scp '<you>@10.96.189.12:DL-Project/out/rr_*.perq.jsonl' out/
 python3 critique/bootstrap.py --base out/rr_released.json.perq.jsonl --new out/rr_fix1.json.perq.jsonl --split critique/splits/asqa_B.json
 python3 critique/bootstrap.py --base out/rr_released.json.perq.jsonl --new out/rr_fix2_mean.json.perq.jsonl --split critique/splits/asqa_B.json
 python3 critique/bootstrap.py --base out/rr_released.json.perq.jsonl --new out/rr_fix2_min.json.perq.jsonl --split critique/splits/asqa_B.json

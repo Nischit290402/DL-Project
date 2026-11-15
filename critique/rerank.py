@@ -77,7 +77,9 @@ def main():
         path = item["best_paths"][str(item.get("output_path", 0))]
         original_node = path[-1]
         depth1 = [c for c in item["candidates"] if c["depth"] == 1]
-        if len(path) > 2 or not depth1:  # multi-segment (or no candidates): keep the original answer
+        # a path looks like [None, 0, node]: None and 0 are the root, so one real node = one segment
+        n_segments = len([n for n in path if n not in (None, 0)])
+        if n_segments > 1 or not depth1:  # multi-segment (or no candidates): keep the original answer
             n_multi += 1
             data.append({k: v for k, v in item.items() if k not in ("candidates", "best_paths")})
             continue
