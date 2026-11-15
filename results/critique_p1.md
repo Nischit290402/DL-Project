@@ -158,5 +158,7 @@ changes 0 of 200 answers. Fix 2 therefore cannot change any choice, and the GPU 
 | `results/runs/asqa_keeptok_0_end.json.perq.jsonl` | C1 scores per question (948) |
 | `results/runs/asqa_keeptok_0_end.json.verdicts.jsonl` | Result 2a: checker verdict per C1 grade |
 | `results/critique_honesty.json` | Results 2b, 2c, 3: agreement, calibration tables, T |
-| `out/asqa_cands_0_end.json` (cluster, not committed, 2.9 MB) | All candidates of Set A + B with grade probabilities |
-| `out/rr_released.json`, `out/rr_fix1.json` (+ `.perq.jsonl`) (not committed) | Re-picked answers for Result 3 |
+| `results/runs/asqa_cands_0_end.json` | All 5 candidates of Set A + B with grade probabilities (Results 2b, 3, 4) |
+| `results/runs/asqa_cands_0_end.json.verdicts.jsonl` | Results 2b, 2c, 3: checker verdict per candidate grade |
+| `results/runs/rr_released.json` (+ `.perq.jsonl`) | C1's answers re-picked from the candidates, with scores (Result 3 baseline) |
+| `results/runs/rr_fix1.json` (+ `.perq.jsonl`) | Answers re-picked with Fix 1 (T = 4), with scores (Result 3) |

@@ -23,12 +23,12 @@ The task split listed the first two items under Person 2; Person 1 built them wh
 | --- | --- |
 | Save every candidate with its raw grade probabilities | `--save_candidates` in `self-rag/retrieval_lm/run_long_form_static.py` (recording only; answers unchanged) |
 | Run only chosen questions | `--indices_file critique/splits/asqa_A.json,critique/splits/asqa_B.json` (same script) |
-| Saved candidates for Set A + Set B (200 questions x 5) | `out/asqa_cands_0_end.json`, 2.9 MB, **not in git**: on Person 1's cluster account (`~saksham010/DL-Project/out/`) and laptop. Ask Person 1 for a copy, or regenerate in about 8 min (command below) |
+| Saved candidates for Set A + Set B (200 questions x 5) | `results/runs/asqa_cands_0_end.json` (2.9 MB, in git). Copy it to `out/` if you prefer working there; regenerating takes about 8 min (command below) |
 | Test sets | `critique/splits/asqa_A.json` (tune), `asqa_B.json` (test), 100 questions each |
 | Per-question scoring (ALCE metrics) | `critique/score_per_question.py` + `cluster/run_critique_score.sbatch` |
 | 95% paired bootstrap | `critique/bootstrap.py` (`--split` limits to a test set) |
 | Re-pick answers offline from the saved candidates | `critique/rerank.py` (changes only the support term today; extend it for your weights) |
-| Baseline on these 200 questions | `out/rr_released.json` = C1's answers, reproduced 200/200 from the saved candidates, scored in `out/rr_released.json.perq.jsonl` (not in git, Person 1's laptop and cluster). The same answers' C1 scores are in git: `results/runs/asqa_keeptok_0_end.json.perq.jsonl` |
+| Baseline on these 200 questions | `results/runs/rr_released.json` = C1's answers, reproduced 200/200 from the saved candidates, with per-question scores in `results/runs/rr_released.json.perq.jsonl`. Compare your runs against this file |
 
 Regenerate the saved candidates (cluster, L40S, about 8 min):
 ```bash
@@ -70,8 +70,8 @@ Utility as the code intends it: `sum(w_i * p_i) / sum(p_i)` with w = (-1, -0.5, 
 2. **Best-possible check (oracle):** per question, the best of the 5 candidates. This is the ceiling for any
    weighting; if it is close to C1, say so early.
 3. **Grid search on Set A** over w_rel, w_sup, w_use (with the corrected utility) and on/off for seq_score.
-4. **Test the best weights on Set B**, paired against `rr_released` with `critique/bootstrap.py --split
-   critique/splits/asqa_B.json`. A win needs the difference interval above 0 (`*`). If it wins, run it on all 948
+4. **Test the best weights on Set B**, paired against `results/runs/rr_released.json.perq.jsonl` with
+   `critique/bootstrap.py --split critique/splits/asqa_B.json`. A win needs the difference interval above 0 (`*`). If it wins, run it on all 948
    questions with `--keep_special_tokens`.
 5. **Config file per results row** (from the task split).
 6. **Results summary** like `results/critique_p1.md`, negative results included with one line of analysis.
