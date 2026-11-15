@@ -1,5 +1,7 @@
 # Critique division, Person 1: measuring tools + honest grades
 
+**Person 2 (learned weights): start with `critique/HANDOFF_P2.md`.** Person 1's results: `results/critique_p1.md`.
+
 Branch `critique-p1` (from `asqa-baseline`). Every GPU step is an `sbatch` job on TC2; every CPU step uses only
 the Python standard library, so run it on your laptop (the login node is for installs and downloads only).
 Laptop and cluster share files through git (code) and `scp` (output files).
