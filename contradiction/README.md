@@ -1,5 +1,7 @@
 # Self-contradiction across candidates
 
+**Results and conclusions: `results/self_contradiction.md`** (Set B: no str-em gain, citations -7.5, significant).
+
 Branch `self-contradiction` (from `critique-p1`, reuses its saved candidates, test sets and scorers).
 
 **Why candidates, not segments.** The original idea penalised contradictions between segments of one answer during
