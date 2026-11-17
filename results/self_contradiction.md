@@ -1,4 +1,4 @@
-# Self-contradiction: an NLI penalty on candidates that the other candidates contradict (negative)
+# Self-contradiction: useless for re-ranking, confirmed as an uncertainty signal
 
 **Summary.** The original idea, penalising contradictions between segments of one long-form answer, cannot be
 tested on ASQA: Self-RAG writes 947 of 948 answers as a single segment. We moved the idea to the 5 candidate answers
@@ -8,9 +8,12 @@ a hand check found only 11 of 30 flagged pairs to be genuine contradictions. Wit
 (lambda 0.3), the held-out test on Set B gives **no gain in correctness (str-em -0.75 [-3.92, +2.08]) and a
 significant loss in citations (recall and precision -7.53, intervals [-14.0, -2.2] and [-13.5, -1.7])**. The
 penalty overrides Self-RAG's support grade: on Set B the answers it swaps in are judged supported by their own
-passage 62% of the time, against 95% for the answers they replace. As an uncertainty signal, disagreement among
-candidates does track correctness at the question level (about 10 points lower str-em in the more contradictory
-half, on both sets), which is where the idea may still be useful.
+passage 62% of the time, against 95% for the answers they replace. Both findings were then tested on the 748
+unused questions (Set C) with the tests written down beforehand (`contradiction/PREREG_C.md`). The penalty again
+gives no str-em gain (+0.17 [-0.84, +1.13]); its citation loss is smaller than on Set B and just misses the
+pre-registered rule (-2.24 [-4.17, +0.01], not confirmed). **Disagreement among candidates is confirmed as an
+uncertainty signal: in the less contradictory half of Set C the released answer scores +8.36 [+3.98, +13.23]
+str-em and +12.77 [+5.80, +18.56] citation recall higher than in the more contradictory half.**
 
 Code: `contradiction/` and `cluster/run_cand_nli.sbatch`, `cluster/run_contra_eval.sbatch` (branch
 `self-contradiction`, from `critique-p1`). All GPU runs on NTU TC2, NVIDIA L40S.
@@ -124,7 +127,7 @@ different passages naturally state different facts, so a well-grounded candidate
 The swapped-in answers share slightly more content with the other passages, which fits the idea that agreement
 partly reflects what the model says regardless of its passage, but that evidence is weak (lexical, 21 answers).
 
-## 7. Contradiction as an uncertainty signal (exploratory, not pre-registered)
+## 7. Contradiction as an uncertainty signal (exploratory on Sets A and B; confirmed on Set C, section 9)
 
 Question-level disagreement = mean p_con over the 10 candidate pairs. Split each set at its median:
 
@@ -138,10 +141,55 @@ of fully wrong answers. Using it to flag uncertain answers, rather than to re-ra
 
 ## 8. Limitations
 
-- 100 test questions; intervals are wide, and only one NLI model and one form of penalty were tested on Set B.
+- Only one NLI model and one form of penalty were tested; the Set B estimate of the citation loss (-7.5) was not
+  borne out at that size on Set C (-2.2), a reminder that 100-question estimates are noisy.
 - ASQA rewards covering several readings of a question, which makes "contradiction" partly the wrong target here;
   a dataset with single-answer questions may behave differently.
 - The D3 labels are one annotator's judgement on 30 pairs.
+
+## 9. Held-out confirmation on Set C (pre-registered)
+
+Set C = the 748 ASQA questions in neither Set A nor Set B. The tests, decision rules and settings were committed in
+`contradiction/PREREG_C.md` (commit `f94597b`) before the Set C job ran; one job produced everything
+(`cluster/run_contra_C.sbatch`, job log `results/runs/contra_C_log.txt`, L40S, about 1 h).
+
+**Sanity check.** Released choices re-picked from the new Set C candidates match C1 exactly on all 748 questions
+(difference 0.00 on every metric), so Set C is directly comparable with the reference run.
+
+**H1 (primary): disagreement flags less correct answers.** Split at the median disagreement (0.600):
+
+| Released answer | Low disagreement (374) | High disagreement (374) | Low - high [95% CI] |
+| --- | --- | --- | --- |
+| str-em | 34.19 | 25.84 | **+8.36 [+3.98, +13.23]** |
+| Citation recall | 72.32 | 59.55 | +12.77 [+5.80, +18.56] |
+| ROUGE-Lsum | 36.85 | 34.93 | +1.92 [-0.41, +4.01] |
+
+**Confirmed** (interval above 0). Sets A + B had suggested +9.67. As a detector of fully wrong answers (str-em 0,
+311 of 748) the signal is weak but above chance: AUROC 0.594 [0.553, 0.636].
+
+What this would buy in practice (descriptive, not pre-registered): answering only the least contradictory questions
+and flagging the rest.
+
+| Questions answered | 25% | 50% | 75% | 100% |
+| --- | --- | --- | --- | --- |
+| str-em | 36.16 | 34.19 | 32.95 | 30.02 |
+| Citation recall | 71.35 | 72.32 | 70.00 | 65.93 |
+
+**H2: the penalty (noctx, lambda 0.3) vs released choices.** 158 of 748 answers change.
+
+| Metric | Released | Penalty | Difference [95% CI] | Pre-registered rule | Verdict |
+| --- | --- | --- | --- | --- | --- |
+| str-em | 30.02 | 30.19 | +0.17 [-0.84, +1.13] | H2a: interval not above 0 | **confirmed: no gain** |
+| Citation recall | 65.93 | 63.69 | -2.24 [-4.17, +0.01] | H2b: interval below 0 | **not confirmed** |
+| Citation precision | 66.94 | 64.88 | -2.05 [-3.98, +0.16] | reported only | |
+| ROUGE-Lsum | 35.89 | 35.78 | -0.10 [-0.60, +0.34] | reported only | |
+
+On the 158 changed answers, citation recall falls from 62.3 to 51.7 and precision from 63.5 to 53.8, while str-em
+moves from 27.5 to 28.3. The direction matches Set B and section 6, but over all 748 questions the loss is about a
+third of the Set B estimate and its interval reaches 0.
+
+**Conclusion.** Contradiction between candidates does not help choose a better answer, but how much the candidates
+contradict each other is a reliable, held-out sign of how far to trust the answer Self-RAG gives.
 
 ## Files
 
@@ -151,3 +199,7 @@ of fully wrong answers. Using it to flag uncertain answers, rather than to re-ra
 | `results/cand_contra_A.json` | D1, D2 |
 | `results/cand_contra_A_pairs.csv`, `results/cand_contra_A_labels.csv` | D3: all flagged pairs; 30 labelled |
 | `results/runs/rr_contra_B.json` (+ `.perq.jsonl`, `.summary.json`) | Set B answers with the penalty, scores per question |
+| `critique/splits/asqa_C.json`, `contradiction/PREREG_C.md` | Set C and the tests fixed before it was run |
+| `results/runs/asqa_cands_C.json`, `cand_nli_C.jsonl` | Set C candidates and NLI scores |
+| `results/runs/rr_released_C.json`, `rr_contra_C.json` (+ `.perq.jsonl`, `.summary.json`) | Set C answers and scores |
+| `results/uncertainty_C.json`, `results/contra_C_bootstrap.json`, `results/runs/contra_C_log.txt` | H1, H2, job log |
