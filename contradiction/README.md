@@ -1,6 +1,8 @@
 # Self-contradiction across candidates
 
-**Results and conclusions: `results/self_contradiction.md`** (Set B: no str-em gain, citations -7.5, significant).
+**Results and conclusions: `results/self_contradiction.md`**. Held-out confirmation on Set C: `contradiction/PREREG_C.md`.
+
+**Set A/B results:** (Set B: no str-em gain, citations -7.5, significant).
 
 Branch `self-contradiction` (from `critique-p1`, reuses its saved candidates, test sets and scorers).
 
