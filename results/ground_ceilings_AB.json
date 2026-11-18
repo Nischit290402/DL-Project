@@ -1,0 +1,594 @@
+{
+  "asqa_A": {
+    "n": 100,
+    "headroom": {
+      "q_str_em_differs": 67,
+      "q_cit_differs": 88,
+      "q_released_not_best_str_em": 28,
+      "q_released_not_best_cit": 28,
+      "mean_candidate_str_em": 22.11,
+      "mean_candidate_cit": 43.71
+    },
+    "citation_source": "citation_rec",
+    "released": {
+      "str_em": 27.78,
+      "rougeLsum": 33.2,
+      "cit_proxy": 74.49,
+      "length": 28.0,
+      "changed": 0,
+      "citation_rec": 67.22,
+      "citation_prec": 67.22,
+      "d_str_em": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "d_rougeLsum": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "d_cit_proxy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "d_citation_rec": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "d_citation_prec": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "oracle_str_em": {
+      "str_em": 40.18,
+      "rougeLsum": 35.08,
+      "cit_proxy": 66.33,
+      "length": 29.1,
+      "changed": 28,
+      "citation_rec": 61.02,
+      "citation_prec": 61.02,
+      "d_str_em": [
+        12.4,
+        8.07,
+        17.3
+      ],
+      "d_rougeLsum": [
+        1.87,
+        0.37,
+        3.53
+      ],
+      "d_cit_proxy": [
+        -8.16,
+        -15.31,
+        -2.04
+      ],
+      "d_citation_rec": [
+        -6.2,
+        -12.2,
+        0.0
+      ],
+      "d_citation_prec": [
+        -6.2,
+        -12.53,
+        -0.4
+      ]
+    },
+    "oracle_cit": {
+      "str_em": 26.42,
+      "rougeLsum": 33.21,
+      "cit_proxy": 91.0,
+      "length": 26.0,
+      "changed": 28,
+      "citation_rec": 87.92,
+      "citation_prec": 87.92,
+      "d_str_em": [
+        -1.37,
+        -5.27,
+        2.7
+      ],
+      "d_rougeLsum": [
+        0.0,
+        -1.12,
+        1.22
+      ],
+      "d_cit_proxy": [
+        16.33,
+        9.18,
+        23.47
+      ],
+      "d_citation_rec": [
+        20.7,
+        14.0,
+        28.7
+      ],
+      "d_citation_prec": [
+        20.7,
+        14.07,
+        28.37
+      ]
+    },
+    "oracle_cit_then_str_em": {
+      "str_em": 33.2,
+      "rougeLsum": 33.94,
+      "cit_proxy": 91.0,
+      "length": 27.4,
+      "changed": 39,
+      "citation_rec": 87.92,
+      "citation_prec": 87.92,
+      "d_str_em": [
+        5.42,
+        0.55,
+        10.6
+      ],
+      "d_rougeLsum": [
+        0.74,
+        -1.0,
+        2.5
+      ],
+      "d_cit_proxy": [
+        16.33,
+        9.18,
+        24.49
+      ],
+      "d_citation_rec": [
+        20.7,
+        13.83,
+        28.67
+      ],
+      "d_citation_prec": [
+        20.7,
+        13.87,
+        28.2
+      ]
+    },
+    "t5_replace": {
+      "str_em": 28.12,
+      "rougeLsum": 35.04,
+      "cit_proxy": 91.0,
+      "length": 28.2,
+      "changed": 36,
+      "citation_rec": 83.5,
+      "citation_prec": 83.5,
+      "d_str_em": [
+        0.33,
+        -4.17,
+        4.83
+      ],
+      "d_rougeLsum": [
+        1.84,
+        0.43,
+        3.49
+      ],
+      "d_cit_proxy": [
+        16.33,
+        9.18,
+        23.47
+      ],
+      "d_citation_rec": [
+        16.28,
+        9.23,
+        23.83
+      ],
+      "d_citation_prec": [
+        16.28,
+        9.2,
+        23.95
+      ]
+    },
+    "t5_add_mu0.25": {
+      "str_em": 26.95,
+      "rougeLsum": 33.84,
+      "cit_proxy": 87.88,
+      "length": 27.6,
+      "changed": 14,
+      "citation_rec": 79.92,
+      "citation_prec": 79.92,
+      "d_str_em": [
+        -0.83,
+        -4.0,
+        2.0
+      ],
+      "d_rougeLsum": [
+        0.64,
+        -0.14,
+        1.52
+      ],
+      "d_cit_proxy": [
+        13.27,
+        7.14,
+        20.41
+      ],
+      "d_citation_rec": [
+        12.7,
+        6.5,
+        19.6
+      ],
+      "d_citation_prec": [
+        12.7,
+        6.5,
+        19.5
+      ]
+    },
+    "t5_add_mu0.5": {
+      "str_em": 26.95,
+      "rougeLsum": 33.76,
+      "cit_proxy": 89.9,
+      "length": 27.5,
+      "changed": 16,
+      "citation_rec": 81.92,
+      "citation_prec": 81.92,
+      "d_str_em": [
+        -0.83,
+        -4.0,
+        2.0
+      ],
+      "d_rougeLsum": [
+        0.56,
+        -0.36,
+        1.59
+      ],
+      "d_cit_proxy": [
+        15.31,
+        8.16,
+        22.45
+      ],
+      "d_citation_rec": [
+        14.7,
+        8.4,
+        22.0
+      ],
+      "d_citation_prec": [
+        14.7,
+        8.2,
+        21.7
+      ]
+    },
+    "t5_add_mu1.0": {
+      "str_em": 26.45,
+      "rougeLsum": 33.87,
+      "cit_proxy": 91.0,
+      "length": 27.8,
+      "changed": 18,
+      "citation_rec": 83.42,
+      "citation_prec": 83.42,
+      "d_str_em": [
+        -1.33,
+        -4.67,
+        1.83
+      ],
+      "d_rougeLsum": [
+        0.66,
+        -0.29,
+        1.67
+      ],
+      "d_cit_proxy": [
+        16.33,
+        9.18,
+        24.49
+      ],
+      "d_citation_rec": [
+        16.2,
+        9.4,
+        23.4
+      ],
+      "d_citation_prec": [
+        16.2,
+        9.9,
+        23.6
+      ]
+    },
+    "concordance_str_em": {
+      "pairs": 365,
+      "released_score": 0.682,
+      "issup_ground_score": 0.677,
+      "t5_verdict": 0.577
+    },
+    "concordance_citation_rec": {
+      "pairs": 527,
+      "released_score": 0.751,
+      "issup_ground_score": 0.757,
+      "t5_verdict": 0.893
+    }
+  },
+  "asqa_B": {
+    "n": 100,
+    "headroom": {
+      "q_str_em_differs": 77,
+      "q_cit_differs": 87,
+      "q_released_not_best_str_em": 30,
+      "q_released_not_best_cit": 20,
+      "mean_candidate_str_em": 26.13,
+      "mean_candidate_cit": 43.06
+    },
+    "citation_source": "citation_rec",
+    "released": {
+      "str_em": 33.92,
+      "rougeLsum": 37.62,
+      "cit_proxy": 74.47,
+      "length": 27.2,
+      "changed": 0,
+      "citation_rec": 70.35,
+      "citation_prec": 71.67,
+      "d_str_em": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "d_rougeLsum": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "d_cit_proxy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "d_citation_rec": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "d_citation_prec": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "oracle_str_em": {
+      "str_em": 49.18,
+      "rougeLsum": 41.47,
+      "cit_proxy": 73.63,
+      "length": 29.3,
+      "changed": 30,
+      "citation_rec": 67.4,
+      "citation_prec": 68.22,
+      "d_str_em": [
+        15.27,
+        10.75,
+        20.2
+      ],
+      "d_rougeLsum": [
+        3.85,
+        2.18,
+        5.82
+      ],
+      "d_cit_proxy": [
+        -1.11,
+        -7.78,
+        6.67
+      ],
+      "d_citation_rec": [
+        -2.95,
+        -9.53,
+        3.52
+      ],
+      "d_citation_prec": [
+        -3.45,
+        -9.82,
+        2.93
+      ]
+    },
+    "oracle_cit": {
+      "str_em": 35.93,
+      "rougeLsum": 37.79,
+      "cit_proxy": 87.5,
+      "length": 27.9,
+      "changed": 20,
+      "citation_rec": 84.67,
+      "citation_prec": 85.17,
+      "d_str_em": [
+        2.02,
+        -2.0,
+        6.17
+      ],
+      "d_rougeLsum": [
+        0.17,
+        -1.85,
+        2.29
+      ],
+      "d_cit_proxy": [
+        12.77,
+        6.38,
+        20.21
+      ],
+      "d_citation_rec": [
+        14.32,
+        8.58,
+        21.15
+      ],
+      "d_citation_prec": [
+        13.5,
+        7.92,
+        19.92
+      ]
+    },
+    "oracle_cit_then_str_em": {
+      "str_em": 41.43,
+      "rougeLsum": 38.69,
+      "cit_proxy": 88.3,
+      "length": 27.5,
+      "changed": 32,
+      "citation_rec": 84.67,
+      "citation_prec": 85.17,
+      "d_str_em": [
+        7.52,
+        2.72,
+        12.8
+      ],
+      "d_rougeLsum": [
+        1.06,
+        -1.12,
+        3.36
+      ],
+      "d_cit_proxy": [
+        13.04,
+        6.52,
+        19.57
+      ],
+      "d_citation_rec": [
+        14.32,
+        8.55,
+        20.33
+      ],
+      "d_citation_prec": [
+        13.5,
+        7.83,
+        20.33
+      ]
+    },
+    "t5_replace": {
+      "str_em": 36.35,
+      "rougeLsum": 37.64,
+      "cit_proxy": 87.5,
+      "length": 26.8,
+      "changed": 32,
+      "citation_rec": 81.52,
+      "citation_prec": 82.17,
+      "d_str_em": [
+        2.43,
+        -1.58,
+        6.37
+      ],
+      "d_rougeLsum": [
+        0.02,
+        -2.03,
+        2.26
+      ],
+      "d_cit_proxy": [
+        12.77,
+        6.38,
+        20.21
+      ],
+      "d_citation_rec": [
+        11.17,
+        5.17,
+        17.67
+      ],
+      "d_citation_prec": [
+        10.5,
+        4.67,
+        16.83
+      ]
+    },
+    "t5_add_mu0.25": {
+      "str_em": 35.93,
+      "rougeLsum": 38.02,
+      "cit_proxy": 86.46,
+      "length": 28.8,
+      "changed": 13,
+      "citation_rec": 80.85,
+      "citation_prec": 81.5,
+      "d_str_em": [
+        2.02,
+        -1.0,
+        5.52
+      ],
+      "d_rougeLsum": [
+        0.4,
+        -1.43,
+        2.37
+      ],
+      "d_cit_proxy": [
+        11.7,
+        5.32,
+        19.15
+      ],
+      "d_citation_rec": [
+        10.5,
+        5.17,
+        16.17
+      ],
+      "d_citation_prec": [
+        9.83,
+        4.5,
+        16.17
+      ]
+    },
+    "t5_add_mu0.5": {
+      "str_em": 36.43,
+      "rougeLsum": 38.23,
+      "cit_proxy": 87.5,
+      "length": 29.1,
+      "changed": 14,
+      "citation_rec": 81.85,
+      "citation_prec": 82.5,
+      "d_str_em": [
+        2.52,
+        -0.75,
+        6.07
+      ],
+      "d_rougeLsum": [
+        0.61,
+        -1.25,
+        2.67
+      ],
+      "d_cit_proxy": [
+        12.77,
+        6.38,
+        19.15
+      ],
+      "d_citation_rec": [
+        11.5,
+        6.17,
+        18.0
+      ],
+      "d_citation_prec": [
+        10.83,
+        5.33,
+        17.17
+      ]
+    },
+    "t5_add_mu1.0": {
+      "str_em": 36.43,
+      "rougeLsum": 38.23,
+      "cit_proxy": 87.5,
+      "length": 29.1,
+      "changed": 14,
+      "citation_rec": 81.85,
+      "citation_prec": 82.5,
+      "d_str_em": [
+        2.52,
+        -0.75,
+        6.27
+      ],
+      "d_rougeLsum": [
+        0.61,
+        -1.31,
+        2.5
+      ],
+      "d_cit_proxy": [
+        12.77,
+        6.38,
+        20.21
+      ],
+      "d_citation_rec": [
+        11.5,
+        5.67,
+        17.67
+      ],
+      "d_citation_prec": [
+        10.83,
+        5.17,
+        17.33
+      ]
+    },
+    "concordance_str_em": {
+      "pairs": 422,
+      "released_score": 0.671,
+      "issup_ground_score": 0.665,
+      "t5_verdict": 0.626
+    },
+    "concordance_citation_rec": {
+      "pairs": 503,
+      "released_score": 0.761,
+      "issup_ground_score": 0.767,
+      "t5_verdict": 0.872
+    }
+  }
+}
