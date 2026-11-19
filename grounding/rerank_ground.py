@@ -10,6 +10,10 @@ so re-picking offline equals what Self-RAG would output). Only the ranking score
   --agg mean       mean p_ent           --agg soft_mean  mean of p_ent + 0.5 * p_neu
   --agg min / first / full              (see grounding/diagnostics.py)
 
+Optional relevance gate (D2-v2, results/nli_grounding_v2_rule.md): with --rel FILE --delta D, only candidates
+whose question-passage relevance r(c) >= r(released choice) - D are eligible (r = --rel_model scores from
+grounding/qa_relevance.py). The released choice is always eligible.
+
 --param 0 must reproduce the released choices exactly (checked and printed).
 Writes an ALCE-format file to score with cluster/run_critique_score.sbatch, plus <out>.config.json.
 
@@ -49,6 +53,22 @@ def new_score(c, g, mode, param, w_sup):
     raise ValueError(mode)
 
 
+def load_relevance(paths, model):
+    rel = {}
+    for path in [p for p in paths.split(",") if p]:
+        for line in open(path):
+            r = json.loads(line)
+            if r["model"] == model:
+                rel[(r["q_idx"], r["node_id"])] = r["score"]
+    return rel
+
+
+def gate(depth1, released_node, q_idx, rel, delta):
+    """Candidates at most `delta` less relevant than the released choice (which is always kept)."""
+    r0 = rel[(q_idx, released_node)]
+    return [c for c in depth1 if c["node_id"] == released_node or rel[(q_idx, c["node_id"])] >= r0 - delta]
+
+
 def choose(depth1, scores):
     """Highest score, stable on ties (passage order); same empty-answer fallback as run_long_form_static.py."""
     ranked = sorted(depth1, key=lambda c: scores[c["node_id"]], reverse=True)
@@ -66,8 +86,13 @@ def main():
     ap.add_argument("--mode", required=True, choices=["add", "mix"])
     ap.add_argument("--agg", default="mean", choices=["mean", "soft_mean", "min", "first", "full"])
     ap.add_argument("--param", type=float, required=True, help="mu (add) or alpha (mix)")
+    ap.add_argument("--rel", default="", help="comma-separated cand_qarel_*.jsonl files (enables the gate)")
+    ap.add_argument("--rel_model", default="BAAI/bge-reranker-base")
+    ap.add_argument("--delta", type=float, default=None, help="gate margin in reranker logits")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
+    assert bool(a.rel) == (a.delta is not None), "--rel and --delta go together"
+    rel = load_relevance(a.rel, a.rel_model) if a.rel else None
 
     full = json.load(open(a.f))
     w_sup = float(full.get("args", {}).get("w_sup", 1.0))
@@ -90,7 +115,8 @@ def main():
                 n_missing += 1
                 gc = 0.0
             scores[c["node_id"]] = new_score(c, gc, a.mode, a.param, w_sup)
-        chosen = choose(depth1, scores)
+        pool = gate(depth1, path[-1], item["q_idx"], rel, a.delta) if rel is not None else depth1
+        chosen = choose(pool, scores)
         new_item = {k: item[k] for k in KEEP if k in item}
         new_item.update({"output": build_output(item, chosen), "docs": [chosen["ctx"]],
                          "intermediate": ["[Retrieval]", chosen["pred"]], "chosen_p_idx": chosen["p_idx"],
@@ -101,6 +127,8 @@ def main():
 
     config = {"source": a.f, "ground": a.ground, "split": a.split, "mode": a.mode, "agg": a.agg,
               "param": a.param, "w_sup": w_sup, "model": "cross-encoder/nli-deberta-v3-large"}
+    if rel is not None:
+        config.update({"rel": a.rel, "rel_model": a.rel_model, "delta": a.delta})
     json.dump({"data": data, "args": config}, open(a.out, "w"))
     json.dump(config, open(a.out + ".config.json", "w"), indent=2)
     print(json.dumps(config))
