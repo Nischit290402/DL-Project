@@ -36,10 +36,51 @@ Bold = interval excludes 0. Answers changed vs released: D2 365 / 748, D2-v2 224
 A+B (+3.29). This does not change the D2 verdict, and D2-v2 was designed with Set B in view, so it is a held-out
 replication of a development finding, not a confirmatory test.
 
-## Not yet done (pre-registered "also reported", no claim attached)
+## Also reported (pre-registered, no claim attached)
 
-Changed-question breakdown (released vs new citation recall, str-em, ROUGE, share fully supported), changed answer
-*texts* vs changed picks, and seconds per question for DeBERTa scoring of 5 candidates.
+### Changed picks vs changed answer texts
+
+D2 changes 365 picks, 346 with a different answer text; D2-v2 changes 224 picks, 213 with a different text (the rest
+pick another candidate whose output text is identical). Same table layout as for Set B
+(`grounding/changed_breakdown.py`, outputs `results/runs/changed_ground_C.json`, `changed_ground_v2_C.json`;
+the script reproduces the Set B table exactly).
+
+### On the questions whose answer text changed
+
+| On the changed questions | Released | D2 (346) | Released | D2-v2 (213) |
+| --- | --- | --- | --- | --- |
+| Citation recall | 58.8 | **71.4** | 54.7 | **70.1** |
+| Fully supported (citation 100) | 171 | 222 | 98 | 123 |
+| str-em | 30.2 | 25.6 | 27.0 | 31.0 |
+| ROUGE-Lsum | 36.6 | 34.3 | 34.4 | 36.3 |
+| Sentences | 1.70 | 1.61 | 1.66 | 1.73 |
+
+Per question, new vs released (better / worse; the rest tie):
+
+| | D2 | D2-v2 |
+| --- | --- | --- |
+| Citation recall | 119 / 61 | 78 / 38 |
+| str-em | 54 / **89** | 44 / 32 |
+| ROUGE-Lsum | 148 / **189** | 108 / 97 |
+
+Reading: on Set C, as on Set B, D2's swaps are better grounded (+51 fully supported answers) but lose more often
+than they win on str-em and ROUGE. With the relevance gate, D2-v2 keeps most of the grounding gain (+25 fully
+supported on 213 swaps) and its swaps win slightly more often than they lose on str-em and ROUGE.
+
+### Extra seconds per question for DeBERTa scoring of 5 candidates
+
+Measured on one TC2 L40S (job 56136, `grounding/time_ground.py`, `cluster/run_time_ground.sbatch`; output
+`results/runs/time_ground_C.json`), in the production setting (fp32, slow tokenizer, whole own passage as premise,
+max 512 tokens), model load excluded. Set C has 9,444 NLI inputs, i.e. 12.6 (passage, sentence) pairs per question
+for the 5 candidates. The re-run reproduces the stored p_ent (max |Δ| = 2.0e-5 over 9,444 inputs).
+
+| Mode | Seconds per question |
+| --- | --- |
+| Batched over all of Set C (batch 16, offline) | 0.094 (70.5 s for 748 questions) |
+| One question at a time (its 5 candidates in one batch, online) | mean 0.094, median 0.084, p90 0.142, max 0.446 |
+
+So D2 adds about 0.1 s per question on an L40S, on top of Self-RAG's own generation. D2-v2 also needs the bge
+relevance score of 5 (question, passage) pairs, a smaller cross-encoder; it was not timed (not pre-registered).
 
 ## Files
 

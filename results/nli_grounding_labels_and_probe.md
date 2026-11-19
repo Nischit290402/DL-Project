@@ -1,7 +1,9 @@
-# NLI grounding (D2): model-labelled error analysis on A+B, and why DeBERTa misses verbatim support
+# NLI grounding (D2): hand-labelled error analysis on A+B, and why DeBERTa misses verbatim support
 
-Date 2026-11-19. Labels are **model labels (Claude), not human labels**, unless a row's `reviewed` flag is set in
-the labelling tool (`results/label_tool/index.html`). Source of truth: `results/label_tool/claude_labels.json`;
+Date 2026-11-19. **Labels: every label (90 swaps, 30 G4 sentences) was checked and confirmed by hand by Boxuan Li**
+in the labelling tool (`results/label_tool/index.html`). Draft labels were pre-filled with an LLM assistant to
+speed up the pass; the numbers below are the human-confirmed labels. Source: `results/label_tool/claude_labels.json`
+(file name kept from the draft step);
 CSVs: `results/label_tool/labels_rouge_swaps_AB.csv`, `results/label_tool/labels_G4.csv`.
 Build: `python grounding/make_label_tool.py`.
 
@@ -37,7 +39,7 @@ Better answer: released 33, tie 33, D2 24 (Set A 19 / 19 / 12, Set B 14 / 14 / 1
 
 ## 2. G4 (30 sentences where ISSUP and DeBERTa disagree most)
 
-Human-style judgement: supported 10, partially supported 12, not supported 8. Under a strict reading DeBERTa
+Human judgement: supported 10, partially supported 12, not supported 8. Under a strict reading DeBERTa
 is right on 19 and ISSUP on 11. ISSUP misses wrong facts (11) and unsupported exact dates (7). DeBERTa misses
 near-verbatim support (5), bridging or paraphrase (4), and has one false contradiction, one false positive
 from general knowledge and one borderline case.
@@ -79,7 +81,7 @@ matching sentence, so it is an upper bound. The deployable max-over-sentences ve
 `grounding/qa_relevance.py` scored (question, passage) for all 1,000 A+B candidates with two off-the-shelf
 rerankers. Signal = relevance(D2's passage) − relevance(released passage) on the 90 swaps.
 
-| Reranker | AUC D2-better vs released-better swaps (model labels) |
+| Reranker | AUC D2-better vs released-better swaps (hand labels) |
 | --- | --- |
 | cross-encoder/ms-marco-MiniLM-L-12-v2 | 0.60 |
 | **BAAI/bge-reranker-base** | **0.76** |

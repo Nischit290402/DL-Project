@@ -71,7 +71,10 @@ closes about 63% of the gap from the released score to T5 ((0.841 − 0.751) / (
 `first` (the ISSUP-style scope) is clearly weaker than `mean` (0.778): the sentences ISSUP never grades matter.
 `nocon_min` is weak: low contradiction is not the same as being supported, so **drop mode (d) filtering**.
 
-## G4: where ISSUP and DeBERTa disagree most (hand-labelling pending)
+## G4: where ISSUP and DeBERTa disagree most
+
+(Hand labels, all 30 confirmed by Boxuan Li, are now in `results/label_tool/labels_G4.csv`; results in
+`results/nli_grounding_labels_and_probe.md` §2. The text below is the pre-labelling read.)
 
 The 30 candidates with the largest |ISSUP support score − DeBERTa p_ent| on the first sentence are in
 `results/ground_diag_A_G4.csv` (question, sentence, passage, both scores, T5 verdict, empty columns
