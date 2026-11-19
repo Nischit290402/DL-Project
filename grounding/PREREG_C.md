@@ -20,7 +20,7 @@ fixed when this file is committed and pushed, and will be reported whatever it s
 
 | File | sha256 |
 | --- | --- |
-| `grounding/configs/d2_final.json` (D2, fixed on Set A in `e740080`) | `9e9a30866fbba441f41a041b0dadf5159b6f2345bfb4e5b37d45cee7b1f6ec5f` |
+| `grounding/configs/d2_final.json` (D2, fixed on Set A in `6e3b386`) | `9e9a30866fbba441f41a041b0dadf5159b6f2345bfb4e5b37d45cee7b1f6ec5f` |
 | `grounding/configs/d2v2_final.json` (D2-v2, fixed on Set A+B) | `a99cba721a4efc5b17cc2e625c64fd70b1a6805737c578961af77055f10feedf` |
 | `results/nli_grounding_v2_rule.md` (D2-v2 selection rule) | `fd02b13ab0436b179a50e491f33b3af17d6f384e6ef7e3cd0c4585caa7df9a72` |
 | `critique/splits/asqa_C.json` | `b38331e0b79acd70621c8a18007bfaa4156a1b5bf5c6cb02e90eb7af31fa6f62` |

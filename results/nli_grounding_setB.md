@@ -1,6 +1,6 @@
 # NLI grounding (D2), Step 4: Set B test of the fixed setting
 
-Setting fixed on Set A and committed before any Set B run: commit `e740080`, `grounding/configs/d2_final.json`
+Setting fixed on Set A and committed before any Set B run: commit `6e3b386`, `grounding/configs/d2_final.json`
 (mode `mix`, aggregation `mean`, α = 0.75). Set B was run once with it; nothing was changed afterwards.
 
 ## Result (Set B, 100 questions, paired 95% bootstrap vs released = C1)
