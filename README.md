@@ -29,7 +29,10 @@ one Self-RAG inference script, one evaluation protocol and the same test sets.
 | 3 Critique | ranking with the paper's full critique score (utility + sequence score restored) | all 948 | citation recall +2.85 [+1.05, +4.67], precision +2.97 [+1.24, +4.79] | `results/critique_paper_scoring.md` |
 | 4 Self-contradiction | penalty for candidates the others contradict | Set C (748) | no str-em gain (+0.17 [-0.84, +1.13]); disagreement confirmed as an uncertainty signal | `results/self_contradiction.md` |
 
-Each change was tested on its own; no configuration combining them has been run.
+**Final combined system** (retrieval + critique + grounding, `combined/`, test plan `combined/PREREG.md`): on Set C,
+str-em +2.84 [+1.10, +4.65] and citation recall +11.44 [+8.47, +14.41] over C1, both pre-registered tests
+confirmed; on all 948 questions str-em 33.69, ROUGE-Lsum 36.82, MAUVE 76.16, citation 77.49 / 78.29, above the
+paper on all five. Ablation ladder and details: `results/combined.md`.
 
 ## Layout
 ```
@@ -40,6 +43,7 @@ critique/                Division 3 + shared tools: splits, per-question ALCE sc
 retrieval/               Division 1: passage coverage, cross-encoder reranking, run analysis
 grounding/               Division 2: NLI grounding scores, re-ranking, tuning, label tool
 contradiction/           Division 4: candidate NLI, contradiction penalty, uncertainty test
+combined/                final system: combined re-ranker, ablation ladder, test plan
 scripts/check_offline.sh re-runs every division's CPU steps from committed files (no GPU)
 results/                 write-ups (*.md) and committed run outputs (results/runs/)
 data/ out/ logs/         gitignored
