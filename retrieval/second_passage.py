@@ -7,6 +7,9 @@ How the second answer is chosen:
   next_fs, c2score_fs  (added after the first full scoring showed lower citation scores) as next / c2score, but a second
            answer is added only if the model itself marked every sentence of it [Fully supported]; otherwise the
            answer stays single. No threshold, nothing tuned.
+  ground, ground_gate  (exploration N1.1b) second answer = remaining candidate with the highest mean support probability
+           from Division 2's checker (results of grounding/cand_ground.py); ground_gate adds it only if that mean is
+           at least 0.5 (more likely supported than not; not tuned).
   oracle   the remaining candidate that adds most gold content: upper bound, not a system
 Sentences of the second answer that repeat the first are dropped; if nothing new is left the next candidate in the
 same order is tried. Rule fixed before running: choose between next and c2score by str-em on Set A+B (tie: next),
@@ -34,10 +37,14 @@ CFG = json.load(open("results/critique_paper_scoring_configs/paper_intended.json
 wv = (W["w_rel"], W["w_sup"], W["w_use"], float(W["use_seqscore"]))
 A = set(json.load(open("critique/splits/asqa_A.json"))["indices"]) | set(json.load(open("critique/splits/asqa_B.json"))["indices"])
 C = set(json.load(open("critique/splits/asqa_C.json"))["indices"])
+GR = {}                                      # Division 2's DeBERTa support probability per candidate sentence
+for f in ("cand_ground_rr_AB.jsonl", "cand_ground_rr_C.jsonl"):
+    for l in open(f"{RR}/{f}"):
+        r = json.loads(l); GR.setdefault((int(r["q_idx"]), r["node_id"]), []).append(r["p_ent"])
 rng = random.Random(0)
 for row in ("c2", "d2v2"):
     picks = json.load(open(f"{RR}/stack/RR_{row}_948.json"))["data"]
-    res = {m: {} for m in ("single", "next", "c2score", "rand", "oracle", "next_fs", "c2score_fs")}; files = {m: [] for m in ("next", "c2score", "rand", "next_fs", "c2score_fs")}
+    res = {m: {} for m in ("single", "next", "c2score", "rand", "oracle", "next_fs", "c2score_fs", "ground", "ground_gate", "ground_gate25", "ground_gate75")}; files = {m: [] for m in ("next", "c2score", "rand", "next_fs", "c2score_fs", "ground", "ground_gate", "ground_gate25", "ground_gate75")}
     for a in picks:
         q = int(a["q_idx"]); item = cands[q]; qa = item["qa_pairs"]; first = a["output"]
         plain1 = re.sub(r"\[\d+\]", "", first); h1 = hits(plain1, qa); n = max(len(qa), 1)
@@ -59,6 +66,9 @@ for row in ("c2", "d2v2"):
                   "oracle": sorted(others, key=lambda x: -sum(p or b for p, b in zip(h1, hits(" ".join(add(x)), qa))))}
         fs = lambda x: "[Fully supported]" in x["pred"] and "[Partially supported]" not in x["pred"] and "[No support" not in x["pred"]
         orders["next_fs"] = [x for x in orders["next"] if fs(x)]; orders["c2score_fs"] = [x for x in orders["c2score"] if fs(x)]
+        gs = lambda x: st.mean(GR.get((q, x["node_id"]), [0.0]))
+        orders["ground"] = sorted(others, key=lambda x: -gs(x)); orders["ground_gate"] = [x for x in orders["ground"] if gs(x) >= 0.5]
+        orders["ground_gate25"] = [x for x in orders["ground"] if gs(x) >= 0.25]; orders["ground_gate75"] = [x for x in orders["ground"] if gs(x) >= 0.75]   # N1.1b-i: is 0.5 fragile?
         for m, order in orders.items():
             second = None
             if not multi:

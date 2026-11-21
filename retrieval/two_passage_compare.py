@@ -11,7 +11,7 @@ for row in ("c2", "d2v2"):
     single = load(f"{D}/RR_{row}_948.json.perq.jsonl"); T = {}
     print(f"\n######## first answer by {row.upper()}")
     print("  single   ", json.load(open(f"{D}/RR_{row}_948.json.summary.json")))
-    for m in ("next", "c2score", "next_fs", "rand"):
+    for m in ("next", "c2score", "next_fs", "ground", "ground_gate", "rand"):
         f = f"{D}/RR_{row}_two_{m}_948.json"
         if not os.path.exists(f + ".summary.json"): print("  missing", m); continue
         T[m] = load(f + ".perq.jsonl"); print(f"  {m:8s} ", json.load(open(f + ".summary.json")))
@@ -19,6 +19,6 @@ for row in ("c2", "d2v2"):
         print(f"  == Set {g} (n={len(qs)})")
         for m, t in T.items():
             print(f"   {m:8s} minus single: " + "  ".join(f"{k} {ci([t[q][k] - single[q][k] for q in qs])}" for k in KEYS))
-        for m in ("next", "c2score", "next_fs"):
+        for m in ("next", "c2score", "next_fs", "ground", "ground_gate"):
             if m in T and "rand" in T:
                 print(f"   {m:8s} minus rand:   " + "  ".join(f"{k} {ci([T[m][q][k] - T['rand'][q][k] for q in qs])}" for k in KEYS))

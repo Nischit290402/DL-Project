@@ -1,0 +1,11 @@
+{
+  "file": "results/runs/retrieval/stack/RR_d2v2_two_ground_gate_948.json",
+  "split": "all",
+  "n": 948,
+  "str_em": 38.16455696202533,
+  "rougeLsum": 40.020858324445655,
+  "length": 47.40928270042194,
+  "citation_rec": 74.73214285714283,
+  "citation_prec": 75.78121860558569,
+  "mauve": 86.9462316116066
+}
