@@ -1,0 +1,11 @@
+{
+  "file": "results/runs/retrieval/stack/RR_d2v2_948.json",
+  "split": "all",
+  "n": 948,
+  "str_em": 32.43670886075947,
+  "rougeLsum": 36.01679556260906,
+  "length": 29.507383966244724,
+  "citation_rec": 75.65463632710468,
+  "citation_prec": 76.42003214788025,
+  "mauve": 74.55945607104172
+}
