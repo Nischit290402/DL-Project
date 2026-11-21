@@ -1,0 +1,17 @@
+{
+  "name": "D2 NLI grounding, fixed on Set A (Step 3)",
+  "chosen_on": "critique/splits/asqa_A.json",
+  "mode": "mix",
+  "agg": "mean",
+  "param": 0.75,
+  "formula": "support := (1 - alpha) * ISSUP + alpha * g_mean; score = released - w_sup * ISSUP + w_sup * support",
+  "g_mean": "mean over the candidate's ALCE sentences of DeBERTa P(entailment | own passage)",
+  "model": "cross-encoder/nli-deberta-v3-large",
+  "w_sup": 1.0,
+  "selection_rule": "grounding/tune_ground.py docstring (fixed before the grid was run)",
+  "set_A_result": "results/ground_tune_A.json",
+  "commands": {
+    "set_B": "python grounding/rerank_ground.py --f results/runs/asqa_cands_0_end.json --ground results/runs/cand_ground_B.jsonl --split critique/splits/asqa_B.json --mode mix --agg mean --param 0.75 --out out/rr_ground_B.json",
+    "set_C": "python grounding/rerank_ground.py --f results/runs/asqa_cands_C.json --ground results/runs/cand_ground_C.jsonl --split critique/splits/asqa_C.json --mode mix --agg mean --param 0.75 --out out/rr_ground_C.json"
+  }
+}

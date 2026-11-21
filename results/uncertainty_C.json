@@ -1,0 +1,44 @@
+{
+  "split": "critique/splits/asqa_C.json",
+  "n": 748,
+  "median_D": 0.5999240000000001,
+  "str_em": {
+    "low_disagreement": 34.19,
+    "high_disagreement": 25.84,
+    "low_minus_high": 8.36,
+    "ci95": [
+      3.98,
+      13.23
+    ],
+    "excludes_0": true
+  },
+  "citation_rec": {
+    "low_disagreement": 72.32,
+    "high_disagreement": 59.55,
+    "low_minus_high": 12.77,
+    "ci95": [
+      5.8,
+      18.56
+    ],
+    "excludes_0": true
+  },
+  "rougeLsum": {
+    "low_disagreement": 36.85,
+    "high_disagreement": 34.93,
+    "low_minus_high": 1.92,
+    "ci95": [
+      -0.41,
+      4.01
+    ],
+    "excludes_0": false
+  },
+  "auroc_D_for_chosen_str_em_0": {
+    "value": 0.594,
+    "ci95": [
+      0.553,
+      0.636
+    ],
+    "n_wrong": 311
+  },
+  "H1_confirmed": true
+}

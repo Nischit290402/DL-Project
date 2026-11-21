@@ -1,0 +1,10 @@
+{
+  "source": "results/runs/asqa_cands_0_end.json",
+  "ground": "results/runs/cand_ground_B.jsonl",
+  "split": "critique/splits/asqa_B.json",
+  "mode": "mix",
+  "agg": "mean",
+  "param": 0.75,
+  "w_sup": 1.0,
+  "model": "cross-encoder/nli-deberta-v3-large"
+}

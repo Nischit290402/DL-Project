@@ -1,0 +1,10 @@
+{
+  "file": "results/runs/rr_contra_B.json",
+  "split": "all",
+  "n": 100,
+  "str_em": 33.166666666666664,
+  "rougeLsum": 36.75795284689553,
+  "length": 29.42,
+  "citation_rec": 62.81666666666667,
+  "citation_prec": 64.13333333333334
+}
