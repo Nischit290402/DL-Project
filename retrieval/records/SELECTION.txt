@@ -1,0 +1,8 @@
+2026-11-21 14:29:56 +08  Step 1 (Set A, component metric only, no Self-RAG output seen)
+mean5 on Set A: GTR 24.0 | R1-20 25.7 | R1-100 25.2 | R2-20 28.1 | R2-100 28.5
+Highest is R2-100 (28.5); R2-20 (28.1) is within 0.5 -> tie rule (smaller K) -> CHOSEN: R2-20
+  = BAAI/bge-reranker-v2-m3 @ 953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e, rerank GTR top-20, keep 5
+Gate G1: R2-20 minus GTR mean5 = +4.1 [+2.4, +5.9] -> passes
+Only the Set A block of rerank/step1_cov_full.txt was read before this file was written.
+34968ada2f9de90ece11af8801ffff9326ad4c2ef511f0b07cfd308e046e06e9  rerank/asqa_R2_K20.json
+d4371564d7e32b0984677c70f1d323a7dc692107137a882a455066d30cfcd1f7  rerank/scores_R2.jsonl

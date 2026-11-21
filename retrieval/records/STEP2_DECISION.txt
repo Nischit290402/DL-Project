@@ -1,0 +1,6 @@
+2026-11-21 14:40:48 +08  After the single Set A+B run (job 56495), before any Set C output exists
+Set B (test): H1 mean5 +4.6 [+2.3,+6.8] confirmed. H2 str-em +0.67 [-3.83,+5.25] NOT supported (interval includes 0). Length -0.38 words.
+Set A (dev):  str-em +2.53 [-2.50,+7.70].
+Prediction check (0.85 x change in coverage of picked passage): A predicted +3.5 observed +2.5; B predicted -0.4 observed +0.7; A+B predicted +1.6 observed +1.6.
+Pre-registered rule: Set B point estimate > 0 -> run Set C exactly once with R2-20. Confirmed only if the Set C str-em interval is above 0.
+Exploratory (Set A only, not pre-registered): picking the candidate from the reranker's rank-1 passage: +0.60 [-4.03,+5.37] vs Self-RAG's pick. No evidence. Dropped; will not be run on Set C.
