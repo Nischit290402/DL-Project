@@ -1,0 +1,11 @@
+{
+  "file": "results/runs/retrieval/stack/RR_c2_two_gate50_948.json",
+  "split": "all",
+  "n": 948,
+  "str_em": 39.86286919831225,
+  "rougeLsum": 40.50757142324335,
+  "length": 50.629746835443036,
+  "citation_rec": 75.03076652601963,
+  "citation_prec": 76.21345690174797,
+  "mauve": 88.25855549744904
+}

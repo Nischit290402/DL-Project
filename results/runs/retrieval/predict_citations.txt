@@ -1,0 +1,12 @@
+RR_c2_two_c2score_948.json             two-passage answers  941 | citation_rec: exact on  887, mean error +0.228, mean abs error 0.946 | citation_prec: exact on  881, mean error +0.138, mean abs error 1.073
+RR_c2_two_ground_948.json              two-passage answers  941 | citation_rec: exact on  903, mean error -0.097, mean abs error 0.679 | citation_prec: exact on  885, mean error -0.233, mean abs error 0.929
+RR_c2_two_ground_gate_948.json         two-passage answers  634 | citation_rec: exact on  618, mean error +0.009, mean abs error 0.429 | citation_prec: exact on  606, mean error -0.302, mean abs error 0.592
+RR_c2_two_next_948.json                two-passage answers  941 | citation_rec: exact on  897, mean error +0.161, mean abs error 0.862 | citation_prec: exact on  884, mean error +0.069, mean abs error 0.936
+RR_c2_two_next_fs_948.json             two-passage answers  823 | citation_rec: exact on  781, mean error +0.302, mean abs error 0.814 | citation_prec: exact on  769, mean error +0.169, mean abs error 0.969
+RR_c2_two_rand_948.json                two-passage answers  941 | citation_rec: exact on  907, mean error +0.113, mean abs error 0.605 | citation_prec: exact on  894, mean error +0.010, mean abs error 0.657
+RR_d2v2_two_c2score_948.json           two-passage answers  941 | citation_rec: exact on  873, mean error -0.237, mean abs error 1.355 | citation_prec: exact on  890, mean error -0.385, mean abs error 1.172
+RR_d2v2_two_ground_948.json            two-passage answers  941 | citation_rec: exact on  890, mean error -0.143, mean abs error 1.032 | citation_prec: exact on  899, mean error -0.306, mean abs error 0.919
+RR_d2v2_two_ground_gate_948.json       two-passage answers  579 | citation_rec: exact on  557, mean error +0.078, mean abs error 0.777 | citation_prec: exact on  567, mean error -0.192, mean abs error 0.417
+RR_d2v2_two_next_948.json              two-passage answers  941 | citation_rec: exact on  887, mean error +0.020, mean abs error 1.039 | citation_prec: exact on  894, mean error +0.016, mean abs error 0.879
+RR_d2v2_two_next_fs_948.json           two-passage answers  838 | citation_rec: exact on  785, mean error -0.024, mean abs error 1.109 | citation_prec: exact on  794, mean error -0.046, mean abs error 0.955
+RR_d2v2_two_rand_948.json              two-passage answers  941 | citation_rec: exact on  901, mean error +0.021, mean abs error 0.758 | citation_prec: exact on  910, mean error -0.109, mean abs error 0.597

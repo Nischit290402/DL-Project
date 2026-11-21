@@ -1,0 +1,33 @@
+questions: 947
+one passage chosen by                  coverage of that passage str-em of its answer     words  mean rank
+reranker rank 1                         39.94 [ 37.66,  42.26]   33.51 [ 31.39,  35.68]   30.3  1.00
+random of the 5                         29.63 [ 27.48,  31.75]   26.40 [ 24.47,  28.42]   27.5  2.93
+Self-RAG relevance token only           37.77 [ 35.58,  39.95]   31.95 [ 29.93,  34.00]   29.1  2.33
+question-answer relevance (bge-base)    37.78 [ 35.39,  40.04]   31.58 [ 29.44,  33.69]   30.3  2.12
+support checker only                    34.38 [ 32.17,  36.52]   29.64 [ 27.56,  31.70]   27.7  2.67
+C1 released score                       37.49 [ 35.27,  39.70]   31.89 [ 29.85,  33.87]   29.2  2.40
+C2 corrected score                      38.13 [ 35.81,  40.27]   32.95 [ 30.86,  35.02]   33.5  2.37
+D2-v2                                   38.35 [ 36.05,  40.63]   32.44 [ 30.33,  34.51]   29.5  2.30
+longest answer                          31.03 [ 28.87,  33.16]   27.88 [ 25.85,  30.02]   46.2  2.70
+ORACLE best passage by coverage         54.49 [ 52.26,  56.52]   42.53 [ 40.47,  44.61]   30.3  1.77
+ORACLE best answer by str-em            46.38 [ 44.11,  48.54]   44.84 [ 42.80,  46.86]   31.4  1.50
+
+mean coverage and str-em by reranker position:
+  position 1: coverage 39.94   answer str-em 33.51   answer/coverage 0.84
+  position 2: coverage 31.47   answer str-em 27.74   answer/coverage 0.88
+  position 3: coverage 26.21   answer str-em 23.62   answer/coverage 0.90
+  position 4: coverage 23.39   answer str-em 21.89   answer/coverage 0.94
+  position 5: coverage 20.32   answer str-em 18.84   answer/coverage 0.93
+
+all metrics of the answer from each choice (lookup in the per-candidate table), and paired difference from reranker rank 1:
+  reranker rank 1          str_em  33.51  rougeLsum  36.58  citation_rec  60.46  citation_prec  61.32  length  30.27
+  C1 released score        str_em  31.89  rougeLsum  35.47  citation_rec  68.74  citation_prec  69.65  length  29.22
+  C2 corrected score       str_em  32.95  rougeLsum  36.37  citation_rec  72.93  citation_prec  74.11  length  33.50
+  D2-v2                    str_em  32.44  rougeLsum  35.99  citation_rec  75.66  citation_prec  76.40  length  29.47
+  support checker only     str_em  29.64  rougeLsum  34.55  citation_rec  76.45  citation_prec  77.16  length  27.75
+  ALL   rank 1 minus C1 released score    str_em   1.62 [  0.09,   3.15]  rougeLsum   1.10 [  0.30,   1.91]  citation_rec  -8.28 [-11.04,  -5.45]  citation_prec  -8.32 [-11.05,  -5.44]  length   1.05 [ -0.22,   2.31]
+  ALL   rank 1 minus C2 corrected score   str_em   0.56 [ -0.92,   2.00]  rougeLsum   0.20 [ -0.53,   0.94]  citation_rec -12.46 [-15.20,  -9.79]  citation_prec -12.79 [-15.49, -10.11]  length  -3.22 [ -4.46,  -1.97]
+  ALL   rank 1 minus D2-v2                str_em   1.06 [ -0.42,   2.44]  rougeLsum   0.59 [ -0.16,   1.36]  citation_rec -15.19 [-17.89, -12.41]  citation_prec -15.07 [-17.76, -12.29]  length   0.80 [ -0.35,   2.00]
+  Set C rank 1 minus C1 released score    str_em   1.17 [ -0.62,   2.86]  rougeLsum   1.03 [  0.13,   1.95]  citation_rec  -9.71 [-13.11,  -6.51]  citation_prec  -9.80 [-13.12,  -6.54]  length   0.80 [ -0.69,   2.21]
+  Set C rank 1 minus C2 corrected score   str_em   0.70 [ -1.09,   2.42]  rougeLsum   0.22 [ -0.58,   1.07]  citation_rec -13.62 [-16.73, -10.53]  citation_prec -14.05 [-17.20, -10.98]  length  -3.50 [ -5.00,  -2.05]
+  Set C rank 1 minus D2-v2                str_em   1.22 [ -0.54,   2.96]  rougeLsum   0.59 [ -0.25,   1.51]  citation_rec -16.59 [-19.83, -13.44]  citation_prec -16.47 [-19.74, -13.27]  length   0.54 [ -0.79,   1.96]

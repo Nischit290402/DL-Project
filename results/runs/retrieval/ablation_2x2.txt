@@ -1,0 +1,13 @@
+questions: 948 (Set C: 748)
+  GTR one str_em  30.96  words  34.36  cit_rec  69.31  cit_prec  70.34  answers with a second passage 0%
+  GTR two str_em  36.96  words  50.43  cit_rec  70.22  cit_prec  71.19  answers with a second passage 64%
+  RR  one str_em  32.97  words  33.44  cit_rec  72.85  cit_prec  74.03  answers with a second passage 0%
+  RR  two str_em  39.86  words  50.63  cit_rec  73.64  cit_prec  74.74  answers with a second passage 67%
+
+Set C, paired differences (str-em | est. citation recall):
+  reranking, one-passage answers        +1.72 [ +0.35,  +3.11] |  +4.29 [ +1.59,  +7.01]
+  reranking, two-passage answers        +2.70 [ +1.31,  +4.03] |  +4.02 [ +1.85,  +6.27]
+  second passage, original passages     +6.25 [ +4.98,  +7.56] |  +1.28 [ -0.12,  +2.82]
+  second passage, reranked passages     +7.23 [ +6.04,  +8.46] |  +1.01 [ -0.38,  +2.41]
+  both together                         +8.96 [ +7.36, +10.57] |  +5.30 [ +2.76,  +7.94]
+  interaction (second-passage gain on RR minus on GTR), str-em:  +0.98 [ -0.41,  +2.40]
