@@ -1,0 +1,13 @@
+{
+  "source": "results/runs/retrieval/asqa_rrR2K20C_0_end.json",
+  "split": "critique/splits/asqa_C.json",
+  "critique": "released",
+  "paper_weights": null,
+  "ground": "results/runs/combined/cand_ground_rr_C.jsonl",
+  "agg": "mean",
+  "alpha": 0.75,
+  "rel": "results/runs/combined/cand_qarel_rr_C.jsonl",
+  "rel_model": "BAAI/bge-reranker-base",
+  "delta": 1.0,
+  "w_sup": 1.0
+}

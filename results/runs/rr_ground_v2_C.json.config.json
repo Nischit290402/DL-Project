@@ -1,0 +1,13 @@
+{
+  "source": "results/runs/asqa_cands_C.json",
+  "ground": "results/runs/cand_ground_C.jsonl",
+  "split": "critique/splits/asqa_C.json",
+  "mode": "mix",
+  "agg": "mean",
+  "param": 0.75,
+  "w_sup": 1.0,
+  "model": "cross-encoder/nli-deberta-v3-large",
+  "rel": "results/runs/cand_qarel_C.jsonl",
+  "rel_model": "BAAI/bge-reranker-base",
+  "delta": 1.0
+}

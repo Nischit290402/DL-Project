@@ -1,0 +1,22 @@
+
+== Set A (n=100)
+  GTR top-5  mean5  24.0 [20.2,28.4]  rank1  30.5 [24.4,36.9]  best5  48.3 [42.0,54.9]  union5  54.5 [47.6,61.6]
+  R1-20      mean5  25.7  rank1  33.0  best5  51.5  union5  58.4  | of its 5 passages, from GTR rank>5: 2.38
+    vs GTR   mean5  +1.7 [ -0.2, +3.6]  rank1  +2.5 [ -3.8, +8.7]  best5  +3.2 [ -0.4, +7.4]  union5  +3.9 [ -1.0, +9.1]
+  R1-100     mean5  25.2  rank1  32.2  best5  51.7  union5  57.7  | of its 5 passages, from GTR rank>5: 2.81
+    vs GTR   mean5  +1.2 [ -0.9, +3.3]  rank1  +1.8 [ -4.4, +8.0]  best5  +3.4 [ -0.1, +7.5]  union5  +3.2 [ -1.6, +8.3]
+  R2-20      mean5  28.1  rank1  38.3  best5  53.4  union5  60.2  | of its 5 passages, from GTR rank>5: 2.51
+    vs GTR   mean5  +4.1 [ +2.4, +5.9]  rank1  +7.8 [ +2.5,+13.8]  best5  +5.1 [ +1.4, +9.4]  union5  +5.7 [ +1.4,+10.4]
+  R2-100     mean5  28.5  rank1  37.4  best5  53.1  union5  59.6  | of its 5 passages, from GTR rank>5: 3.03
+    vs GTR   mean5  +4.4 [ +2.1, +6.7]  rank1  +7.0 [ +1.5,+12.8]  best5  +4.8 [ +0.3, +9.8]  union5  +5.1 [ -0.5,+10.9]
+
+== Set ALL (n=948)
+  GTR top-5  mean5  25.4 [23.9,26.7]  rank1  36.0 [33.7,38.3]  best5  51.9 [49.8,54.1]  union5  57.6 [55.4,60.0]
+  R1-20      mean5  25.6  rank1  35.0  best5  52.9  union5  59.9  | of its 5 passages, from GTR rank>5: 2.25
+    vs GTR   mean5  +0.2 [ -0.4, +0.9]  rank1  -1.0 [ -2.8, +0.9]  best5  +0.9 [ -0.2, +2.1]  union5  +2.2 [ +0.8, +3.7]
+  R1-100     mean5  25.1  rank1  34.2  best5  52.2  union5  58.8  | of its 5 passages, from GTR rank>5: 2.71
+    vs GTR   mean5  -0.2 [ -1.0, +0.6]  rank1  -1.8 [ -3.7, +0.2]  best5  +0.2 [ -1.1, +1.6]  union5  +1.1 [ -0.5, +2.8]
+  R2-20      mean5  28.7  rank1  40.2  best5  55.0  union5  61.2  | of its 5 passages, from GTR rank>5: 2.40
+    vs GTR   mean5  +3.4 [ +2.7, +4.1]  rank1  +4.2 [ +2.2, +6.4]  best5  +3.0 [ +1.9, +4.2]  union5  +3.6 [ +2.2, +5.0]
+  R2-100     mean5  29.2  rank1  40.3  best5  54.7  union5  60.8  | of its 5 passages, from GTR rank>5: 2.93
+    vs GTR   mean5  +3.9 [ +3.1, +4.7]  rank1  +4.3 [ +2.3, +6.5]  best5  +2.8 [ +1.4, +4.2]  union5  +3.2 [ +1.6, +4.9]

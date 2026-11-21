@@ -1,0 +1,5 @@
+{
+  "weights": {"w_rel": 1, "w_sup": 1, "w_use": 0, "use_seqscore": false},
+  "temperature": 1.0,
+  "note": "What the released code effectively ranks with (C1). Sanity check: must reproduce C1."
+}

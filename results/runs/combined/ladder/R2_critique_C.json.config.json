@@ -1,0 +1,18 @@
+{
+  "source": "results/runs/retrieval/asqa_rrR2K20C_0_end.json",
+  "split": "critique/splits/asqa_C.json",
+  "critique": "paper",
+  "paper_weights": {
+    "w_rel": 1.0,
+    "w_sup": 1.0,
+    "w_use": 0.5,
+    "use_seqscore": true
+  },
+  "ground": null,
+  "agg": null,
+  "alpha": null,
+  "rel": null,
+  "rel_model": null,
+  "delta": null,
+  "w_sup": 1.0
+}

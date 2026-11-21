@@ -1,0 +1,195 @@
+GPU: NVIDIA L40S on TC2N03
+
+=== 1/5 candidates for Set C  00:53:20
+WARNING 11-18 00:53:29 ray_utils.py:34] Failed to import Ray with ModuleNotFoundError("No module named 'ray.air.util.torch_dist'"). For distributed inference, please install Ray with `pip install ray pandas pyarrow`.
+keep_special_tokens = True
+save_candidates = True
+WARNING 11-18 00:53:29 config.py:467] Casting torch.bfloat16 to torch.float16.
+INFO 11-18 00:53:29 llm_engine.py:73] Initializing an LLM engine with config: model='selfrag/selfrag_llama2_7b', tokenizer='selfrag/selfrag_llama2_7b', tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.float16, max_seq_len=4096, download_dir='/home/msai/siyuan029/hf_cache', load_format=auto, tensor_parallel_size=1, quantization=None, enforce_eager=False, seed=0)
+INFO 11-18 00:58:52 llm_engine.py:223] # GPU blocks: 3371, # CPU blocks: 512
+INFO 11-18 00:58:53 model_runner.py:394] Capturing the model for CUDA graphs. This may lead to unexpected consequences if the model is not static. To run the model in eager mode, set 'enforce_eager=True' or use '--enforce-eager' in the CLI.
+INFO 11-18 00:58:57 model_runner.py:437] Graph capturing finished in 4 secs.
+Running 748 examples from ../../critique/splits/asqa_C.json
+[1/748] 0.0 min elapsed, 1.6 s/question
+[11/748] 0.5 min elapsed, 2.9 s/question
+[21/748] 0.9 min elapsed, 2.7 s/question
+[31/748] 1.3 min elapsed, 2.5 s/question
+[41/748] 1.8 min elapsed, 2.7 s/question
+[51/748] 2.2 min elapsed, 2.6 s/question
+[61/748] 2.6 min elapsed, 2.5 s/question
+[71/748] 3.0 min elapsed, 2.5 s/question
+[81/748] 3.5 min elapsed, 2.6 s/question
+[91/748] 4.1 min elapsed, 2.7 s/question
+[101/748] 4.4 min elapsed, 2.6 s/question
+[111/748] 4.9 min elapsed, 2.6 s/question
+[121/748] 5.3 min elapsed, 2.6 s/question
+[131/748] 5.7 min elapsed, 2.6 s/question
+[141/748] 6.2 min elapsed, 2.6 s/question
+[151/748] 6.7 min elapsed, 2.7 s/question
+[161/748] 7.1 min elapsed, 2.6 s/question
+[171/748] 7.5 min elapsed, 2.6 s/question
+[181/748] 8.0 min elapsed, 2.7 s/question
+[191/748] 8.4 min elapsed, 2.6 s/question
+[201/748] 8.8 min elapsed, 2.6 s/question
+[211/748] 9.1 min elapsed, 2.6 s/question
+[221/748] 9.5 min elapsed, 2.6 s/question
+[231/748] 10.0 min elapsed, 2.6 s/question
+[241/748] 10.3 min elapsed, 2.6 s/question
+[251/748] 10.8 min elapsed, 2.6 s/question
+[261/748] 11.2 min elapsed, 2.6 s/question
+[271/748] 11.6 min elapsed, 2.6 s/question
+[281/748] 11.9 min elapsed, 2.6 s/question
+[291/748] 12.3 min elapsed, 2.5 s/question
+[301/748] 12.8 min elapsed, 2.5 s/question
+[311/748] 13.2 min elapsed, 2.5 s/question
+[321/748] 13.7 min elapsed, 2.6 s/question
+[331/748] 14.1 min elapsed, 2.6 s/question
+[341/748] 14.6 min elapsed, 2.6 s/question
+[351/748] 15.0 min elapsed, 2.6 s/question
+[361/748] 15.4 min elapsed, 2.6 s/question
+[371/748] 15.8 min elapsed, 2.6 s/question
+retrieval_tokens
+[381/748] 16.2 min elapsed, 2.6 s/question
+[391/748] 16.6 min elapsed, 2.6 s/question
+[401/748] 17.1 min elapsed, 2.6 s/question
+[411/748] 17.5 min elapsed, 2.6 s/question
+[421/748] 17.8 min elapsed, 2.5 s/question
+[431/748] 18.1 min elapsed, 2.5 s/question
+[441/748] 18.5 min elapsed, 2.5 s/question
+[451/748] 18.9 min elapsed, 2.5 s/question
+[461/748] 19.2 min elapsed, 2.5 s/question
+[471/748] 19.7 min elapsed, 2.5 s/question
+[481/748] 20.1 min elapsed, 2.5 s/question
+[491/748] 20.6 min elapsed, 2.5 s/question
+[501/748] 21.1 min elapsed, 2.5 s/question
+[511/748] 21.5 min elapsed, 2.5 s/question
+[521/748] 22.0 min elapsed, 2.5 s/question
+[531/748] 22.3 min elapsed, 2.5 s/question
+[541/748] 22.7 min elapsed, 2.5 s/question
+[551/748] 23.1 min elapsed, 2.5 s/question
+[561/748] 23.6 min elapsed, 2.5 s/question
+[571/748] 23.9 min elapsed, 2.5 s/question
+[581/748] 24.5 min elapsed, 2.5 s/question
+[591/748] 24.9 min elapsed, 2.5 s/question
+[601/748] 25.2 min elapsed, 2.5 s/question
+[611/748] 25.7 min elapsed, 2.5 s/question
+[621/748] 26.0 min elapsed, 2.5 s/question
+[631/748] 26.4 min elapsed, 2.5 s/question
+[641/748] 26.7 min elapsed, 2.5 s/question
+[651/748] 27.1 min elapsed, 2.5 s/question
+[661/748] 27.5 min elapsed, 2.5 s/question
+[671/748] 27.8 min elapsed, 2.5 s/question
+[681/748] 28.3 min elapsed, 2.5 s/question
+[691/748] 28.6 min elapsed, 2.5 s/question
+retrieval_tokens
+retrieval_tokens
+[701/748] 29.1 min elapsed, 2.5 s/question
+[711/748] 29.5 min elapsed, 2.5 s/question
+[721/748] 30.0 min elapsed, 2.5 s/question
+[731/748] 30.3 min elapsed, 2.5 s/question
+[741/748] 30.7 min elapsed, 2.5 s/question
+Done: 748 items in 31.1 min
+
+=== 2/5 NLI over candidate pairs  01:30:05
+questions: 748 of split 748
+NLI inputs: 29920
+labels: {0: 'contradiction', 1: 'entailment', 2: 'neutral'}
+CAND_NLI_OK results/runs/cand_nli_C.jsonl
+
+=== 3/5 re-pick: released (lambda 0) and penalty (noctx, lambda 0.3)  01:32:23
+{"source": "results/runs/asqa_cands_C.json", "nli": "results/runs/cand_nli_C.jsonl", "split": "critique/splits/asqa_C.json", "variant": "noctx", "lambda": 0.0}
+748 questions, 1 multi-segment kept as is, answer changed: 0
+RERANK_FILE results/runs/rr_released_C.json
+{"source": "results/runs/asqa_cands_C.json", "nli": "results/runs/cand_nli_C.jsonl", "split": "critique/splits/asqa_C.json", "variant": "noctx", "lambda": 0.3}
+748 questions, 1 multi-segment kept as is, answer changed: 158
+RERANK_FILE results/runs/rr_contra_C.json
+
+=== 4/5 per-question scores  01:32:23
+{
+  "file": "results/runs/rr_released_C.json",
+  "split": "all",
+  "n": 748,
+  "str_em": 30.01559714795006,
+  "rougeLsum": 35.88580709011649,
+  "length": 30.584224598930483,
+  "citation_rec": 65.93360071301247,
+  "citation_prec": 66.93850267379679
+}
+PERQ_FILE results/runs/rr_released_C.json.perq.jsonl
+{
+  "file": "results/runs/rr_contra_C.json",
+  "split": "all",
+  "n": 748,
+  "str_em": 30.187165775401056,
+  "rougeLsum": 35.78168169603531,
+  "length": 31.03342245989305,
+  "citation_rec": 63.69174942704354,
+  "citation_prec": 64.88381716322893
+}
+PERQ_FILE results/runs/rr_contra_C.json.perq.jsonl
+
+=== 5/5 pre-registered tests  01:50:26
+--- H1: disagreement vs correctness
+questions: 748 (split 748, with disagreement 748, with scores 748)
+{
+  "split": "critique/splits/asqa_C.json",
+  "n": 748,
+  "median_D": 0.5999240000000001,
+  "str_em": {
+    "low_disagreement": 34.19,
+    "high_disagreement": 25.84,
+    "low_minus_high": 8.36,
+    "ci95": [
+      3.98,
+      13.23
+    ],
+    "excludes_0": true
+  },
+  "citation_rec": {
+    "low_disagreement": 72.32,
+    "high_disagreement": 59.55,
+    "low_minus_high": 12.77,
+    "ci95": [
+      5.8,
+      18.56
+    ],
+    "excludes_0": true
+  },
+  "rougeLsum": {
+    "low_disagreement": 36.85,
+    "high_disagreement": 34.93,
+    "low_minus_high": 1.92,
+    "ci95": [
+      -0.41,
+      4.01
+    ],
+    "excludes_0": false
+  },
+  "auroc_D_for_chosen_str_em_0": {
+    "value": 0.594,
+    "ci95": [
+      0.553,
+      0.636
+    ],
+    "n_wrong": 311
+  },
+  "H1_confirmed": true
+}
+--- H2: penalty vs released
+metric                            base                    new               new - base
+str_em            30.02 [ 27.76,  32.21]   30.19 [ 27.87,  32.65]   +0.17 [ -0.84,  +1.13]
+rougeLsum         35.89 [ 34.86,  37.06]   35.78 [ 34.72,  36.83]   -0.10 [ -0.60,  +0.34]
+citation_rec      65.93 [ 62.97,  68.96]   63.69 [ 60.39,  66.92]   -2.24 [ -4.17,  +0.01]
+citation_prec     66.94 [ 63.66,  69.98]   64.88 [ 61.70,  68.25]   -2.05 [ -3.98,  +0.16]
+length            30.58 [ 29.18,  31.96]   31.03 [ 29.42,  32.66]   +0.45 [ -0.41,  +1.36]
+* = the 95% interval of the difference excludes 0
+--- sanity: released (regenerated) vs C1 on Set C
+warning: only 748 questions are in both files
+metric                            base                    new               new - base
+str_em            30.02 [ 27.76,  32.21]   30.02 [ 27.66,  32.50]   +0.00 [ +0.00,  +0.00]
+rougeLsum         35.89 [ 34.86,  37.06]   35.89 [ 34.84,  37.00]   +0.00 [ +0.00,  +0.00]
+citation_rec      65.93 [ 62.97,  68.96]   65.93 [ 62.80,  69.20]   +0.00 [ +0.00,  +0.00]
+citation_prec     66.94 [ 63.66,  69.98]   66.94 [ 63.75,  70.25]   +0.00 [ +0.00,  +0.00]
+length            30.58 [ 29.18,  31.96]   30.58 [ 29.05,  32.19]   +0.00 [ +0.00,  +0.00]
+* = the 95% interval of the difference excludes 0
+CONTRA_C_OK

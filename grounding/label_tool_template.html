@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>D2 Labelling</title>
+<style>
+:root{--bg:#f6f6f3;--panel:#fff;--ink:#1d1d1b;--muted:#6b6b66;--line:#e2e1dc;--acc:#2f5fd0;--acc-soft:#e7eefc;
+--good:#1f7a4d;--good-soft:#e3f3ea;--bad:#b3362c;--bad-soft:#fae6e3;--warn:#9a6a00;--warn-soft:#fbf1d9;--hl:#fff1a8;--hl2:#cdeedd}
+@media (prefers-color-scheme:dark){:root{--bg:#161615;--panel:#20201e;--ink:#ecebe6;--muted:#9a9993;--line:#33332f;--acc:#7da2ff;
+--acc-soft:#25304a;--good:#5cc791;--good-soft:#1d3328;--bad:#ff8a7d;--bad-soft:#3d2421;--warn:#e6b84d;--warn-soft:#3a3020;--hl:#5a4f12;--hl2:#1f4a35}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif}
+.app{display:grid;grid-template-columns:290px 1fr;height:100vh}
+aside{border-right:1px solid var(--line);background:var(--panel);display:flex;flex-direction:column;min-height:0}
+.side-top{padding:12px;border-bottom:1px solid var(--line)}
+.tabs{display:flex;gap:4px;margin-bottom:8px}
+.tabs button{flex:1}
+button{font:inherit;color:inherit;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:5px 8px;cursor:pointer}
+button:hover{border-color:var(--acc)}
+button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.prog{font-size:12px;color:var(--muted);margin:6px 0 2px}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--good)}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;font-size:12px}
+.filters label{display:flex;align-items:center;gap:3px}
+.list{overflow:auto;flex:1}
+.item{padding:7px 12px;border-bottom:1px solid var(--line);cursor:pointer;display:grid;grid-template-columns:28px 1fr auto;gap:6px;align-items:center}
+.item:hover{background:var(--bg)}
+.item.cur{background:var(--acc-soft)}
+.item .n{color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+.item .q{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.dot.done{background:var(--good)}
+.side-bot{padding:10px 12px;border-top:1px solid var(--line);display:flex;gap:6px;flex-wrap:wrap}
+main{overflow:auto;min-height:0}
+.wrap{max-width:1180px;margin:0 auto;padding:18px 22px 140px}
+h1{font-size:19px;margin:4px 0 6px;line-height:1.35}
+.meta{color:var(--muted);font-size:12px;display:flex;gap:10px;flex-wrap:wrap}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-top:12px}
+.card h3{margin:0 0 6px;font-size:13px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ans{font-size:15px;line-height:1.6}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+.chip{font-size:12px;padding:1px 7px;border-radius:10px;background:var(--bg);border:1px solid var(--line);font-variant-numeric:tabular-nums}
+.chip.up{background:var(--good-soft);color:var(--good);border-color:transparent}
+.chip.down{background:var(--bad-soft);color:var(--bad);border-color:transparent}
+.passage{font-size:13px;color:var(--ink);background:var(--bg);border-radius:6px;padding:8px 10px;margin-top:6px;max-height:260px;overflow:auto}
+.ptitle{font-weight:600;font-size:13px}
+mark{background:var(--hl);color:inherit;border-radius:2px;padding:0 1px}
+mark.sa{background:var(--hl2)}
+.sents{font-size:12px;margin-top:6px}
+.sents div{display:flex;gap:6px;margin:2px 0}
+.sents b{font-variant-numeric:tabular-nums;min-width:44px}
+details summary{cursor:pointer;color:var(--muted);font-size:13px}
+ul.refs{margin:6px 0 0;padding-left:18px}
+ul.refs li{margin:4px 0}
+.sa-list{font-size:13px}
+.sa-list span{display:inline-block;margin:2px 6px 2px 0}
+.labelbar{position:fixed;bottom:0;left:290px;right:0;background:var(--panel);border-top:1px solid var(--line);padding:10px 22px;box-shadow:0 -4px 14px rgba(0,0,0,.06)}
+.lb{max-width:1180px;margin:0 auto;display:grid;gap:7px}
+.row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.row .lab{width:92px;color:var(--muted);font-size:12px}
+.opt{font-size:13px}
+.opt kbd{font:11px ui-monospace,monospace;opacity:.7;margin-right:4px}
+textarea{font:inherit;color:inherit;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:5px 8px;flex:1;min-width:200px;height:32px;resize:vertical}
+.hint{font-size:11px;color:var(--muted)}
+.big{font-size:16px;font-weight:600}
+@media (max-width:820px){.app{grid-template-columns:1fr}aside{height:40vh}.labelbar{left:0}.cols{grid-template-columns:1fr}.wrap{padding:12px 16px 220px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside>
+  <div class="side-top">
+    <div class="tabs">
+      <button id="tR" class="on">R · ROUGE 换答案</button>
+      <button id="tG">G4 · 支持判断</button>
+    </div>
+    <div class="prog" id="prog"></div>
+    <div class="bar"><i id="pbar"></i></div>
+    <div class="filters">
+      <label id="fPrioL"><input type="checkbox" id="fPrio" checked>只看前 30</label>
+      <label><input type="checkbox" id="fUndone">只看未标</label>
+      <label id="fSetL">Set <select id="fSet"><option value="">A+B</option><option>A</option><option>B</option></select></label>
+    </div>
+  </div>
+  <div class="list" id="list"></div>
+  <div class="side-bot">
+    <button id="exCsv">导出 CSV</button>
+    <button id="exJson">导出 JSON</button>
+    <button id="imJson">导入 JSON</button>
+    <input type="file" id="file" accept=".json" hidden>
+  </div>
+</aside>
+<main id="main"><div class="wrap" id="view"></div></main>
+</div>
+<div class="labelbar"><div class="lb" id="lbar"></div></div>
+
+<script src="data.js"></script>
+<script>
+const D = window.LABEL_DATA;
+const KEY = 'd2_labels_v1';
+let L = {};
+try { L = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { L = {}; }
+for (const [k, v] of Object.entries(window.LABEL_DEFAULTS || {})) if (!L[k]) L[k] = {...v};
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(L)); } catch (e) {} };
+
+const R_REASON = [
+  ['wrong_entity', '答错对象', '答的是另一个实体/事件/建筑/联赛等，不是问的那个（Blue Lagoon 威尔士之外的典型：西班牙国王、Whirlpool 星系）'],
+  ['other_reading', '另一种解读', '回答了问题的另一种合理解读；可能不在参考答案覆盖范围内（备注里写 in-ref / not-in-ref）'],
+  ['non_answer', '答非所问', '同一主题，但根本没回答问题（如只介绍 Premier League 是什么）'],
+  ['factual_error', '事实错误', '对象对，但关键事实错（把 ALCS 对手当 World Series 对手、编造片名）'],
+  ['less_coverage', '内容变少', '方向对，但覆盖的答案点/消歧更少'],
+  ['rouge_false', 'ROUGE 误判', '其实答得不差，甚至更好'],
+  ['d2_fixes', 'D2 更正确/更完整', 'D2 纠正了 released 的错误、偏题，或覆盖更全'],
+  ['equivalent', '基本等价', '两个答案内容相同，只是措辞不同'],
+  ['other', '其他', '写在备注里'],
+];
+const R_BETTER = [['released', 'Released 更好'], ['tie', '差不多'], ['d2', 'D2 更好']];
+const R_TAGS = [['off_question', '偏题（与问题不符）'], ['shorter', '更短'], ['more_grounded', 'D2 更贴 passage'],
+  ['released_halluc', 'Released 有错/幻觉'], ['d2_halluc', 'D2 有错/幻觉'], ['both_bad', '两个都差']];
+
+const G_SUP = [['yes', '支持'], ['partial', '部分支持'], ['no', '不支持']];
+const G_ERR = [
+  ['deb_verbatim', 'DeBERTa 漏判：几乎原句'],
+  ['deb_bridge', 'DeBERTa 漏判：跨句/改写'],
+  ['deb_falsecon', 'DeBERTa 误判矛盾'],
+  ['deb_falsepos', 'DeBERTa 误判为支持（常识）'],
+  ['issup_detail', 'ISSUP 漏检：多余细节（日期/数字）'],
+  ['issup_wrongfact', 'ISSUP 漏检：错误事实'],
+  ['both_ok', '两者都有道理/边界'],
+  ['other', '其他'],
+];
+
+let task = 'R', idx = 0;
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt = (v, d = 1) => v == null ? '–' : (+v).toFixed(d);
+const sgn = v => (v > 0 ? '+' : '') + fmt(v);
+
+function items() {
+  let xs = task === 'R' ? D.swaps : D.g4;
+  if (task === 'R' && document.getElementById('fPrio').checked) xs = xs.filter(x => x.priority);
+  const s = document.getElementById('fSet').value;
+  if (task === 'R' && s) xs = xs.filter(x => x.set === s);
+  if (document.getElementById('fUndone').checked) xs = xs.filter(x => !isDone(x) || cur() === x);
+  return xs;
+}
+let curItem = null;
+const cur = () => curItem;
+function isDone(x) {
+  const l = L[x.id]; if (!l) return false;
+  return x.task === 'R' ? !!(l.reason && l.better) : !!(l.supported && l.error);
+}
+
+// highlighting
+const STOP = new Set('the a an of in on at to and or is was were be by for with as from that this it its his her their which who when where what how did does do are has had have than into after before during over about'.split(' '));
+const toks = s => (String(s).toLowerCase().match(/[\p{L}\p{N}]+/gu) || []).filter(t => !STOP.has(t) && (t.length > 2 || /\d/.test(t)));
+function highlight(text, words, cls = '') {
+  const set = new Set(words);
+  return esc(text).replace(/[\p{L}\p{N}]+/gu, w => set.has(w.toLowerCase()) ? `<mark class="${cls}">${w}</mark>` : w);
+}
+function hlPhrases(text, phrases) {
+  let h = esc(text);
+  const ps = [...new Set(phrases.filter(p => p && p.length > 1))].sort((a, b) => b.length - a.length);
+  for (const p of ps) {
+    const re = new RegExp('(' + esc(p).replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')(?![^<]*>)', 'gi');
+    h = h.replace(re, '<mark class="sa">$1</mark>');
+  }
+  return h;
+}
+
+function renderList() {
+  const xs = items();
+  const all = task === 'R' ? D.swaps.filter(x => !document.getElementById('fPrio').checked || x.priority) : D.g4;
+  const done = all.filter(isDone).length;
+  document.getElementById('prog').textContent = `${task === 'R' ? 'R' : 'G4'}：已标 ${done} / ${all.length}　（R 全部 ${D.swaps.filter(isDone).length}/${D.swaps.length}，G4 ${D.g4.filter(isDone).length}/${D.g4.length}）`;
+  document.getElementById('pbar').style.width = (100 * done / Math.max(1, all.length)) + '%';
+  document.getElementById('list').innerHTML = xs.map((x, i) => `
+    <div class="item ${x === curItem ? 'cur' : ''}" data-i="${i}">
+      <span class="n">${x.rank}</span>
+      <span class="q" title="${esc(x.question)}">${esc(x.question)}</span>
+      <span style="display:flex;gap:6px;align-items:center">
+        ${task === 'R' ? `<span class="chip ${x.d_rouge < 0 ? 'down' : 'up'}">${sgn(x.d_rouge)}</span>` : `<span class="chip">${fmt(x.gap, 2)}</span>`}
+        <span class="dot ${isDone(x) ? 'done' : ''}"></span></span>
+    </div>`).join('');
+  document.querySelectorAll('.item').forEach(el => el.onclick = () => { go(+el.dataset.i); });
+  const c = document.querySelector('.item.cur'); if (c) c.scrollIntoView({block: 'nearest'});
+}
+
+function ansCard(name, a, other, sa) {
+  const sents = a.sents.map(s => `<div><b style="color:${s.p_ent >= .5 ? 'var(--good)' : s.p_con >= .5 ? 'var(--bad)' : 'var(--warn)'}">ent ${fmt(s.p_ent, 2)}</b><span>${esc(s.s)}</span></div>`).join('');
+  const d = (k, better = 1) => { const v = (a[k] ?? 0) - (other[k] ?? 0); return v === 0 ? '' : (v * better > 0 ? 'up' : 'down'); };
+  return `<div class="card">
+    <h3>${name} · passage #${a.p_idx}</h3>
+    <div class="ans">${hlPhrases(a.text, sa)}</div>
+    <div class="chips">
+      <span class="chip ${d('rouge')}">ROUGE ${fmt(a.rouge)}</span>
+      <span class="chip ${d('str_em')}">str-em ${fmt(a.str_em)}</span>
+      <span class="chip ${d('cit_rec')}">cit rec ${fmt(a.cit_rec)}</span>
+      <span class="chip">len ${a.length ?? '–'}</span>
+      <span class="chip">ISSUP ${fmt(a.issup, 2)}</span>
+      <span class="chip">g_mean ${fmt(a.g_mean, 2)}</span>
+      <span class="chip">rel ${fmt(a.relevance, 2)}</span>
+    </div>
+    <div class="sents">${sents}</div>
+    <details><summary><span class="ptitle">📄 ${esc(a.passage_title)}</span></summary>
+      <div class="passage">${highlight(a.passage, toks(a.text))}</div></details>
+  </div>`;
+}
+
+function saBlock(x) {
+  if (!x.short_answers?.length) return '';
+  return `<div class="card"><h3>消歧子问题 / short answers（绿色 = 出现在回答里）</h3><div class="sa-list">${
+    x.short_answers.map(s => `<div>• ${esc(s.q)} → <b>${s.a.map(esc).join(' / ')}</b></div>`).join('')}</div></div>`;
+}
+
+function renderR(x) {
+  const sa = x.short_answers.flatMap(s => s.a);
+  return `<div class="meta"><span>#${x.rank} / ${D.swaps.length}</span><span>Set ${x.set}</span><span>q_idx ${x.q_idx}</span>
+      <span class="chip ${x.d_rouge < 0 ? 'down' : 'up'}">ΔROUGE ${sgn(x.d_rouge)}</span>
+      <span class="chip ${x.d_strem < 0 ? 'down' : x.d_strem > 0 ? 'up' : ''}">Δstr-em ${sgn(x.d_strem)}</span>
+      <span class="chip ${x.d_cit < 0 ? 'down' : x.d_cit > 0 ? 'up' : ''}">Δcit ${sgn(x.d_cit)}</span></div>
+    <h1>${esc(x.question)}</h1>
+    ${saBlock(x)}
+    <div class="cols">${ansCard('Released', x.released, x.d2, sa)}${ansCard('D2', x.d2, x.released, sa)}</div>
+    <div class="card"><details><summary>参考长答案（ROUGE 对照的 ${x.references.length} 条）</summary>
+      <ul class="refs">${x.references.map(r => `<li>${hlPhrases(r, sa)}</li>`).join('')}</ul></details></div>`;
+}
+
+function renderG(x) {
+  const sa = x.short_answers.flatMap(s => s.a);
+  return `<div class="meta"><span>#${x.rank} / ${D.g4.length}</span><span>q_idx ${x.q_idx}</span><span>p_idx ${x.p_idx}</span>
+      <span class="chip">gap ${fmt(x.gap, 3)}</span></div>
+    <h1>${esc(x.question)}</h1>
+    <div class="card"><h3>待判断的句子（第一句）</h3><div class="ans big">${esc(x.sentence)}</div>
+      <div class="chips">
+        <span class="chip">ISSUP ${fmt(x.issup, 3)} ${esc(x.issup_label)}</span>
+        <span class="chip ${x.p_ent >= .5 ? 'up' : 'down'}">DeBERTa ent ${fmt(x.p_ent, 3)}</span>
+        <span class="chip">neu ${fmt(x.p_neu, 3)}</span>
+        <span class="chip ${x.p_con >= .5 ? 'down' : ''}">con ${fmt(x.p_con, 3)}</span>
+        <span class="chip ${x.t5 ? 'up' : 'down'}">T5 ${x.t5 ? '支持' : '不支持'}</span>
+        <span class="chip">cand cit rec ${fmt(x.cit_rec)}</span>
+      </div>
+      <div class="hint">黄色 = 句子中的词在 passage 里出现；先自己判断，再看分数。</div></div>
+    <div class="card"><h3>Passage</h3><div class="passage" style="max-height:none;font-size:14px">${highlight(x.passage, toks(x.sentence))}</div></div>
+    ${saBlock(x)}`;
+}
+
+function optRow(label, opts, field, keys, multi = false) {
+  const l = L[curItem.id] || {};
+  return `<div class="row"><span class="lab">${label}</span>${opts.map((o, i) => {
+    const on = multi ? (l[field] || []).includes(o[0]) : l[field] === o[0];
+    return `<button class="opt ${on ? 'on' : ''}" data-f="${field}" data-v="${o[0]}" data-m="${multi ? 1 : ''}" title="${esc(o[2] || '')}">${keys ? `<kbd>${keys[i] ?? ''}</kbd>` : ''}${o[1]}</button>`;
+  }).join('')}</div>`;
+}
+
+function renderBar() {
+  const x = curItem; if (!x) { document.getElementById('lbar').innerHTML = ''; return; }
+  const l = L[x.id] || {};
+  let h = l.by ? `<div class="hint">标注来源：${esc(l.by)}${l.reviewed ? '（已人工复核）' : '（未复核，改动任意一项即视为已复核）'}</div>` : '';
+  if (x.task === 'R') {
+    h += optRow('主要原因', R_REASON, 'reason', ['1', '2', '3', '4', '5', '6', '7', '8', '9']);
+    h += optRow('哪个更好', R_BETTER, 'better', ['Q', 'W', 'E']);
+    h += optRow('附加标签', R_TAGS, 'tags', ['A', 'S', 'D', 'F', 'G', 'H'], true);
+  } else {
+    h += optRow('人工：支持?', G_SUP, 'supported', ['Q', 'W', 'E']);
+    h += optRow('错误类型', G_ERR, 'error', ['1', '2', '3', '4', '5', '6', '7', '8']);
+  }
+  h += `<div class="row"><span class="lab">备注</span><textarea id="note" placeholder="可选（按 / 聚焦，Esc 退出）">${esc(l.note || '')}</textarea>
+    <button id="prev">← 上一条</button><button id="next">下一条 →</button><button id="nextU">下一条未标 ⏎</button></div>
+    <div class="hint">快捷键：数字/字母选择 · ←/→ 或 J/K 翻页 · Enter 跳到下一条未标 · 鼠标悬停原因按钮可看定义 · 自动保存在本浏览器</div>`;
+  document.getElementById('lbar').innerHTML = h;
+  document.querySelectorAll('.opt').forEach(b => b.onclick = () => setVal(b.dataset.f, b.dataset.v, !!b.dataset.m));
+  const n = document.getElementById('note');
+  n.oninput = () => { (L[x.id] ||= {}).note = n.value; stamp(); save(); };
+  document.getElementById('prev').onclick = () => step(-1);
+  document.getElementById('next').onclick = () => step(1);
+  document.getElementById('nextU').onclick = nextUndone;
+}
+function stamp() { L[curItem.id].t = new Date().toISOString(); if (L[curItem.id].by) L[curItem.id].reviewed = true; }
+function setVal(f, v, multi) {
+  const l = (L[curItem.id] ||= {});
+  if (multi) { const s = new Set(l[f] || []); s.has(v) ? s.delete(v) : s.add(v); l[f] = [...s]; }
+  else l[f] = l[f] === v ? undefined : v;
+  stamp(); save(); renderBar(); renderList();
+}
+
+function go(i) {
+  const xs = items(); if (!xs.length) { curItem = null; document.getElementById('view').innerHTML = '<p>没有符合筛选的条目。</p>'; renderBar(); renderList(); return; }
+  idx = Math.max(0, Math.min(xs.length - 1, i)); curItem = xs[idx];
+  document.getElementById('view').innerHTML = curItem.task === 'R' ? renderR(curItem) : renderG(curItem);
+  document.getElementById('main').scrollTop = 0;
+  renderBar(); renderList();
+  try { localStorage.setItem(KEY + '_pos', JSON.stringify({task, id: curItem.id})); } catch (e) {}
+}
+function step(d) { const xs = items(); const i = xs.indexOf(curItem); go((i < 0 ? 0 : i) + d); }
+function nextUndone() {
+  const xs = items(); const i = xs.indexOf(curItem);
+  for (let k = 1; k <= xs.length; k++) { const y = xs[(i + k) % xs.length]; if (!isDone(y)) { go(xs.indexOf(y)); return; } }
+}
+function setTask(t) {
+  task = t; document.getElementById('tR').classList.toggle('on', t === 'R'); document.getElementById('tG').classList.toggle('on', t === 'G');
+  document.getElementById('fPrioL').style.display = document.getElementById('fSetL').style.display = t === 'R' ? '' : 'none';
+  curItem = null; go(0);
+}
+document.getElementById('tR').onclick = () => setTask('R');
+document.getElementById('tG').onclick = () => setTask('G');
+['fPrio', 'fUndone', 'fSet'].forEach(id => document.getElementById(id).onchange = () => { const c = curItem; const xs = items(); go(Math.max(0, xs.indexOf(c))); });
+
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'TEXTAREA') { if (e.key === 'Escape') e.target.blur(); return; }
+  if (e.target.tagName === 'SELECT' || e.ctrlKey || e.metaKey || e.altKey || !curItem) return;
+  const k = e.key.toLowerCase();
+  if (k === 'arrowright' || k === 'j') return step(1);
+  if (k === 'arrowleft' || k === 'k') return step(-1);
+  if (k === 'enter') { e.preventDefault(); return nextUndone(); }
+  if (k === '/') { e.preventDefault(); return document.getElementById('note').focus(); }
+  const R = curItem.task === 'R';
+  const num = '123456789'.indexOf(k), qwe = 'qwe'.indexOf(k), asd = 'asdfgh'.indexOf(k);
+  if (num >= 0) { const o = R ? R_REASON : G_ERR; if (o[num]) setVal(R ? 'reason' : 'error', o[num][0]); }
+  else if (qwe >= 0) { const o = R ? R_BETTER : G_SUP; setVal(R ? 'better' : 'supported', o[qwe][0]); }
+  else if (asd >= 0 && R) setVal('tags', R_TAGS[asd][0], true);
+});
+
+// export / import
+function download(name, text, type) {
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['﻿' + text], {type})); a.download = name; a.click();
+}
+const csvCell = v => { v = Array.isArray(v) ? v.join(';') : (v ?? ''); v = String(v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
+const toCsv = rows => rows.map(r => r.map(csvCell).join(',')).join('\n');
+const lab = (opts, v) => (opts.find(o => o[0] === v) || [])[1] || '';
+document.getElementById('exCsv').onclick = () => {
+  const r = [['id', 'set', 'q_idx', 'rank', 'priority', 'question', 'd_rouge', 'd_strem', 'd_cit', 'released_p_idx', 'd2_p_idx', 'reason', 'reason_zh', 'better', 'tags', 'note', 'by', 'reviewed']];
+  D.swaps.forEach(x => { const l = L[x.id] || {}; r.push([x.id, x.set, x.q_idx, x.rank, x.priority ? 1 : 0, x.question, x.d_rouge.toFixed(2), x.d_strem.toFixed(2), x.d_cit.toFixed(2), x.released.p_idx, x.d2.p_idx, l.reason, lab(R_REASON, l.reason), l.better, l.tags, l.note, l.by, l.reviewed ? 1 : 0]); });
+  download('label_rouge_swaps_AB.csv', toCsv(r), 'text/csv');
+  const g = [['q_idx', 'p_idx', 'gap', 'issup_score', 'deberta_p_ent', 'deberta_p_con', 't5_verdict', 'question', 'sentence', 'human_supported', 'error_type', 'error_type_zh', 'note', 'by', 'reviewed']];
+  D.g4.forEach(x => { const l = L[x.id] || {}; g.push([x.q_idx, x.p_idx, x.gap, x.issup, x.p_ent, x.p_con, x.t5, x.question, x.sentence, l.supported, l.error, lab(G_ERR, l.error), l.note, l.by, l.reviewed ? 1 : 0]); });
+  setTimeout(() => download('ground_diag_A_G4_labeled.csv', toCsv(g), 'text/csv'), 300);
+};
+document.getElementById('exJson').onclick = () => download('d2_labels.json', JSON.stringify({version: 1, exported: new Date().toISOString(), labels: L}, null, 1), 'application/json');
+document.getElementById('imJson').onclick = () => document.getElementById('file').click();
+document.getElementById('file').onchange = async e => {
+  const f = e.target.files[0]; if (!f) return;
+  try {
+    const j = JSON.parse((await f.text()).replace(/^﻿/, ''));
+    const inc = j.labels || j; let n = 0;
+    for (const [k, v] of Object.entries(inc)) { if (!L[k] || (v.t || '') >= (L[k].t || '')) { L[k] = v; n++; } }
+    save(); go(idx); alert(`导入 ${n} 条（同一条取较新的）`);
+  } catch (err) { alert('导入失败：' + err.message); }
+};
+
+// restore position
+let pos = null; try { pos = JSON.parse(localStorage.getItem(KEY + '_pos') || 'null'); } catch (e) {}
+setTask(pos?.task || 'R');
+if (pos) { const xs = items(); const i = xs.findIndex(x => x.id === pos.id); if (i >= 0) go(i); }
+</script>
+</body>
+</html>
