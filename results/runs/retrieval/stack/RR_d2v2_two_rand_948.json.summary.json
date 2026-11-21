@@ -1,0 +1,11 @@
+{
+  "file": "results/runs/retrieval/stack/RR_d2v2_two_rand_948.json",
+  "split": "all",
+  "n": 948,
+  "str_em": 39.59036568213782,
+  "rougeLsum": 41.755153013545446,
+  "length": 55.37658227848101,
+  "citation_rec": 57.440978501105064,
+  "citation_prec": 58.3228533070305,
+  "mauve": 91.21425713082498
+}

@@ -1,0 +1,46 @@
+
+######## first answer by C2
+  single    {'file': 'results/runs/retrieval/stack/RR_c2_948.json', 'split': 'all', 'n': 948, 'str_em': 32.937763713080145, 'rougeLsum': 36.39841773075296, 'length': 33.530590717299575, 'citation_rec': 72.92784307815953, 'citation_prec': 74.13979304802089, 'mauve': 78.23336173139647}
+  next      {'file': 'results/runs/retrieval/stack/RR_c2_two_next_948.json', 'split': 'all', 'n': 948, 'str_em': 42.01652601969058, 'rougeLsum': 42.174660468675, 'length': 59.71308016877637, 'citation_rec': 60.53839327573504, 'citation_prec': 61.6548205076686, 'mauve': 89.5384161768326}
+  c2score   {'file': 'results/runs/retrieval/stack/RR_c2_two_c2score_948.json', 'split': 'all', 'n': 948, 'str_em': 41.884669479606195, 'rougeLsum': 42.08995479052348, 'length': 59.40928270042194, 'citation_rec': 65.30603275065297, 'citation_prec': 66.46415176478463, 'mauve': 89.87962872761739}
+  next_fs   {'file': 'results/runs/retrieval/stack/RR_c2_two_next_fs_948.json', 'split': 'all', 'n': 948, 'str_em': 41.60513361462729, 'rougeLsum': 41.228605925306255, 'length': 57.13607594936709, 'citation_rec': 63.592190744089464, 'citation_prec': 64.73323119683879, 'mauve': 94.27337574885955}
+  rand      {'file': 'results/runs/retrieval/stack/RR_c2_two_rand_948.json', 'split': 'all', 'n': 948, 'str_em': 40.95288326300984, 'rougeLsum': 41.600753909559955, 'length': 58.348101265822784, 'citation_rec': 57.298406000937625, 'citation_prec': 58.3467701426562, 'mauve': 93.14900841175633}
+  == Set C (n=748)
+   next     minus single: str_em  +9.11 [ +7.67, +10.45]  rougeLsum  +5.64 [ +4.89,  +6.40]  citation_rec -12.36 [-14.26, -10.55]  citation_prec -12.62 [-14.55, -10.76]  length +26.72 [+25.37, +28.23]
+   c2score  minus single: str_em  +9.13 [ +7.82, +10.50]  rougeLsum  +5.46 [ +4.68,  +6.25]  citation_rec  -7.32 [ -9.23,  -5.55]  citation_prec  -7.47 [ -9.38,  -5.69]  length +26.10 [+24.79, +27.43]
+   next_fs  minus single: str_em  +8.58 [ +7.21,  +9.92]  rougeLsum  +4.55 [ +3.82,  +5.27]  citation_rec  -9.23 [-10.96,  -7.49]  citation_prec  -9.42 [-11.15,  -7.68]  length +23.94 [+22.49, +25.52]
+   rand     minus single: str_em  +8.21 [ +6.86,  +9.47]  rougeLsum  +5.11 [ +4.40,  +5.87]  citation_rec -15.64 [-17.55, -13.82]  citation_prec -15.83 [-17.77, -14.00]  length +24.95 [+23.67, +26.26]
+   next     minus rand:   str_em  +0.91 [ -0.44,  +2.29]  rougeLsum  +0.53 [ +0.09,  +0.99]  citation_rec  +3.28 [ +1.64,  +4.91]  citation_prec  +3.22 [ +1.60,  +4.88]  length  +1.77 [ +0.39,  +3.20]
+   c2score  minus rand:   str_em  +0.93 [ -0.38,  +2.28]  rougeLsum  +0.35 [ -0.17,  +0.85]  citation_rec  +8.32 [ +6.77,  +9.96]  citation_prec  +8.36 [ +6.77, +10.01]  length  +1.15 [ -0.25,  +2.51]
+   next_fs  minus rand:   str_em  +0.37 [ -0.98,  +1.80]  rougeLsum  -0.56 [ -1.05,  -0.03]  citation_rec  +6.41 [ +4.66,  +8.19]  citation_prec  +6.41 [ +4.64,  +8.20]  length  -1.00 [ -2.54,  +0.58]
+  == Set ALL (n=948)
+   next     minus single: str_em  +9.08 [ +7.85, +10.27]  rougeLsum  +5.78 [ +5.07,  +6.44]  citation_rec -12.39 [-14.08, -10.73]  citation_prec -12.48 [-14.20, -10.76]  length +26.18 [+24.92, +27.52]
+   c2score  minus single: str_em  +8.95 [ +7.76, +10.11]  rougeLsum  +5.69 [ +5.01,  +6.38]  citation_rec  -7.62 [ -9.30,  -6.04]  citation_prec  -7.68 [ -9.33,  -6.06]  length +25.88 [+24.72, +27.25]
+   next_fs  minus single: str_em  +8.67 [ +7.51,  +9.83]  rougeLsum  +4.83 [ +4.17,  +5.46]  citation_rec  -9.34 [-10.98,  -7.81]  citation_prec  -9.41 [-11.01,  -7.84]  length +23.61 [+22.30, +25.05]
+   rand     minus single: str_em  +8.02 [ +6.94,  +9.10]  rougeLsum  +5.20 [ +4.55,  +5.84]  citation_rec -15.63 [-17.40, -13.93]  citation_prec -15.79 [-17.58, -14.06]  length +24.82 [+23.74, +25.96]
+   next     minus rand:   str_em  +1.06 [ -0.11,  +2.21]  rougeLsum  +0.57 [ +0.15,  +1.00]  citation_rec  +3.24 [ +1.78,  +4.72]  citation_prec  +3.31 [ +1.80,  +4.79]  length  +1.36 [ +0.22,  +2.60]
+   c2score  minus rand:   str_em  +0.93 [ -0.19,  +1.98]  rougeLsum  +0.49 [ +0.02,  +0.97]  citation_rec  +8.01 [ +6.58,  +9.41]  citation_prec  +8.12 [ +6.66,  +9.52]  length  +1.06 [ -0.13,  +2.38]
+   next_fs  minus rand:   str_em  +0.65 [ -0.47,  +1.77]  rougeLsum  -0.37 [ -0.85,  +0.10]  citation_rec  +6.29 [ +4.82,  +7.91]  citation_prec  +6.39 [ +4.86,  +8.00]  length  -1.21 [ -2.52,  +0.17]
+
+######## first answer by D2V2
+  single    {'file': 'results/runs/retrieval/stack/RR_d2v2_948.json', 'split': 'all', 'n': 948, 'str_em': 32.43670886075947, 'rougeLsum': 36.01679556260906, 'length': 29.507383966244724, 'citation_rec': 75.65463632710468, 'citation_prec': 76.42003214788025, 'mauve': 74.55945607104172}
+  next      {'file': 'results/runs/retrieval/stack/RR_d2v2_two_next_948.json', 'split': 'all', 'n': 948, 'str_em': 41.606891701828424, 'rougeLsum': 42.20139097762742, 'length': 57.833333333333336, 'citation_rec': 61.222163619315495, 'citation_prec': 62.0555388118679, 'mauve': 89.01345899537793}
+  c2score   {'file': 'results/runs/retrieval/stack/RR_d2v2_two_c2score_948.json', 'split': 'all', 'n': 948, 'str_em': 41.828410689170184, 'rougeLsum': 42.0750608824022, 'length': 59.08755274261603, 'citation_rec': 67.67015772553744, 'citation_prec': 68.77465508003476, 'mauve': 88.17306917415303}
+  next_fs   {'file': 'results/runs/retrieval/stack/RR_d2v2_two_next_fs_948.json', 'split': 'all', 'n': 948, 'str_em': 41.11814345991562, 'rougeLsum': 41.33223108775351, 'length': 55.4789029535865, 'citation_rec': 64.51305170450739, 'citation_prec': 65.39916951309355, 'mauve': 86.28549929940196}
+  rand      {'file': 'results/runs/retrieval/stack/RR_d2v2_two_rand_948.json', 'split': 'all', 'n': 948, 'str_em': 39.59036568213782, 'rougeLsum': 41.755153013545446, 'length': 55.37658227848101, 'citation_rec': 57.440978501105064, 'citation_prec': 58.3228533070305, 'mauve': 91.21425713082498}
+  == Set C (n=748)
+   next     minus single: str_em  +9.30 [ +7.90, +10.73]  rougeLsum  +6.11 [ +5.22,  +6.95]  citation_rec -14.53 [-16.58, -12.61]  citation_prec -14.58 [-16.62, -12.66]  length +28.92 [+27.30, +30.49]
+   c2score  minus single: str_em  +9.50 [ +8.13, +11.01]  rougeLsum  +5.87 [ +5.01,  +6.74]  citation_rec  -7.89 [ -9.74,  -6.02]  citation_prec  -7.63 [ -9.50,  -5.74]  length +29.90 [+28.28, +31.48]
+   next_fs  minus single: str_em  +8.57 [ +7.27, +10.01]  rougeLsum  +5.15 [ +4.31,  +5.99]  citation_rec -11.33 [-13.22,  -9.57]  citation_prec -11.30 [-13.22,  -9.51]  length +26.35 [+24.76, +28.08]
+   rand     minus single: str_em  +7.02 [ +5.85,  +8.22]  rougeLsum  +5.72 [ +4.91,  +6.55]  citation_rec -18.76 [-20.66, -17.01]  citation_prec -18.63 [-20.51, -16.84]  length +26.06 [+24.75, +27.47]
+   next     minus rand:   str_em  +2.28 [ +1.01,  +3.54]  rougeLsum  +0.39 [ -0.14,  +0.94]  citation_rec  +4.23 [ +2.43,  +6.04]  citation_prec  +4.05 [ +2.24,  +5.87]  length  +2.86 [ +1.44,  +4.38]
+   c2score  minus rand:   str_em  +2.48 [ +1.05,  +3.88]  rougeLsum  +0.15 [ -0.42,  +0.68]  citation_rec +10.87 [ +9.23, +12.62]  citation_prec +11.01 [ +9.37, +12.76]  length  +3.84 [ +2.23,  +5.39]
+   next_fs  minus rand:   str_em  +1.55 [ +0.23,  +2.84]  rougeLsum  -0.57 [ -1.16,  +0.02]  citation_rec  +7.43 [ +5.55,  +9.39]  citation_prec  +7.33 [ +5.42,  +9.36]  length  +0.30 [ -1.17,  +1.85]
+  == Set ALL (n=948)
+   next     minus single: str_em  +9.17 [ +7.93, +10.47]  rougeLsum  +6.18 [ +5.44,  +6.91]  citation_rec -14.43 [-16.14, -12.71]  citation_prec -14.36 [-16.11, -12.63]  length +28.33 [+26.98, +29.70]
+   c2score  minus single: str_em  +9.39 [ +8.17, +10.69]  rougeLsum  +6.06 [ +5.32,  +6.83]  citation_rec  -7.98 [ -9.62,  -6.29]  citation_prec  -7.65 [ -9.29,  -5.94]  length +29.58 [+28.17, +31.07]
+   next_fs  minus single: str_em  +8.68 [ +7.49,  +9.88]  rougeLsum  +5.32 [ +4.60,  +6.04]  citation_rec -11.14 [-12.82,  -9.43]  citation_prec -11.02 [-12.70,  -9.35]  length +25.97 [+24.63, +27.38]
+   rand     minus single: str_em  +7.15 [ +6.04,  +8.25]  rougeLsum  +5.74 [ +5.04,  +6.42]  citation_rec -18.21 [-19.93, -16.50]  citation_prec -18.10 [-19.79, -16.42]  length +25.87 [+24.71, +27.17]
+   next     minus rand:   str_em  +2.02 [ +0.95,  +3.13]  rougeLsum  +0.45 [ +0.03,  +0.93]  citation_rec  +3.78 [ +2.24,  +5.32]  citation_prec  +3.73 [ +2.14,  +5.26]  length  +2.46 [ +1.22,  +3.80]
+   c2score  minus rand:   str_em  +2.24 [ +1.13,  +3.47]  rougeLsum  +0.32 [ -0.16,  +0.81]  citation_rec +10.23 [ +8.78, +11.81]  citation_prec +10.45 [ +8.94, +12.06]  length  +3.71 [ +2.36,  +5.06]
+   next_fs  minus rand:   str_em  +1.53 [ +0.40,  +2.69]  rougeLsum  -0.42 [ -0.89,  +0.10]  citation_rec  +7.07 [ +5.39,  +8.71]  citation_prec  +7.08 [ +5.33,  +8.70]  length  +0.10 [ -1.20,  +1.42]
