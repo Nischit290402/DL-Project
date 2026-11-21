@@ -138,3 +138,59 @@ A fix "wins" only if the difference interval on Set B is above 0 (marked `*`). I
 ## What to send back after each step
 
 The job log (`logs/crit_*_<jobid>.log` or `logs/asqa_<jobid>.log`) and the printed table. Errors: the `.err` file.
+
+## Person 2: select and validate reranking weights
+
+Export one ALCE answer file per passage position from the committed candidate run:
+
+```bash
+python critique/learn_weights.py export --out out/person2/candidates
+```
+
+Copy the five files to TC2 if exported locally. From the TC2 repository, use the appropriate path
+to the uploaded directory below. The jobs run one at a time and stop on a scoring error.
+
+```bash
+mkdir -p logs
+candidate_dir="$HOME/critique-p2-input"
+for p in 0 1 2 3 4; do
+  sbatch --wait --export=ALL,F="$candidate_dir/candidate_${p}.json" cluster/run_critique_score.sbatch || break
+done
+```
+
+The five full ALCE score files from the reported Colab run are in
+`results/runs/critique_p2`. Use that directory to reproduce the analysis locally.
+On Set A, search the grid separately for raw support grades and Person 1's calibrated grades
+(`T=4`). Select by str-em, with ties resolved by citation recall, precision, ROUGE-Lsum,
+then distance to the C1 weight settings. This also computes the per-metric oracle for Set A.
+
+```bash
+python critique/learn_weights.py tune --score-dir results/runs/critique_p2 --out results/critique_p2_configs
+```
+
+Evaluate the locked configurations on Set B and compute paired differences with C1:
+
+```bash
+for run in learned_weights learned_weights_calibrated; do
+  python critique/learn_weights.py test --score-dir results/runs/critique_p2 \
+    --config "results/critique_p2_configs/$run.json" --out out/person2/test
+  python critique/bootstrap.py --base results/runs/rr_released.json.perq.jsonl \
+    --new "out/person2/test/$run.perq.jsonl" --split critique/splits/asqa_B.json \
+    --out "out/person2/test/$run.bootstrap.json"
+done
+```
+
+The raw-support result is the primary comparison. The calibrated result checks whether the
+same weight-selection procedure benefits from Person 1's revised support scores.
+If the primary config's Set B str-em difference interval is above zero, save candidates from
+the complete 948-question C1 run and apply the locked config. The offline reranker leaves
+any original multi-segment path intact and reports how many it preserved.
+
+```bash
+EXTRA="--keep_special_tokens --save_candidates" sbatch --wait --export=ALL,TAG=p2_full cluster/run_asqa.sbatch
+python critique/learn_weights.py apply --candidates out/asqa_p2_full_0_end.json \
+  --config results/critique_p2_configs/learned_weights.json --out out/person2_full.json
+sbatch --wait --export=ALL,F=out/person2_full.json,FLAGS=--mauve cluster/run_critique_score.sbatch
+python critique/bootstrap.py --base results/runs/asqa_keeptok_0_end.json.perq.jsonl \
+  --new out/person2_full.json.perq.jsonl
+```

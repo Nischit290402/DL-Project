@@ -59,6 +59,25 @@ def build_output(item, cand):
     return output.replace(". [1] ", " [1]. ")
 
 
+def candidate_output(item, candidate):
+    keep = ("question", "qa_pairs", "annotations", "answer", "sample_id", "q_idx")
+    output = {key: item[key] for key in keep if key in item}
+    output.update(
+        output=build_output(item, candidate),
+        docs=[candidate["ctx"]],
+        intermediate=["[Retrieval]", candidate["pred"]],
+        chosen_p_idx=candidate["p_idx"],
+    )
+    return output
+
+
+def pick_candidate(candidates, score):
+    ranked = sorted(candidates, key=score, reverse=True)  # ties keep passage order
+    if len(ranked) > 1 and not postprocess(" " + ranked[0]["processed_pred"]):
+        return ranked[1]  # upstream's fallback for an empty best path
+    return ranked[0]
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--f", required=True, help="output file made with --save_candidates")
@@ -69,7 +88,6 @@ def main():
 
     full = json.load(open(args.f))
     w_sup = float(full.get("args", {}).get("w_sup", 1.0))
-    keep = ("question", "qa_pairs", "annotations", "answer", "sample_id", "q_idx")
     data, n_multi, n_changed, n_same_text = [], 0, 0, 0
     n_cands, n_cands_multi_grade = 0, 0
 
@@ -85,17 +103,14 @@ def main():
             continue
         n_cands += len(depth1)
         n_cands_multi_grade += sum(len(c["support_probs"]) > 1 for c in depth1)
-        for c in depth1:
-            c["new_score"] = c["final_score"] - w_sup * c["ground_score"] + w_sup * new_ground(
-                c, args.variant, args.temperature)
-        ranked = sorted(depth1, key=lambda c: c["new_score"], reverse=True)  # stable: ties keep passage order
-        chosen = ranked[0]
-        if len(postprocess(" " + chosen["processed_pred"])) == 0 and len(ranked) > 1:
-            chosen = ranked[1]  # same fallback as main(): the best path is empty after postprocessing
-        new_item = {k: item[k] for k in keep if k in item}
-        new_item.update({"output": build_output(item, chosen), "docs": [chosen["ctx"]],
-                         "intermediate": ["[Retrieval]", chosen["pred"]], "chosen_p_idx": chosen["p_idx"],
-                         "original_p_idx": next(c["p_idx"] for c in depth1 if c["node_id"] == original_node)})
+
+        def adjusted_score(candidate):
+            return (candidate["final_score"] - w_sup * candidate["ground_score"]
+                    + w_sup * new_ground(candidate, args.variant, args.temperature))
+
+        chosen = pick_candidate(depth1, adjusted_score)
+        new_item = candidate_output(item, chosen)
+        new_item["original_p_idx"] = next(c["p_idx"] for c in depth1 if c["node_id"] == original_node)
         n_changed += chosen["node_id"] != original_node
         n_same_text += new_item["output"] == item["output"]
         data.append(new_item)
