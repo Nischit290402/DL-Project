@@ -1,0 +1,11 @@
+{
+  "file": "out/full948_released.json",
+  "split": "all",
+  "n": 948,
+  "str_em": 30.191631504922615,
+  "rougeLsum": 35.78635378156262,
+  "length": 29.959915611814345,
+  "citation_rec": 66.5348101265823,
+  "citation_prec": 67.46659634317864,
+  "mauve": 75.56903653855373
+}
