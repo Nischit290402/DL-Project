@@ -1,0 +1,33 @@
+{
+ "questions": 748,
+ "changed_picks": 224,
+ "changed_texts": 213,
+ "on_changed_texts": {
+  "citation_rec": {
+   "released": 54.72613458528952,
+   "new": 70.14084507042253,
+   "better": 78,
+   "worse": 38
+  },
+  "str_em": {
+   "released": 27.003129890453827,
+   "new": 30.97026604068858,
+   "better": 44,
+   "worse": 32
+  },
+  "rougeLsum": {
+   "released": 34.39674454688605,
+   "new": 36.3032316850044,
+   "better": 108,
+   "worse": 97
+  },
+  "fully_supported": {
+   "released": 98,
+   "new": 123
+  },
+  "sentences": {
+   "released": 1.6572769953051643,
+   "new": 1.732394366197183
+  }
+ }
+}

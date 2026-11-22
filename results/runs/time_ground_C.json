@@ -1,0 +1,21 @@
+{
+ "gpu": "NVIDIA L40S",
+ "model": "cross-encoder/nli-deberta-v3-large",
+ "precision": "fp32",
+ "questions": 748,
+ "nli_inputs": 9444,
+ "inputs_per_question": 12.62566844919786,
+ "batched": {
+  "batch_size": 16,
+  "total_s": 70.49349855491892,
+  "s_per_question": 0.09424264512689695
+ },
+ "per_question": {
+  "mean_s": 0.09417473432579312,
+  "median_s": 0.08351326955016702,
+  "p90_s": 0.14169223699718714,
+  "max_s": 0.44563777022995055
+ },
+ "max_abs_diff_vs_stored_p_ent": 2.030336380010045e-05,
+ "n_compared": 9444
+}

@@ -1,0 +1,862 @@
+{
+ "about": "Labels written by Claude (model, not a human annotator) on 2026-11-19 after reading each item's question, disambiguated short answers, reference long answers, both answers and their passages. Must be reported as model labels unless reviewed; the tool marks an item reviewed once a person changes any field.",
+ "by": "claude-opus-5-5",
+ "R": {
+  "R-419": [
+   "other_reading",
+   "released",
+   [
+    "shorter",
+    "more_grounded"
+   ],
+   "D2 answers about a different Blue Lagoon (Abereiddy, Wales): a real place, not in the refs (Iceland / Umgeni). Second sentence repeats itself."
+  ],
+  "R-164": [
+   "wrong_entity",
+   "released",
+   [
+    "off_question",
+    "d2_halluc"
+   ],
+   "Wrong albums: Into the Morning (2010) is not 'new'; 'The Flipside' 2015 is not in the passage (cit 50)."
+  ],
+  "R-594": [
+   "other_reading",
+   "released",
+   [
+    "shorter",
+    "more_grounded"
+   ],
+   "D2 takes the 'total teams' reading but gives 76 teams for 2012-13, not the ref's 79; released gives the 32 group-stage teams (in ref)."
+  ],
+  "R-189": [
+   "rouge_false",
+   "tie",
+   [
+    "shorter"
+   ],
+   "Both say five; D2 lists the years. Neither covers the women's team."
+  ],
+  "R-467": [
+   "non_answer",
+   "released",
+   [
+    "off_question"
+   ],
+   "D2 describes the Nepali new year, never says which country uses the calendar."
+  ],
+  "R-195": [
+   "less_coverage",
+   "released",
+   [
+    "shorter",
+    "more_grounded"
+   ],
+   "D2 names Lorraine Crosby only; released also gives 'Mrs. Loud'. D2 is correct."
+  ],
+  "R-565": [
+   "rouge_false",
+   "tie",
+   [
+    "shorter"
+   ],
+   "Same answer (eight books), worded differently."
+  ],
+  "R-439": [
+   "factual_error",
+   "released",
+   [
+    "d2_halluc",
+    "shorter"
+   ],
+   "D2 says the 1989 World Series was against the Toronto Blue Jays (that was the ALCS)."
+  ],
+  "R-267": [
+   "wrong_entity",
+   "tie",
+   [
+    "both_bad",
+    "released_halluc",
+    "off_question"
+   ],
+   "Released: Lutyens (wrong, it is Herbert Baker). D2: talks about the Old Secretariat building and names no architect."
+  ],
+  "R-41": [
+   "other_reading",
+   "released",
+   [
+    "shorter",
+    "d2_halluc"
+   ],
+   "Emma Tillman was briefly the oldest living person (2007); not in refs, and 'oldest person in the world' without a date is misleading."
+  ],
+  "R-589": [
+   "factual_error",
+   "released",
+   [
+    "d2_halluc"
+   ],
+   "D2 invents the film title 'The Curious Journey of Captain Jack Sparrow' (date right) and adds the sequel."
+  ],
+  "R-901": [
+   "non_answer",
+   "released",
+   [
+    "off_question",
+    "shorter"
+   ],
+   "D2 only says what the Premier League is. Released gives Wenger (one in-ref reading)."
+  ],
+  "R-262": [
+   "rouge_false",
+   "tie",
+   [
+    "shorter"
+   ],
+   "Both: Chris Pratt. Released also mentions Vol. 2, same short answer."
+  ],
+  "R-553": [
+   "less_coverage",
+   "released",
+   [
+    "shorter"
+   ],
+   "Same date; D2 drops the platforms, which is what separates the two release dates."
+  ],
+  "R-862": [
+   "factual_error",
+   "tie",
+   [
+    "both_bad",
+    "released_halluc",
+    "d2_halluc"
+   ],
+   "Both wrong: released says Hiccup dies, D2 says Snotlout (answer is Stoick)."
+  ],
+  "R-895": [
+   "wrong_entity",
+   "tie",
+   [
+    "both_bad",
+    "off_question",
+    "released_halluc"
+   ],
+   "D2: Zeb Atlas, an unrelated person. Released: on topic but wrong actor (Richard Moll)."
+  ],
+  "R-367": [
+   "rouge_false",
+   "d2",
+   [
+    "shorter",
+    "released_halluc"
+   ],
+   "D2 'moved in 1780' is correct. Released's '1705' is not in the passage (it says 81 years, i.e. 1699)."
+  ],
+  "R-521": [
+   "other_reading",
+   "released",
+   [
+    "shorter"
+   ],
+   "D2: Janet Jackson 'Rock with U' (2008), an in-ref reading; released gives the main reading (Michael Jackson)."
+  ],
+  "R-442": [
+   "other_reading",
+   "released",
+   [],
+   "D2: the Saalach, a real river through Salzburg state, not in refs; released gives the main river (Salzach)."
+  ],
+  "R-313": [
+   "wrong_entity",
+   "released",
+   [
+    "off_question"
+   ],
+   "D2 answers about the King and Queen of Spain."
+  ],
+  "R-928": [
+   "rouge_false",
+   "tie",
+   [
+    "more_grounded"
+   ],
+   "Both say Elizabeth Perkins; D2 pastes the whole cast list, which dilutes ROUGE."
+  ],
+  "R-630": [
+   "other_reading",
+   "released",
+   [
+    "shorter"
+   ],
+   "D2: Benjamin Franklin (popular reading, not in refs). Released: William Gilbert (in ref)."
+  ],
+  "R-561": [
+   "other_reading",
+   "released",
+   [
+    "d2_halluc"
+   ],
+   "D2: Mills Brothers (a different hall of fame?, the passage does not say 'first'); released: Everly Brothers (in ref)."
+  ],
+  "R-735": [
+   "rouge_false",
+   "d2",
+   [
+    "shorter",
+    "more_grounded",
+    "released_halluc"
+   ],
+   "D2 'near Murfreesboro' is right; released claims a 'town of Stones River'."
+  ],
+  "R-275": [
+   "wrong_entity",
+   "released",
+   [
+    "off_question"
+   ],
+   "D2 is about the Whirlpool Galaxy, not the Milky Way. Released (W43) is partial at best."
+  ],
+  "R-259": [
+   "wrong_entity",
+   "released",
+   [
+    "off_question"
+   ],
+   "D2: 'second sound' in superfluid physics. Released is about the heart (mostly right)."
+  ],
+  "R-704": [
+   "wrong_entity",
+   "tie",
+   [
+    "both_bad",
+    "released_halluc"
+   ],
+   "D2: the relay flame arriving at Land's End, not the cauldron lighting. Released: Steve Redgrave (wrong, he handed it on)."
+  ],
+  "R-89": [
+   "other_reading",
+   "released",
+   [],
+   "D2: the 2009-10 season, not in refs; released gives 2017-18 (in ref)."
+  ],
+  "R-614": [
+   "other_reading",
+   "released",
+   [
+    "shorter"
+   ],
+   "D2: a 2009 extension act; refs want the first laws (1911 UK / 1927 DE / 1935 US). Released mentions 1935."
+  ],
+  "R-402": [
+   "rouge_false",
+   "tie",
+   [],
+   "Near-identical sentences."
+  ],
+  "R-93": [
+   "rouge_false",
+   "d2",
+   [],
+   "Both: peristalsis. D2 answers directly ('is called peristalsis'); released only defines it."
+  ],
+  "R-743": [
+   "rouge_false",
+   "tie",
+   [
+    "both_bad",
+    "released_halluc",
+    "d2_halluc",
+    "shorter"
+   ],
+   "Same content: Churchill right, Mountbatten wrong (Linlithgow) in both."
+  ],
+  "R-843": [
+   "factual_error",
+   "released",
+   [
+    "d2_halluc"
+   ],
+   "D2: Raymond 'played by Robert William Holleman' and lives in Los Angeles; both wrong."
+  ],
+  "R-16": [
+   "rouge_false",
+   "d2",
+   [
+    "shorter",
+    "released_halluc"
+   ],
+   "D2 1995 is right; released says 1994."
+  ],
+  "R-575": [
+   "less_coverage",
+   "released",
+   [
+    "d2_halluc"
+   ],
+   "Both 1955; D2 replaces the in-ref 1965 Righteous Brothers version with dubious covers (Roy Orbison 'British')."
+  ],
+  "R-302": [
+   "rouge_false",
+   "tie",
+   [
+    "released_halluc"
+   ],
+   "Released names transmutation but describes electron capture (wrong mechanism); D2 gives a correct generic definition. Neither gives neutron capture."
+  ],
+  "R-779": [
+   "rouge_false",
+   "tie",
+   [
+    "shorter"
+   ],
+   "Both: Resurgence, June 24, 2016."
+  ],
+  "R-852": [
+   "non_answer",
+   "tie",
+   [
+    "both_bad",
+    "released_halluc"
+   ],
+   "D2 defines ordinances of secession in general. Released: Gist 'signed' it, wrong date. Neither names Memminger."
+  ],
+  "R-423": [
+   "other_reading",
+   "tie",
+   [
+    "both_bad"
+   ],
+   "Released: Rim Fire 2013 + Tubbs 2017; D2: 2008 Summit Fire. All real fires, none in refs."
+  ],
+  "R-59": [
+   "rouge_false",
+   "tie",
+   [
+    "shorter"
+   ],
+   "Both: Gregory and Matthew; D2 drops the Ray Romano detail."
+  ],
+  "R-736": [
+   "non_answer",
+   "released",
+   [
+    "off_question"
+   ],
+   "D2 describes the 2006 contingent, gives no position; its str-em gain is a digit-match artefact. Released: 2nd in 2010 (in ref)."
+  ],
+  "R-556": [
+   "non_answer",
+   "released",
+   [
+    "off_question",
+    "shorter"
+   ],
+   "D2: 'is a breed of dog'. Released: 12-15 years (close to the refs, unsupported)."
+  ],
+  "R-849": [
+   "rouge_false",
+   "tie",
+   [
+    "d2_halluc"
+   ],
+   "Both: insulin shock therapy. D2 adds an unsupported real-life claim (cit 0)."
+  ],
+  "R-418": [
+   "d2_fixes",
+   "d2",
+   [
+    "released_halluc"
+   ],
+   "Released describes a different song (Lee Greenwood's 'God Bless the U.S.A.'). D2: Irving Berlin, 1938 (revision year)."
+  ],
+  "R-276": [
+   "less_coverage",
+   "released",
+   [],
+   "Released: April 12, 1971 (in ref); D2 only says 1971."
+  ],
+  "R-296": [
+   "equivalent",
+   "d2",
+   [],
+   "Both: Tim Paterson; D2 also covers Microsoft buying 86-DOS."
+  ],
+  "R-355": [
+   "non_answer",
+   "released",
+   [
+    "off_question"
+   ],
+   "D2: share of foreign-born who were European in 1971. Released: 28.6% in 2016 (close to refs)."
+  ],
+  "R-361": [
+   "factual_error",
+   "released",
+   [
+    "shorter"
+   ],
+   "D2: 'commodity standard' (broader term). Released: gold standard (in ref)."
+  ],
+  "R-145": [
+   "d2_fixes",
+   "d2",
+   [
+    "shorter"
+   ],
+   "D2 names Nights of Cabiria; released never says what won."
+  ],
+  "R-318": [
+   "d2_fixes",
+   "d2",
+   [
+    "released_halluc",
+    "shorter"
+   ],
+   "Released: Napoleon III (wrong period). D2: Louis-Philippe I (in ref)."
+  ],
+  "R-557": [
+   "equivalent",
+   "tie",
+   [
+    "shorter"
+   ],
+   "Both: Bank of America Stadium."
+  ],
+  "R-53": [
+   "d2_fixes",
+   "d2",
+   [
+    "released_halluc"
+   ],
+   "Released credits the 100 points to Kobe Bryant (wrong, 81); D2: Wilt Chamberlain (right)."
+  ],
+  "R-327": [
+   "non_answer",
+   "tie",
+   [
+    "both_bad",
+    "released_halluc"
+   ],
+   "D2 answers 'first sportsperson' (Tendulkar). Released: Radhakrishnan (wrong). Refs: Mother Teresa / Ghaffar Khan."
+  ],
+  "R-469": [
+   "d2_fixes",
+   "d2",
+   [],
+   "D2: written by DeShannon, performed by Carnes, covering both readings; released wrongly says 'originally sung by' Carnes."
+  ],
+  "R-699": [
+   "factual_error",
+   "released",
+   [
+    "d2_halluc"
+   ],
+   "D2: Kelly and Terry Virts (wrong, Kornienko)."
+  ],
+  "R-940": [
+   "other_reading",
+   "tie",
+   [],
+   "24 vs 26: both in ref (regular vs with bonus episodes)."
+  ],
+  "R-2": [
+   "equivalent",
+   "tie",
+   [],
+   "Same answer."
+  ],
+  "R-701": [
+   "factual_error",
+   "tie",
+   [
+    "both_bad",
+    "released_halluc",
+    "d2_halluc"
+   ],
+   "Both wrong: 2005 world title / 1998 Olympics (refs 2018/2019)."
+  ],
+  "R-376": [
+   "other_reading",
+   "released",
+   [
+    "shorter"
+   ],
+   "Released: Bill Withers 1972 (main reading); D2: Kirk Franklin 1998 (in ref)."
+  ],
+  "R-563": [
+   "equivalent",
+   "tie",
+   [],
+   "Same answer; D2 parrots the question."
+  ],
+  "R-47": [
+   "equivalent",
+   "tie",
+   [],
+   "Same answer."
+  ],
+  "R-845": [
+   "d2_fixes",
+   "d2",
+   [
+    "released_halluc"
+   ],
+   "Released: Bank Hall (not in London). D2: Elizabeth Tower 1859 (in ref)."
+  ],
+  "R-204": [
+   "equivalent",
+   "tie",
+   [],
+   "Same answer."
+  ],
+  "R-157": [
+   "equivalent",
+   "tie",
+   [],
+   "Same answer."
+  ],
+  "R-805": [
+   "equivalent",
+   "tie",
+   [],
+   "Same core answer; D2 adds a palpation aside."
+  ],
+  "R-470": [
+   "d2_fixes",
+   "d2",
+   [
+    "released_halluc"
+   ],
+   "Released '13 episodes' is wrong; D2 'three' is right. Released's str-em credit is a digit-match artefact."
+  ],
+  "R-627": [
+   "factual_error",
+   "released",
+   [
+    "d2_halluc",
+    "shorter"
+   ],
+   "D2: 'primary and secondary' crust (wrong); released: continental and oceanic. ROUGE goes the wrong way."
+  ],
+  "R-913": [
+   "equivalent",
+   "tie",
+   [],
+   "Both: Gary Oldman."
+  ],
+  "R-165": [
+   "non_answer",
+   "released",
+   [
+    "off_question"
+   ],
+   "D2 narrates 1934-1950 and never says 2010. ROUGE goes the wrong way."
+  ],
+  "R-478": [
+   "equivalent",
+   "tie",
+   [],
+   "Both: 100th from 130th."
+  ],
+  "R-795": [
+   "d2_fixes",
+   "d2",
+   [
+    "d2_halluc",
+    "released_halluc"
+   ],
+   "D2 episode 98 is right (date wrong); released 'episode 86' is wrong."
+  ],
+  "R-258": [
+   "d2_fixes",
+   "d2",
+   [
+    "released_halluc"
+   ],
+   "D2: November 17, 2017 (right); released: November 5 (wrong)."
+  ],
+  "R-247": [
+   "equivalent",
+   "tie",
+   [],
+   "Both: Willie Nelson; neither gives Aloe Blacc."
+  ],
+  "R-465": [
+   "d2_fixes",
+   "d2",
+   [],
+   "D2 lists all four rivers; released only two."
+  ],
+  "R-626": [
+   "other_reading",
+   "tie",
+   [],
+   "2008 vs 1980: both in ref."
+  ],
+  "R-286": [
+   "d2_fixes",
+   "d2",
+   [],
+   "D2 gives both 2000 and the last electrocution in 1999."
+  ],
+  "R-375": [
+   "equivalent",
+   "tie",
+   [
+    "shorter"
+   ],
+   "Both: LBJ, 1964 State of the Union."
+  ],
+  "R-392": [
+   "d2_fixes",
+   "d2",
+   [
+    "released_halluc"
+   ],
+   "Released: 'Eddie Holman' (wrong); D2: Curry Grant (right)."
+  ],
+  "R-871": [
+   "d2_fixes",
+   "d2",
+   [
+    "released_halluc",
+    "d2_halluc"
+   ],
+   "D2: Super Bowl XXXIV, Jan 30, 2000 (right). Released: claims a 1979 win (wrong)."
+  ],
+  "R-830": [
+   "equivalent",
+   "tie",
+   [],
+   "Both: Pinellas County."
+  ],
+  "R-872": [
+   "factual_error",
+   "released",
+   [
+    "d2_halluc"
+   ],
+   "D2: Nebula 'played by Ashly Burch' (the Telltale game voice, not the film's Karen Gillan). ROUGE goes the wrong way."
+  ],
+  "R-847": [
+   "wrong_entity",
+   "released",
+   [
+    "off_question"
+   ],
+   "D2 is about Port Adelaide (a different club). Released: Adelaide 2017 (in ref). ROUGE goes the wrong way."
+  ],
+  "R-932": [
+   "non_answer",
+   "released",
+   [
+    "off_question",
+    "shorter"
+   ],
+   "D2: 'has varied over time'. Released: 46% (matches the refs). ROUGE goes the wrong way."
+  ],
+  "R-703": [
+   "d2_fixes",
+   "d2",
+   [],
+   "D2 gives Feb 1944 and June 1947; released never gives a date."
+  ],
+  "R-142": [
+   "d2_fixes",
+   "d2",
+   [
+    "shorter"
+   ],
+   "D2: Lowry (lyrics) and Greene (music), both in ref."
+  ],
+  "R-587": [
+   "d2_fixes",
+   "d2",
+   [],
+   "Released names the wrong actors. D2's cast list includes KJ Apa but does not say he plays Ethan."
+  ],
+  "R-769": [
+   "other_reading",
+   "tie",
+   [
+    "released_halluc"
+   ],
+   "Released: 1983 recording (in ref) plus a wrong 2017 release. D2: Drake 2018 version (in ref)."
+  ],
+  "R-761": [
+   "d2_fixes",
+   "d2",
+   [
+    "shorter",
+    "released_halluc"
+   ],
+   "D2: Ralph (right). Released: Scott Wilson as 'Sam Hagen' (wrong)."
+  ],
+  "R-421": [
+   "d2_fixes",
+   "d2",
+   [],
+   "D2 gives the Mantaro / Apurimac sources; released is vague."
+  ],
+  "R-542": [
+   "d2_fixes",
+   "d2",
+   [
+    "released_halluc"
+   ],
+   "Released: Joel Hoekstra (wrong, later member). D2 names John Sykes as guitarist/co-writer, not explicitly as the player."
+  ]
+ },
+ "G": {
+  "G-398-3": [
+   "partial",
+   "issup_detail",
+   "Passage: April 1933; the day (25) is not given."
+  ],
+  "G-367-0": [
+   "partial",
+   "issup_detail",
+   "'1705' not in passage (81 years until 1780 gives 1699); the rest is verbatim."
+  ],
+  "G-607-0": [
+   "yes",
+   "deb_falsecon",
+   "Two adjacent passage sentences merged; p_con 0.99 is wrong."
+  ],
+  "G-913-0": [
+   "yes",
+   "deb_bridge",
+   "Film from the title + 'Gary Oldman as Sirius Black'."
+  ],
+  "G-204-0": [
+   "yes",
+   "deb_bridge",
+   "'banjo-playing teenager' / 'played Dueling Banjos'."
+  ],
+  "G-469-3": [
+   "partial",
+   "issup_wrongfact",
+   "Carnes 1981 is supported; 'originally sung' is not (song written 1974, earlier versions)."
+  ],
+  "G-398-2": [
+   "no",
+   "issup_detail",
+   "1971 date is nowhere in the passage (true in the world, unsupported here)."
+  ],
+  "G-327-0": [
+   "no",
+   "issup_wrongfact",
+   "Radhakrishnan was among the first recipients, not a foreigner."
+  ],
+  "G-165-4": [
+   "yes",
+   "deb_bridge",
+   "'won ... the 2010 FIFA World Cup ... the first time the team had reached the final'."
+  ],
+  "G-376-1": [
+   "partial",
+   "issup_detail",
+   "Passage: 1998 only; the day is not given."
+  ],
+  "G-626-4": [
+   "partial",
+   "issup_detail",
+   "Passage: won the 2008 World Series; no date."
+  ],
+  "G-761-2": [
+   "partial",
+   "issup_wrongfact",
+   "Murder suspect in the 1967 film is supported; the name 'Sam Hagen' is invented."
+  ],
+  "G-7-1": [
+   "yes",
+   "deb_verbatim",
+   "Verbatim passage sentence."
+  ],
+  "G-901-1": [
+   "no",
+   "deb_falsepos",
+   "General knowledge, not stated in the passage; ISSUP 0 is right here."
+  ],
+  "G-607-1": [
+   "no",
+   "issup_wrongfact",
+   "The passage says the L'Echo des Feuilletons edition is an 1846 illustrated edition, not the first publication."
+  ],
+  "G-710-0": [
+   "yes",
+   "deb_verbatim",
+   "Verbatim."
+  ],
+  "G-714-0": [
+   "yes",
+   "deb_verbatim",
+   "Verbatim (only 'the' added)."
+  ],
+  "G-682-4": [
+   "partial",
+   "issup_wrongfact",
+   "Faraday built an early alternator (supported); 'first AC system' and '1821' are not."
+  ],
+  "G-469-1": [
+   "partial",
+   "issup_wrongfact",
+   "'not until 1981 ... Carnes recorded her version' implies earlier recordings, so 'first recorded' is wrong."
+  ],
+  "G-258-1": [
+   "partial",
+   "issup_detail",
+   "Passage: November 2017; the day is not given."
+  ],
+  "G-852-2": [
+   "no",
+   "issup_wrongfact",
+   "Passage: Pickens moved to repeal the ordinance, not wrote it."
+  ],
+  "G-133-2": [
+   "no",
+   "issup_wrongfact",
+   "Passage: Montreal beat the Rangers in 1979."
+  ],
+  "G-133-4": [
+   "no",
+   "issup_wrongfact",
+   "Same as G-133-2."
+  ],
+  "G-133-1": [
+   "no",
+   "issup_wrongfact",
+   "Canadiens won the 1979 final."
+  ],
+  "G-521-0": [
+   "yes",
+   "deb_verbatim",
+   "Verbatim first sentence of the passage."
+  ],
+  "G-916-0": [
+   "yes",
+   "deb_bridge",
+   "Portsmouth Alarm (Dec 1774) and the April 1775 warning."
+  ],
+  "G-133-0": [
+   "partial",
+   "issup_detail",
+   "1994 win supported; 'April 13' is not (and is wrong)."
+  ],
+  "G-375-1": [
+   "yes",
+   "deb_verbatim",
+   "Verbatim (drops 'Wednesday')."
+  ],
+  "G-843-0": [
+   "partial",
+   "issup_wrongfact",
+   "Long Island supported; 'two children' is wrong (a daughter and twin sons)."
+  ],
+  "G-557-3": [
+   "partial",
+   "both_ok",
+   "Panthers' home stadium supported; 'Charlotte, North Carolina' is not in the passage."
+  ]
+ }
+}

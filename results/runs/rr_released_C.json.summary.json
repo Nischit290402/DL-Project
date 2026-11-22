@@ -1,0 +1,10 @@
+{
+  "file": "results/runs/rr_released_C.json",
+  "split": "all",
+  "n": 748,
+  "str_em": 30.01559714795006,
+  "rougeLsum": 35.88580709011649,
+  "length": 30.584224598930483,
+  "citation_rec": 65.93360071301247,
+  "citation_prec": 66.93850267379679
+}

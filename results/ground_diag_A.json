@@ -1,0 +1,230 @@
+{
+  "split": "critique/splits/asqa_A.json",
+  "questions": 100,
+  "candidates": 500,
+  "G1": {
+    "sentences": 476,
+    "threshold": 0.5,
+    "rate_supported": {
+      "deb": 0.399,
+      "t5": 0.498,
+      "issup": 0.769
+    },
+    "deb_vs_t5": {
+      "agree": 0.788,
+      "kappa": 0.575
+    },
+    "issup_vs_t5": {
+      "agree": 0.637,
+      "kappa": 0.275
+    },
+    "deb_vs_issup": {
+      "agree": 0.555,
+      "kappa": 0.196
+    },
+    "candidate_pearson_with_citation_rec": {
+      "ground_score": 0.394,
+      "final_score": 0.375,
+      "t5": 0.941,
+      "min": 0.551,
+      "mean": 0.654,
+      "first": 0.566,
+      "full": 0.634,
+      "soft_mean": 0.631,
+      "nocon_min": 0.37
+    }
+  },
+  "G2_str_em": {
+    "final_score": {
+      "concordance": 0.682,
+      "ci95": [
+        0.609,
+        0.753
+      ],
+      "pairs": 365,
+      "fix_rate_vs_released": null,
+      "pairs_released_wrong": 116
+    },
+    "ground_score": {
+      "concordance": 0.677,
+      "ci95": [
+        0.603,
+        0.749
+      ],
+      "pairs": 365,
+      "fix_rate_vs_released": 0.0,
+      "pairs_released_wrong": 116
+    },
+    "t5": {
+      "concordance": 0.577,
+      "ci95": [
+        0.518,
+        0.638
+      ],
+      "pairs": 365,
+      "fix_rate_vs_released": 0.375,
+      "pairs_released_wrong": 116
+    },
+    "min": {
+      "concordance": 0.608,
+      "ci95": [
+        0.529,
+        0.683
+      ],
+      "pairs": 365,
+      "fix_rate_vs_released": 0.44,
+      "pairs_released_wrong": 116
+    },
+    "mean": {
+      "concordance": 0.614,
+      "ci95": [
+        0.535,
+        0.689
+      ],
+      "pairs": 365,
+      "fix_rate_vs_released": 0.431,
+      "pairs_released_wrong": 116
+    },
+    "first": {
+      "concordance": 0.605,
+      "ci95": [
+        0.526,
+        0.683
+      ],
+      "pairs": 365,
+      "fix_rate_vs_released": 0.414,
+      "pairs_released_wrong": 116
+    },
+    "full": {
+      "concordance": 0.578,
+      "ci95": [
+        0.499,
+        0.653
+      ],
+      "pairs": 365,
+      "fix_rate_vs_released": 0.422,
+      "pairs_released_wrong": 116
+    },
+    "soft_mean": {
+      "concordance": 0.608,
+      "ci95": [
+        0.532,
+        0.68
+      ],
+      "pairs": 365,
+      "fix_rate_vs_released": 0.422,
+      "pairs_released_wrong": 116
+    },
+    "nocon_min": {
+      "concordance": 0.56,
+      "ci95": [
+        0.503,
+        0.624
+      ],
+      "pairs": 365,
+      "fix_rate_vs_released": 0.457,
+      "pairs_released_wrong": 116
+    }
+  },
+  "G3_citation_rec": {
+    "final_score": {
+      "concordance": 0.751,
+      "ci95": [
+        0.698,
+        0.802
+      ],
+      "pairs": 527,
+      "fix_rate_vs_released": null,
+      "pairs_released_wrong": 131
+    },
+    "ground_score": {
+      "concordance": 0.757,
+      "ci95": [
+        0.707,
+        0.806
+      ],
+      "pairs": 527,
+      "fix_rate_vs_released": 0.053,
+      "pairs_released_wrong": 131
+    },
+    "t5": {
+      "concordance": 0.893,
+      "ci95": [
+        0.862,
+        0.922
+      ],
+      "pairs": 527,
+      "fix_rate_vs_released": 0.813,
+      "pairs_released_wrong": 131
+    },
+    "min": {
+      "concordance": 0.761,
+      "ci95": [
+        0.713,
+        0.807
+      ],
+      "pairs": 527,
+      "fix_rate_vs_released": 0.775,
+      "pairs_released_wrong": 131
+    },
+    "mean": {
+      "concordance": 0.841,
+      "ci95": [
+        0.795,
+        0.878
+      ],
+      "pairs": 527,
+      "fix_rate_vs_released": 0.786,
+      "pairs_released_wrong": 131
+    },
+    "first": {
+      "concordance": 0.778,
+      "ci95": [
+        0.733,
+        0.817
+      ],
+      "pairs": 527,
+      "fix_rate_vs_released": 0.664,
+      "pairs_released_wrong": 131
+    },
+    "full": {
+      "concordance": 0.808,
+      "ci95": [
+        0.762,
+        0.852
+      ],
+      "pairs": 527,
+      "fix_rate_vs_released": 0.809,
+      "pairs_released_wrong": 131
+    },
+    "soft_mean": {
+      "concordance": 0.839,
+      "ci95": [
+        0.787,
+        0.882
+      ],
+      "pairs": 527,
+      "fix_rate_vs_released": 0.802,
+      "pairs_released_wrong": 131
+    },
+    "nocon_min": {
+      "concordance": 0.645,
+      "ci95": [
+        0.584,
+        0.705
+      ],
+      "pairs": 527,
+      "fix_rate_vs_released": 0.656,
+      "pairs_released_wrong": 131
+    }
+  },
+  "G4": {
+    "n": 30,
+    "issup_high_deberta_low": 29,
+    "deberta_high_issup_low": 1,
+    "t5_sides_with_deberta": 14,
+    "t5_sides_with_issup": 16,
+    "with_t5": 30,
+    "csv": "results/ground_diag_A_G4.csv"
+  }
+}

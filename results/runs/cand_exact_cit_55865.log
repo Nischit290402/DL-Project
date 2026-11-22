@@ -1,0 +1,138 @@
+GPU: NVIDIA L40S on TC2N07
+slot 0: 200 questions, 0 skipped -> out/pick_AB_p0.json
+slot 1: 200 questions, 0 skipped -> out/pick_AB_p1.json
+slot 2: 200 questions, 0 skipped -> out/pick_AB_p2.json
+slot 3: 200 questions, 0 skipped -> out/pick_AB_p3.json
+slot 4: 200 questions, 0 skipped -> out/pick_AB_p4.json
+== AB slot 0  20:55:45
+{
+  "file": "out/pick_AB_p0.json",
+  "split": "all",
+  "n": 200,
+  "str_em": 30.600000000000005,
+  "rougeLsum": 36.19489708281687,
+  "length": 29.755,
+  "citation_rec": 60.64999999999999,
+  "citation_prec": 61.19166666666665
+}
+PERQ_FILE out/pick_AB_p0.json.perq.jsonl
+== AB slot 1  21:04:28
+{
+  "file": "out/pick_AB_p1.json",
+  "split": "all",
+  "n": 200,
+  "str_em": 24.808333333333334,
+  "rougeLsum": 33.79841749905238,
+  "length": 26.545,
+  "citation_rec": 47.10833333333333,
+  "citation_prec": 47.10833333333333
+}
+PERQ_FILE out/pick_AB_p1.json.perq.jsonl
+== AB slot 2  21:05:26
+{
+  "file": "out/pick_AB_p2.json",
+  "split": "all",
+  "n": 200,
+  "str_em": 23.75833333333333,
+  "rougeLsum": 32.64000097405807,
+  "length": 25.89,
+  "citation_rec": 36.15833333333333,
+  "citation_prec": 36.483333333333334
+}
+PERQ_FILE out/pick_AB_p2.json.perq.jsonl
+== AB slot 3  21:06:24
+{
+  "file": "out/pick_AB_p3.json",
+  "split": "all",
+  "n": 200,
+  "str_em": 21.841666666666665,
+  "rougeLsum": 32.826019056772864,
+  "length": 25.82,
+  "citation_rec": 36.775,
+  "citation_prec": 37.075
+}
+PERQ_FILE out/pick_AB_p3.json.perq.jsonl
+== AB slot 4  21:07:22
+{
+  "file": "out/pick_AB_p4.json",
+  "split": "all",
+  "n": 200,
+  "str_em": 19.6,
+  "rougeLsum": 30.496113362711196,
+  "length": 24.39,
+  "citation_rec": 36.25,
+  "citation_prec": 37.0
+}
+PERQ_FILE out/pick_AB_p4.json.perq.jsonl
+1000 of 1000 candidates have exact citation; str-em/ROUGE mismatches: 0
+released cross-check: citation_rec identical on 200 of 200 selected candidates
+EXACT_FILE results/runs/cand_metrics_AB_exact.jsonl
+slot 0: 747 questions, 1 skipped -> out/pick_C_p0.json
+slot 1: 747 questions, 1 skipped -> out/pick_C_p1.json
+slot 2: 747 questions, 1 skipped -> out/pick_C_p2.json
+slot 3: 747 questions, 1 skipped -> out/pick_C_p3.json
+slot 4: 747 questions, 1 skipped -> out/pick_C_p4.json
+== C slot 0  21:08:20
+{
+  "file": "out/pick_C_p0.json",
+  "split": "all",
+  "n": 747,
+  "str_em": 29.332887103971437,
+  "rougeLsum": 36.23226879580914,
+  "length": 30.872824631860777,
+  "citation_rec": 52.35290367820489,
+  "citation_prec": 53.23643781475106
+}
+PERQ_FILE out/pick_C_p0.json.perq.jsonl
+== C slot 1  21:10:32
+{
+  "file": "out/pick_C_p1.json",
+  "split": "all",
+  "n": 747,
+  "str_em": 24.48460508701472,
+  "rougeLsum": 34.39959118840782,
+  "length": 28.1954484605087,
+  "citation_rec": 48.02989736724677,
+  "citation_prec": 48.67023650156181
+}
+PERQ_FILE out/pick_C_p1.json.perq.jsonl
+== C slot 2  21:12:38
+{
+  "file": "out/pick_C_p2.json",
+  "split": "all",
+  "n": 747,
+  "str_em": 21.474788041053117,
+  "rougeLsum": 32.83126875544279,
+  "length": 27.759036144578314,
+  "citation_rec": 40.61834640147893,
+  "citation_prec": 41.472556894243645
+}
+PERQ_FILE out/pick_C_p2.json.perq.jsonl
+== C slot 3  21:14:44
+{
+  "file": "out/pick_C_p3.json",
+  "split": "all",
+  "n": 747,
+  "str_em": 19.446675591253918,
+  "rougeLsum": 31.507144815336208,
+  "length": 25.572958500669344,
+  "citation_rec": 35.56400203990566,
+  "citation_prec": 35.91285778032767
+}
+PERQ_FILE out/pick_C_p3.json.perq.jsonl
+== C slot 4  21:16:49
+{
+  "file": "out/pick_C_p4.json",
+  "split": "all",
+  "n": 747,
+  "str_em": 17.670682730923705,
+  "rougeLsum": 31.385564863567804,
+  "length": 25.68273092369478,
+  "citation_rec": 33.70354433607446,
+  "citation_prec": 34.09176388092051
+}
+PERQ_FILE out/pick_C_p4.json.perq.jsonl
+3735 of 3740 candidates have exact citation; str-em/ROUGE mismatches: 0
+released cross-check: citation_rec identical on 747 of 747 selected candidates
+EXACT_FILE results/runs/cand_metrics_C_exact.jsonl
+EXACT_CIT_OK

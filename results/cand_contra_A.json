@@ -1,0 +1,173 @@
+{
+  "split": "critique/splits/asqa_A.json",
+  "n_questions": 100,
+  "nli_file": "results/runs/cand_nli_A.jsonl",
+  "D3": {
+    "flagged_pairs_ctx_p>=0.5": 571,
+    "marked_for_labelling": 30,
+    "csv": "results/cand_contra_A_pairs.csv",
+    "labels": "genuine = the two answers cannot both be true for the same reading of the question; different-reading = both can be true, they answer different readings; nli-error = no real conflict (paraphrase, extra detail, unrelated text)"
+  },
+  "noctx": {
+    "D1": {
+      "0.5": {
+        "questions_with_a_contradicting_pair": 0.88,
+        "pair_rate": 0.564,
+        "chosen_answer_in_a_contradicting_pair": 0.84
+      },
+      "0.7": {
+        "questions_with_a_contradicting_pair": 0.88,
+        "pair_rate": 0.56,
+        "chosen_answer_in_a_contradicting_pair": 0.84
+      },
+      "0.9": {
+        "questions_with_a_contradicting_pair": 0.88,
+        "pair_rate": 0.553,
+        "chosen_answer_in_a_contradicting_pair": 0.84
+      }
+    },
+    "D2": {
+      "contradiction C (lower = better)": {
+        "concordance": 0.586,
+        "ci95": [
+          0.503,
+          0.669
+        ],
+        "pairs": 365
+      },
+      "Self-RAG released score": {
+        "concordance": 0.682,
+        "ci95": [
+          0.609,
+          0.753
+        ],
+        "pairs": 365
+      },
+      "word-overlap agreement": {
+        "concordance": 0.588,
+        "ci95": [
+          0.504,
+          0.67
+        ],
+        "pairs": 365
+      },
+      "entailment agreement E (higher = better)": {
+        "concordance": 0.618,
+        "ci95": [
+          0.535,
+          0.7
+        ],
+        "pairs": 365
+      },
+      "str_em_by_C_bucket": {
+        "0.0-0.1": {
+          "n": 94,
+          "mean_str_em": 33.71
+        },
+        "0.1-0.3": {
+          "n": 63,
+          "mean_str_em": 28.33
+        },
+        "0.3-0.5": {
+          "n": 37,
+          "mean_str_em": 20.09
+        },
+        "0.5-1.0": {
+          "n": 306,
+          "mean_str_em": 17.52
+        }
+      },
+      "chosen_is_most_contradicted": {
+        "questions": 22,
+        "chosen_str_em": 20.38,
+        "least_contradicted_str_em": 17.5
+      },
+      "reference": {
+        "chosen_str_em": 27.78,
+        "best_of_5_str_em": 40.18,
+        "mean_candidate_str_em": 22.11
+      }
+    }
+  },
+  "ctx": {
+    "D1": {
+      "0.5": {
+        "questions_with_a_contradicting_pair": 0.89,
+        "pair_rate": 0.571,
+        "chosen_answer_in_a_contradicting_pair": 0.83
+      },
+      "0.7": {
+        "questions_with_a_contradicting_pair": 0.89,
+        "pair_rate": 0.563,
+        "chosen_answer_in_a_contradicting_pair": 0.83
+      },
+      "0.9": {
+        "questions_with_a_contradicting_pair": 0.89,
+        "pair_rate": 0.553,
+        "chosen_answer_in_a_contradicting_pair": 0.83
+      }
+    },
+    "D2": {
+      "contradiction C (lower = better)": {
+        "concordance": 0.607,
+        "ci95": [
+          0.514,
+          0.688
+        ],
+        "pairs": 365
+      },
+      "Self-RAG released score": {
+        "concordance": 0.682,
+        "ci95": [
+          0.609,
+          0.753
+        ],
+        "pairs": 365
+      },
+      "word-overlap agreement": {
+        "concordance": 0.588,
+        "ci95": [
+          0.504,
+          0.67
+        ],
+        "pairs": 365
+      },
+      "entailment agreement E (higher = better)": {
+        "concordance": 0.597,
+        "ci95": [
+          0.507,
+          0.687
+        ],
+        "pairs": 365
+      },
+      "str_em_by_C_bucket": {
+        "0.0-0.1": {
+          "n": 92,
+          "mean_str_em": 33.89
+        },
+        "0.1-0.3": {
+          "n": 80,
+          "mean_str_em": 27.19
+        },
+        "0.3-0.5": {
+          "n": 29,
+          "mean_str_em": 22.07
+        },
+        "0.5-1.0": {
+          "n": 299,
+          "mean_str_em": 17.13
+        }
+      },
+      "chosen_is_most_contradicted": {
+        "questions": 19,
+        "chosen_str_em": 26.23,
+        "least_contradicted_str_em": 22.89
+      },
+      "reference": {
+        "chosen_str_em": 27.78,
+        "best_of_5_str_em": 40.18,
+        "mean_candidate_str_em": 22.11
+      }
+    }
+  }
+}

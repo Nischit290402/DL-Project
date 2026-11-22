@@ -1,0 +1,17 @@
+{
+  "name": "D2-v2: relevance-gated NLI grounding, fixed on Set A+B (exploratory; Set B informed the design)",
+  "chosen_on": "critique/splits/asqa_A.json,critique/splits/asqa_B.json",
+  "mode": "mix",
+  "agg": "mean",
+  "param": 0.75,
+  "gate": {"rel_model": "BAAI/bge-reranker-base", "delta": 1.0,
+           "rule": "eligible candidates: r(c) >= r(released choice) - delta; released choice always eligible"},
+  "formula": "among eligible candidates, max of released + alpha * (g_mean - ISSUP)",
+  "model": "cross-encoder/nli-deberta-v3-large",
+  "selection_rule": "results/nli_grounding_v2_rule.md (sha256 fd02b13ab0436b179a50e491f33b3af17d6f384e6ef7e3cd0c4585caa7df9a72)",
+  "AB_result": "results/ground_tune_v2_AB.json",
+  "commands": {
+    "set_C_relevance": "sbatch cluster/run_qa_relevance_C.sbatch",
+    "set_C": "python grounding/rerank_ground.py --f results/runs/asqa_cands_C.json --ground results/runs/cand_ground_C.jsonl --split critique/splits/asqa_C.json --mode mix --agg mean --param 0.75 --rel results/runs/cand_qarel_C.jsonl --delta 1 --out out/rr_ground_v2_C.json"
+  }
+}

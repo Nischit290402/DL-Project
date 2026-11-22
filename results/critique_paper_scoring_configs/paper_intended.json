@@ -1,0 +1,5 @@
+{
+  "weights": {"w_rel": 1, "w_sup": 1, "w_use": 0.5, "use_seqscore": true},
+  "temperature": 1.0,
+  "note": "Paper/README weights with both unused terms restored. Fixed in advance, not tuned."
+}

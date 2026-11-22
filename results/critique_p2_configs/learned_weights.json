@@ -1,0 +1,46 @@
+{
+  "weights": {
+    "w_rel": 2,
+    "w_sup": 0,
+    "w_use": 0.5,
+    "use_seqscore": false
+  },
+  "temperature": 1.0,
+  "set_a_metrics": {
+    "str_em": 30.533333333333335,
+    "rougeLsum": 34.26741812924373,
+    "citation_rec": 57.38333333333333,
+    "citation_prec": 57.38333333333333,
+    "length": 27.61
+  },
+  "set_a_changed_candidates": 41,
+  "selection_split": "A",
+  "selection_metric": "str_em",
+  "score_protocol": "alce",
+  "grid": {
+    "w_rel": [
+      0,
+      0.5,
+      1,
+      2
+    ],
+    "w_sup": [
+      0,
+      0.5,
+      1,
+      2,
+      3
+    ],
+    "w_use": [
+      0,
+      0.5,
+      1
+    ],
+    "use_seqscore": [
+      false,
+      true
+    ]
+  },
+  "candidates": "asqa_cands_0_end.json",
+  "baseline": "rr_released.json"
+}
