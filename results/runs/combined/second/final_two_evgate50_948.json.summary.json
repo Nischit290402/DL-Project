@@ -1,0 +1,11 @@
+{
+  "file": "out/final_two_evgate50_948.json",
+  "split": "all",
+  "n": 948,
+  "str_em": 40.490506329113934,
+  "rougeLsum": 40.94040662604896,
+  "length": 52.03481012658228,
+  "citation_rec": 75.21657959949097,
+  "citation_prec": 76.11889692585892,
+  "mauve": 85.1058636391087
+}

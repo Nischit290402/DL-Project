@@ -1,0 +1,11 @@
+{
+  "file": "results/runs/retrieval/stack/RR_c2_one_gate50_948.json",
+  "split": "all",
+  "n": 948,
+  "str_em": 32.972925457102654,
+  "rougeLsum": 36.39706288270258,
+  "length": 33.43565400843882,
+  "citation_rec": 74.53473477998794,
+  "citation_prec": 75.75723327305606,
+  "mauve": 74.7071549849404
+}

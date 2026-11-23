@@ -1,0 +1,11 @@
+{
+  "file": "results/runs/retrieval/stack/final_two_gate75_948.json",
+  "split": "all",
+  "n": 948,
+  "str_em": 37.686357243319286,
+  "rougeLsum": 39.605939327213655,
+  "length": 43.33860759493671,
+  "citation_rec": 76.83569419328913,
+  "citation_prec": 77.71184950773558,
+  "mauve": 84.22986577346707
+}
