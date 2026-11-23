@@ -28,6 +28,7 @@ def main():
     ap.add_argument("--threshold", type=float, default=0.2)
     ap.add_argument("--with_first_paragraph", action="store_true")
     ap.add_argument("--max_questions", type=int, default=None)
+    ap.add_argument("--same_passage", action="store_true", help="control: continue from the passage the first segment already used (more words, no new passage)")
     a = ap.parse_args()
     R.KEEP_SPECIAL_TOKENS = True; R.SAVE_CANDIDATES = True
     tok = AutoTokenizer.from_pretrained(a.model_name, padding_side="left")
@@ -46,6 +47,7 @@ def main():
         q = int(pk["q_idx"]); item = cands[q]
         d1 = sorted([c for c in item["candidates"] if c["depth"] == 1], key=lambda c: c["p_idx"])
         first = next(c for c in d1 if c["p_idx"] == int(pk["chosen_p_idx"])); others = [c for c in d1 if c is not first]
+        if a.same_passage: others = [first]
         prev = first["pred"].replace("</s>", "")
         prev = re.sub(r"\[Utility:[1-5]\]\s*$", "", prev)          # the utility token closes an answer; drop it to continue
         root = PROMPT_DICT["prompt_no_input"].format_map({"instruction": TASK_INST["asqa"] + "## Input:\n\n" + item["question"]})

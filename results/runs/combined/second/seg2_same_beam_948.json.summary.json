@@ -1,0 +1,11 @@
+{
+  "file": "out/seg2_same_beam_948.json",
+  "split": "all",
+  "n": 948,
+  "str_em": 37.61427566807315,
+  "rougeLsum": 39.72183049093673,
+  "length": 50.892405063291136,
+  "citation_rec": 62.47584723059406,
+  "citation_prec": 63.69499698613622,
+  "mauve": 93.7903759990441
+}

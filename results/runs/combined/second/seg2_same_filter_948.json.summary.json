@@ -1,0 +1,11 @@
+{
+  "file": "out/seg2_same_filter_948.json",
+  "split": "all",
+  "n": 948,
+  "str_em": 35.476441631504905,
+  "rougeLsum": 38.14638561971737,
+  "length": 41.393459915611814,
+  "citation_rec": 77.5649236487844,
+  "citation_prec": 78.69826200522401,
+  "mauve": 85.04618011795601
+}
