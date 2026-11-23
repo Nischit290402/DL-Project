@@ -4,7 +4,9 @@ self-rag/retrieval_lm/run_second_segment.py (SEG2 files) and their support score
 A continuation is eligible if its evidence-sentence support is >= CUT (mean over its sentences of the best of
 whole-passage and evidence-unit entailment). Among eligible continuations the one with the highest corrected
 Self-RAG score (relevance + support + 0.5 utility + likelihood, paper weights) is appended, citing its passage as [2].
-RULE: filter | beam (Self-RAG's own score only) | none | whole (filter + answer-level check: the continuation must\nnot contradict segment 1 (max contradiction < CON) and must not restate it (mean entailment < ENT)) | whole_con | whole_ent
+RULE: filter (the rule of the report) | beam (Self-RAG's own score only, no check) | none
+(the whole* rules belong to an answer-level check that was tested and dropped; they need a WHOLE file and are not
+used in the report)
 Prints exact STR-EM and length for every rule plus an oracle; writes OUT for the chosen RULE.
 usage: python3 retrieval/second_segment_pick.py PICKS OUT RULE CUT SEG2.json[,..] GROUND.jsonl[,..] GROUND_EV.jsonl[,..] [SPLIT.json|-] [WHOLE.jsonl,..] [CON] [ENT]"""
 import json, re, string, sys, random, statistics as st
@@ -32,7 +34,7 @@ for f in sys.argv[7].split(","):
     for l in open(f):
         r = json.loads(l); GE.setdefault((int(r["q_idx"]), r["node_id"]), {})[r["sent_idx"]] = max(r["t1"], r["t2"])
 keep = set(json.load(open(sys.argv[8]))["indices"]) if len(sys.argv) > 8 and sys.argv[8] != "-" else None
-WHOLE = {}                      # answer-level check (grounding/seg2_whole_answer.py): first segment vs each continuation
+WHOLE = {}                      # optional answer-level scores (dropped experiment): first segment vs each continuation
 for f in (sys.argv[9].split(",") if len(sys.argv) > 9 else []):
     for l in open(f): r = json.loads(l); WHOLE[(int(r["q_idx"]), r["node_id"])] = r
 CON = float(sys.argv[10]) if len(sys.argv) > 10 else 0.5; ENT = float(sys.argv[11]) if len(sys.argv) > 11 else 0.5

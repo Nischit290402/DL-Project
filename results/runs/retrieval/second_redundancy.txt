@@ -1,6 +1,0 @@
-second-answer sentences examined: 876; word overlap with the first answer: median 0.50, share >= 0.6: 36.8%, share >= 0.8: 17.0%
-  max overlap allowed   str-em   words  est.cit.rec  with 2nd |  Set C: str-em gain over one passage     minus no-limit version
-  no limit              39.86    50.6     73.64       67% |  +7.23 [ +6.04,  +8.46]   
-  0.8                   39.56    49.3     73.35       60% |  +6.91 [ +5.73,  +8.18]    -0.32 [ -0.69,  +0.05]
-  0.6                   38.22    47.5     73.28       49% |  +5.62 [ +4.50,  +6.80]    -1.62 [ -2.34,  -0.92]
-  0.4                   36.30    43.5     73.53       34% |  +3.44 [ +2.55,  +4.41]    -3.79 [ -4.79,  -2.81]

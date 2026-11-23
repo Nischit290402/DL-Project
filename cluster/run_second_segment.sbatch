@@ -11,7 +11,8 @@
 #SBATCH --output=logs/seg2_%j.log
 #SBATCH --error=logs/seg2_%j.err
 # Second-segment continuations for the combined system's answers (self-rag/retrieval_lm/run_second_segment.py).
-#   sbatch --export=ALL,TAG=AB,IDX=critique/splits/asqa_A.json,critique/splits/asqa_B.json,EXTRA= cluster/run_second_segment.sbatch
+#   sbatch --export=ALL,TAG=BC,IDX=results/runs/combined/second/split_BC.json cluster/run_second_segment.sbatch
+# IDX must be ONE split file: sbatch --export splits its value on commas. EXTRA=--same_passage is the control run.
 cd "$SLURM_SUBMIT_DIR"
 source cluster/env.sh
 mkdir -p out logs
