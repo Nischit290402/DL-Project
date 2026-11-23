@@ -1,0 +1,11 @@
+{
+  "file": "out/seg2A_filter.json",
+  "split": "all",
+  "n": 100,
+  "str_em": 38.833333333333336,
+  "rougeLsum": 38.4141076846867,
+  "length": 45.3,
+  "citation_rec": 75.55,
+  "citation_prec": 76.18333333333334,
+  "mauve": 95.93502012472062
+}
