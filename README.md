@@ -1,7 +1,7 @@
 # Improving Self-RAG on long-form question answering (ASQA)
 
-Code and run outputs for the AI6103 group project report *Diagnose, Then Re-rank: Improving Self-RAG on Long-Form
-Question Answering Without Retraining*.
+Code and run outputs for the AI6103 group project report *Reproduce, Diagnose, Repair: Inference-Time Improvements
+to Self-RAG on Long-Form Question Answering*.
 
 The project reproduces Self-RAG 7B ([paper](https://arxiv.org/abs/2310.11511)) on ASQA, measures where its long
 answers lose content and support, and adds three components at inference time: a passage reranker, the paper's
